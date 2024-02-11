@@ -1,0 +1,19 @@
+---
+const { link, sreenReaderLabel } = Astro.props;
+---
+
+<a href={link} target="_blank">
+    <span class="sr-only">{sreenReaderLabel}</span>
+
+    <slot />
+</a>
+
+<style>
+    a {
+        text-decoration: none;
+        color: rgb(var(--gray));
+    }
+    a:hover {
+        color: rgb(var(--gray-dark));
+    }
+</style>
