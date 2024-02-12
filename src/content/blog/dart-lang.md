@@ -1,6 +1,6 @@
 ---
-title: 'About Dart'
-description: 'Dart lang'
+title: 'About Dart language'
+description: "a.k.a. Google's favorite"
 pubDate: 'Feb 11 2024'
 # updatedDate: Feb 11 2024
 heroImage: '/blog-placeholder-4.jpg'

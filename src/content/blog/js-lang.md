@@ -1,6 +1,6 @@
 ---
-title: 'About JavaScript'
-description: 'JS lang'
+title: 'About JavaScript language'
+description: 'TypeScript but worse'
 pubDate: 'Feb 11 2024'
 heroImage: '/blog-placeholder-3.jpg'
 ---
