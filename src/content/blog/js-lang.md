@@ -6,6 +6,101 @@ pubDate: 'Feb 11 2024'
 heroImage: '/js-gradient.png'
 ---
 
+## Intro
+
+Basic definitions
+
+### ECMA
+
+TODO
+
+### CommonJS vs ES Modules
+
+### ES Modules
+
+Files, including Node.js modules, must either end in `.mjs` or the nearest `package.json` file must contain `"type": "module"`.
+
+### CommonJS
+
+TODO
+
+### Node.js
+
+TODO
+
+### Libraries
+
+## `require` vs `import`
+
+Two ways of using legacy code
+
+### Node.js `require`
+
+Exporting in `myModule.js`:
+
+```javascript
+// CommonJS syntax
+module.exports = {
+    foo: function(){ return 'bar';},
+    baz: 123
+}
+```
+
+Importing in `index.js`:
+
+```javascript
+var http = require('http'); // to use built-in modules
+
+var myModule = require('./myModule') // to use local modules
+const foo = myModule.foo;
+const baz = myModule.baz;
+```
+
+`require` observations:
+
+- Exists only in CommonJS (Previous to ES6)
+- Works only with `module.exports` command
+- Can be called anywhere in a file
+- Should be avoided in favor of `import`
+
+### ES6 `import`
+
+Exporting in `myModule.js`:
+
+```javascript
+// ES6 syntax
+export function foo(){ return 'bar';}
+export const baz = 123;
+
+// or
+function foo(){ return 'bar';}
+const baz = 123;
+export default {foo, baz};
+```
+
+Importing in `index.js`:
+
+```javascript
+// ES6 syntax
+import * as A from './myModule.js';
+const foo = A.foo;
+const baz = A.baz;
+
+// more direct way
+import {foo, baz} from './myModule.js';
+```
+
+**import syntax**:
+
+`import` observations:
+
+- Exists in ES6 and later
+- Works with both `module.exports` and `export`
+- Can be called only at the beginning of the file
+- It's the prefered way over `require`
+
+## `import` types
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
 
 Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
