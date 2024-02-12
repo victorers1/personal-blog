@@ -27,13 +27,13 @@ Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptio
 
 ## Images
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 ![Alt text](./full/or/relative/path/of/image)
 ```
 
-#### Output
+**Output**:
 
 ![blog placeholder](/blog-placeholder-about.jpg)
 
@@ -43,28 +43,28 @@ Represents content that is quoted from another source, optionally with a citatio
 
 ### Blockquote without attribution
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
 > **Note** that you can use _Markdown syntax_ within a blockquote.
 ```
 
-#### Output
+**Output**:
 
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
 > **Note** that you can use _Markdown syntax_ within a blockquote.
 
 ### Blockquote with attribution
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 > Don't communicate by sharing memory, share memory by communicating.<br>
 > — <cite>Rob Pike[^1]</cite>
 ```
 
-#### Output
+**Output**:
 
 > Don't communicate by sharing memory, share memory by communicating.<br>
 > — <cite>Rob Pike[^1]</cite>
@@ -73,7 +73,7 @@ Represents content that is quoted from another source, optionally with a citatio
 
 ## Tables
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 | Italics   | Bold     | Code   |
@@ -81,7 +81,7 @@ Represents content that is quoted from another source, optionally with a citatio
 | _italics_ | **bold** | `code` |
 ```
 
-#### Output
+**Output**:
 
 | Italics   | Bold     | Code   |
 | --------- | -------- | ------ |
@@ -89,9 +89,9 @@ Represents content that is quoted from another source, optionally with a citatio
 
 ## Code Blocks
 
-#### Syntax
-
 Use 3 backticks ``` to open code block, write snippet and close with 3 backticks again. To highlight language specific syntax, write the language name after first 3 backticks, for eg.: html, javascript, css, markdown, typescript, txt, bash, etc.
+
+**Syntax**:
 
 ````markdown
 ```html
@@ -108,7 +108,7 @@ Use 3 backticks ``` to open code block, write snippet and close with 3 backticks
 ```
 ````
 
-Output
+**Output**:
 
 ```html
 <!doctype html>
@@ -127,7 +127,7 @@ Output
 
 ### Ordered List
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 1. First item
@@ -135,7 +135,7 @@ Output
 3. Third item
 ```
 
-#### Output
+**Output**:
 
 1. First item
 2. Second item
@@ -143,7 +143,7 @@ Output
 
 ### Unordered List
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 - List item
@@ -151,7 +151,7 @@ Output
 - And another item
 ```
 
-#### Output
+**Output**:
 
 - List item
 - Another item
@@ -159,7 +159,7 @@ Output
 
 ### Nested list
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 - Fruit
@@ -171,7 +171,7 @@ Output
   - Cheese
 ```
 
-#### Output
+**Output**:
 
 - Fruit
   - Apple
@@ -183,7 +183,7 @@ Output
 
 ## Other Elements — abbr, sub, sup, kbd, mark
 
-#### Syntax
+**Syntax**:
 
 ```markdown
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
@@ -197,7 +197,7 @@ Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the ses
 Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
 ```
 
-#### Output
+**Output**:
 
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
 

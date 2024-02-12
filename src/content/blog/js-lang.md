@@ -2,6 +2,7 @@
 title: 'JavaScript Language'
 description: 'TypeScript but worse'
 pubDate: 'Feb 11 2024'
+# updatedDate: Feb 11 2024
 heroImage: '/js-gradient.png'
 ---
 
