@@ -1,24 +1,80 @@
 ---
 import BlogPost from "../layouts/BlogPost.astro";
+
+var birthDate = new Date("1996-06-13");
+var now = new Date();
+
+var ageInMilliseconds = now.getTime() - birthDate.getTime();
+var ageInYears = Math.trunc(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365));
 ---
 
 <BlogPost
 	title="About Me"
-	description="Who am I?"
-	pubDate={new Date("February 11 2024")}
+	description="As a "
+	pubDate={new Date("February 14 2024")}
+	heroImage="Natal-RN.jpg"
 >
-	<p>TODO</p>
-
+	<h2>Personal me</h2>
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo
-		integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu
-		turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus
-		sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget
-		magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius
-		sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque
-		sagittis purus sit amet.
+		Name is Victor Emanuel, a {ageInYears} y.o. Computer Engineer based in Brazil.
+	</p>
+
+	<h2>Professional me</h2>
+	<p>
+		I started in 2018, with an internship as a Mobile developer using Ionic
+		Framework at a small startup at the time, Incuba Tech, where I spent my
+		first year working. In 2019, I started studying Flutter due to the
+		company's strategy of switching to Google's newest solution.
+	</p>
+	<p>
+		Then, to slightly increase the alms I received, I joined a large company
+		as an intern in Flutter mobile development for another year, ESIG
+		Software. In addition to experience in mobile development, I acquired
+		knowledge in backend with Spring Boot as well as carrying out unit and
+		integration tests. After all, an intern has to do everything they ask.
+		However, this was obviously crucial for my professional growth, I was
+		already an intern working from end to end on an application.
+	</p>
+	<p>
+		After being hired at the same company, I acted as leader of the Mobile
+		Team of which I was part, mainly because everyone left and new, less
+		experienced interns had to be hired. It was at that time when the
+		pandemic arrived in Brazil and I was introduced to the remote work
+		model, a path of no return. In addition to working as a Flutter and
+		Spring Boot developer, I worked on continuously passing on knowledge to
+		new team members.
+	</p>
+	<p>
+		After playing around with my first formal job, I needed to earn real
+		money and was hired by a company in the south of the country, 4,092 km
+		from my home. Good thing it was a remote format, I didn't want to change
+		cities yet. So, I started working at Kobe Apps, also developing mobile
+		applications made in Flutter but now focused on the eCommerce sector.
+	</p>
+	<p>
+		In this company, all the projects I worked on consisted of company-owned
+		Frontends integrated via API with Backends as a Service that implemented
+		the stackholders' business rules. The backends used were generally
+		Firebase, VTEX, Contentful, among others.
+	</p>
+	<p>
+		To handle CI/CD, we used Github Actions. Thus, Pull Request analysis,
+		test coverage analysis, app deployment for internal testing and
+		deployment to official stores were automated.
+	</p>
+	<p>
+		The stackholders I worked with were marketing managers from large retail
+		companies. They wanted to add a new sales channel to their business and
+		approached Kobe Apps to create a mobile app that would allow them to
+		close purchases remotely and autonomously.
+	</p>
+	<p>
+		The main product I was able to work on was an application designed to
+		have an easily customizable interface in order to be used at the same
+		time by several clients from different retail sectors. This was possible
+		thanks to the fact that online sales applications are generally very
+		similar in terms of how they work. They all have a home page with
+		product showcases, search with filters, checkout with delivery options
+		and order tracking.
 	</p>
 </BlogPost>
