@@ -16,7 +16,39 @@ Acronym stands for **European Computer Manufacturers Association**. It's a nonpr
 
 ### ECMAScript
 
-Also known as **ES**, it's a standard for scripting languages, including JavaScript, JScript, and ActionScript. It is best known as a JavaScript standard intended to ensure the interoperability of web pages across different web browsers.
+Also known as **ES**, it's a standard for scripting languages, including JavaScript, JScript, and ActionScript. It is best known as a JavaScript standard intended to ensure the interoperability of web pages across different web browsers. The standard official name is [ECMA-262](https://ecma-international.org/publications-and-standards/standards/ecma-262/).
+
+#### Publications History
+
+| Document name | Publication date | Abbreviation |
+|---|---| --- |
+| ECMA-262, 1st edition | June 1997 | n/a |
+| ECMA-262, 2nd edition | August 1998 | n/a |
+| ECMA-262, 3rd edition | December 1999 | n/a |
+| ECMA-262, 4th edition  |(wasn't published)| n/a |
+| ECMA-262, 5th edition | December 2009 | n/a |
+| ECMA-262, 5.1th edition | June 2011 | n/a |
+| ECMA-262, 6th edition | June 2015 | ES6 |
+| ECMA-262, 7th edition | June 2016 | ES7 |
+| ECMA-262, 8th edition | June 2017 | ES8 |
+| ECMA-262, 9th edition | June 2018 | ES9 |
+| ECMA-262, 10th edition | June 2019 | ES10 |
+| ECMA-262, 11th edition | June 2020 | ES11 |
+| ECMA-262, 12th edition | June 2021 | ES12 |
+| ECMA-262, 13th edition | June 2022 | ES13 |
+| ECMA-262, 14th edition | June 2023 | ES14 |
+
+A standard may also be known by its publication date, so you may encounter someone in the web referring to the 5.1th edition as ECMAScript 2011, or to the 6th edition as ECMAScript 2015 and so on.
+
+Since 2015, it became common to use the version number as the identifier. So, ECMAScript 2015 can be called ES6 (because it's the 6th version), ECMAScript 2016 can be referred as ES7 and so on.
+
+#### ECMAScript 2015 (ES6) and beyond
+
+Since ECMAScript 2015 (ES6) features are split into three groups for **shipping**, **staged**, and **in progress** features:
+
+- All shipping features, which V8 considers stable, are turned on by default on Node.js and do NOT require any kind of runtime flag.
+- Staged features, which are almost-completed features that are not considered stable by the V8 team, require a runtime flag: `--harmony`.
+- In progress features can be activated individually by their respective harmony flag, although this is highly discouraged unless for testing purposes. Note: these flags are exposed by V8 and will potentially change without any deprecation notice.
 
 ### V8 engine
 
@@ -66,7 +98,7 @@ Node.js has a unique advantage because millions of frontend developers that writ
 
 In Node.js the new ECMAScript standards can be used without problems, as you don't have to wait for all your users to update their browsers - you are in charge of deciding which ECMAScript version to use by changing the Node.js version.
 
-#### Differences in relation to browser
+#### Differences from the browser
 
 Despite the fact that it's always JavaScript, there are some key differences.
 
@@ -74,15 +106,39 @@ In the browser, most of the time what you are doing is interacting with the DOM,
 
 Another difference is that Node.js supports both the CommonJS and ES module systems (since Node.js v12), while in the browser we are starting to see the ES Modules standard being implemented.
 
-### npm
+#### npm
 
 The package manager allows programmers to publish and share Node.js packages, along with the accompanying source code, and is designed to simplify the installation, update and uninstallation of packages.
 
 It consists of a Command Line Interface, also called npm, and an online database of public and paid-for private packages, called the npm registry. The registry is accessed via the client, and the available packages can be browsed and searched via the npm website. The package manager and the registry are managed by **npm, Inc**.
 
-## ECMAScript 2015 (ES6) and beyond
+#### Release dates
 
-TODO
+| Node.js version | Codename | Release Date | npm version |
+| --- | --- | --- | --- |
+| v21.6.2   |     -    | 2024-02-13 | v10.2.4  |
+| v20.11.1  |   Iron   | 2024-02-13 | v10.2.4  |
+| v19.9.0   |     -    | 2023-04-10 | v9.6.3   |
+| v18.19.1  | Hydrogen | 2024-02-13 | v10.2.4  |
+| v17.9.1   |     -    | 2022-06-01 | v8.11.0  |
+| v16.20.2  | Gallium  | 2023-08-08 | v8.19.4  |
+| v15.14.0  |     -    | 2021-04-06 | v7.7.6   |
+| v14.21.3  | Fermium  | 2023-02-16 | v6.14.18 |
+| v13.14.0  |     -    | 2020-04-29 | v6.14.4  |
+| v12.22.12 |  Erbium  | 2022-04-05 | v6.14.16 |
+| v11.15.0  |     -    | 2019-04-30 | v6.7.0   |
+| v10.24.1  | Dubnium  | 2021-04-06 | v6.14.12 |
+| v9.11.2   |     -    | 2018-06-12 | v5.6.0   |
+| v8.17.0   |  Carbon  | 2019-12-17 | v6.13.4  |
+| v7.10.1   |     -    | 2017-07-11 | v4.2.0   |
+| v6.17.1   |  Boron   | 2019-04-03 | v3.10.10 |
+| v5.12.0   |     -    | 2016-06-23 | v3.8.6   |
+| v4.9.1    |  Argon   | 2018-03-29 | v2.15.11 |
+| v0.12.18  |     -    | 2017-02-22 | v2.15.11 |
+
+#### Which ECMAScript version is Node.js using?
+
+There is no correlation between Node.js version and ECMAScript version, they adopt new stuff feature by feature. The list of what's included in each Node.js can be seen [here](https://node.green/).
 
 ## Module Standards
 
@@ -115,10 +171,6 @@ ECMAScript modules are the official standard format to package JavaScript code f
 
 TODO
 
-### AMD
-
-TODO
-
 #### `.js` vs `.mjs`
 
 `.js` is the original extension used for scripts writen in JavaScript since the beginning, before modules even exists.
@@ -127,15 +179,15 @@ When modules came up a new extension was created, `.mjs`. ESModules, including N
 
 Although that on the Web file extensions doesn't really matter, as long as the file is served with JavaScript MIME type `text/javascript`, this differentiation is mainly to make it crystal clear if a file is a module or a regular JS script.
 
-### Native Modules
+### AMD
 
-Native modules in NodeJS context are modules that are written in C/C++ to interact with lower level functions/libraries. Those functions are then wrapped using the NaN, or node-addons-api to make then available in NodeJS.
+TODO
 
-## `require()` vs `import`
+### `require()` vs `import`
 
 There are two ways of reusing code that's inside other file. When writing a CommonJS file, use `require()`; when writing an ES Module, use `import`.
 
-### `require()`
+#### `require()`
 
 CommonJS export in `myModule.js`:
 
@@ -167,7 +219,7 @@ Observations on `require()`:
 - Has a sync execution
 - Caches previouly imported modules, so they're all Singleton
 
-### `import`
+#### `import`
 
 ES6 export in `myModule.js`:
 
@@ -206,7 +258,7 @@ Observations on `import`:
 
 ## `import` types
 
-Export vs Export default
+TODO Export vs Export default syntaxes
 
 ## Data Types
 
