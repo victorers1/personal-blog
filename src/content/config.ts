@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const docs = defineCollection({
+const notes = defineCollection({
 	type: 'content',
 	// Type-check frontmatter using a schema
 	schema: z.object({
@@ -13,4 +13,4 @@ const docs = defineCollection({
 	}),
 });
 
-export const collections = { docs };
+export const collections = { notes };

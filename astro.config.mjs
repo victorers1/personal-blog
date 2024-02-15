@@ -8,7 +8,9 @@ import remarkToc from 'remark-toc';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
-  integrations: [sitemap(), icon(), mdx()],
+  integrations: [sitemap(), icon(), mdx(
+
+  )],
   markdown: {
     rehypePlugins: [
           'rehype-slug',

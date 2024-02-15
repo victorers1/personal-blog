@@ -20,9 +20,19 @@ Also known as **ES**, it's a standard for scripting languages, including JavaScr
 
 ### V8 engine
 
-Is a program writen in C++ that takes our JavaScript code, parses it and executes it while browsing with Chrome.
+Is a program writen in C++ that takes our JavaScript code, compiles it to machine code and executes it while browsing with Chrome. That was the original purpose, but the fact that it can also run standalone or be embedded into any C++ application made a huge difference after its release.
 
-The cool thing is that the JavaScript engine is independent of the browser in which it's hosted. This key feature enabled the rise of Node.js. V8 was the chosen engine to power Node.js back in 2009.
+So, follow me:
+
+- Computers doesn't understand JavaScript code by default
+- JavaScript engines are programs that converts JavaScript code into machine code
+- JavaScript engines are independent of the browsers in which they're hosted
+- In addition to browsers, V8 engine can also run standalone or be embedded into any C++ application
+- By embedding V8 into your own C++ application, you can write C++ code that get executed when a user write a JavaScript code
+- Since C++ is great for lower level operations like file handling, database connections and network, by embedding a JS engine into your own C++ program, you have the power to add all of these functionalities to JavaScript
+- This C++ application can take your JS code, parse into machine code and perform features that originally weren't available in JavaScript
+
+That application was already made and it's called Node.js. V8 was the chosen engine to power Node.js back in 2009.
 
 #### Other JS engines
 
