@@ -153,23 +153,80 @@ The JavaScript language didn’t have a native way of organizing code before the
 CommonJS can be recognized by the use of the `require()` function and `module.exports`, while ES modules use `import` and `export` statements for similar (though not identical) functionality.
 
 ```javascript
-'use strict'
+//importing
+const doSomething = require('./doSomething.js');
 
-const CONNECTION_LIMIT = 0
-
-function connect () { /* ... */ }
-
-module.exports = {
-  CONNECTION_LIMIT,
-  connect
-}
+//exporting
+module.exports = function doSomething(n) { }
 ```
+
+- It's the original syntax from Node.js, althouht it already added support for ES Module standard.
+- CJS imports module synchronously.
+- You can import from a library `node_modules` or local dir. Either `const myModule = require('./some/local/file.js')` or `var React = require('react')` works.
+- CJS will not work in the browser. It will have to be transpiled and bundled.
+
+### AMD
+
+AMD stands for Asynchronous Module Definition. Here is a sample code:
+
+```javascript
+define(['dep1', 'dep2'], function (dep1, dep2) {
+    //Define the module value by returning a value.
+    return function () {};
+});
+```
+
+or
+
+```javascript
+// "simplified CommonJS wrapping" https://requirejs.org/docs/whyamd.html
+define(function (require) {
+    var dep1 = require('dep1'),
+        dep2 = require('dep2');
+    return function () {};
+});
+```
+
+Observations on AMD:
+
+- It register the factory function by calling `define()`, instead of immediately executing it.
+- It passes dependencies as an array of string values, do not grab globals.
+- Only execute the factory function once all the dependencies have been loaded and executed.
+- Pass the dependent modules as arguments to the factory function.
+- Imports modules asynchronously (hence the name).
+- It's made for frontend, when it was proposed (while CJS was made for backend).
 
 ### ES Module
 
 ECMAScript modules are the official standard format to package JavaScript code for reuse. Modules are defined using a variety of import and export statements.
 
-TODO
+Syntax example:
+
+```javascript
+import {foo, bar} from './myLib';
+
+...
+
+export default function() {
+  // your Function
+};
+export const function1() {...};
+export const function2() {...};
+```
+
+- Works in many modern browsers
+- It has the best of both worlds: CJS-like simple syntax and AMD's async
+- Tree-shakeable, due to ES6's static module structure
+- ESM allows bundlers like Rollup to remove unnecessary code, allowing sites to ship less codes to get faster load.
+- Can be called in HTML, just do:
+
+```html
+<script type="module">
+  import {func1} from 'my-lib';
+
+  func1();
+</script>
+```
 
 #### `.js` vs `.mjs`
 
@@ -178,10 +235,6 @@ TODO
 When modules came up a new extension was created, `.mjs`. ESModules, including Node.js modules, must either end in `.mjs` or the nearest `package.json` file must contain `"type": "module"`.
 
 Although that on the Web file extensions doesn't really matter, as long as the file is served with JavaScript MIME type `text/javascript`, this differentiation is mainly to make it crystal clear if a file is a module or a regular JS script.
-
-### AMD
-
-TODO
 
 ### `require()` vs `import`
 
