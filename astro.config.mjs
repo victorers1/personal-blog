@@ -21,10 +21,10 @@ export default defineConfig({
       remarkMath
     ],
     rehypePlugins: [
-      rehypeSlug,
-      rehypeKatex,
       [rehypeAutolinkHeadings, { behavior: 'append' }],
       [rehypeToc, { headings: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+      rehypeSlug,
+      rehypeKatex,
     ],
   }
 });
