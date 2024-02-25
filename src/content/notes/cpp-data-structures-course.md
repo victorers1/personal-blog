@@ -3,69 +3,82 @@ title: 'Data Structures & Algorithms in C++'
 description: "Notes from an Udemy Course"
 pubDate: 'Feb 24 2024'
 # updatedDate: Feb 12 2024
-heroImage: '/css-gradient.png'
+heroImage: '/cpp-gradient.png'
 ---
 
 ## Intro
 
 Course: [C++ Data Structures & Algorithms + LEETCODE Exercises](https://www.udemy.com/course/data-structures-algorithms-cpp/)
 
-## Complexities
+## Pointers
 
-### Time Complexity
+Variables that stores memory addresses, not actual values.
 
-Amount of time used by a program to run completely. But, execution time depends not only on the code itself but also on the capacity of the machine it's running. So, a program efficiency is not exactly measured in seconds but in terms of complexity's growth rate as we increase the input value or dimension.
+### What it isn't
 
-### Space Complexity
+```c++
+#include <iostream>
 
-Amount of memory used by a program to run completely. It's common to see algorithms that uses more memory to reduce execution time or vice-versa.
+using namespace std;
 
-## Symbols
+int main() {
+    int num1 = 11;
+    int num2 = num1; // num2 will receive a new value that is a copy of what's in num1
 
-- $\Omega$, the uppercase Omega represents the **best case**
-- $\Theta$, the uppercase Theta represents the **average case**
-- $\Omicron$, the uppercase Omicron represents the **worst case**
+    num1 = 22;
 
-## $\Omicron$ notation
+    cout << "num1 = " << num1 << endl; // Will print 22
+    cout << "num2 = " << num2 << endl; // Will print 11
+}
+```
 
-Describes the worst-case scenario for an algorithm.
+### Whats it is
 
-### Common complexities
+```c++
+#include <iostream>
 
-- **$\Omicron(1)$**: Constant Time
-  - Doesn't depend on the size of the data set.
-  - Example: Accessing an array element by its index.
-- **$\Omicron(\log n)$**: Logarithmic Time
-  - Splits the data in each step (divide and conquer).
-  - Example: Binary search.
-- **$\Omicron(n)$**: Linear Time
-  - Directly propor onal to the data set size.
-  - Example: Looping through an array.
-- **$\Omicron(n\log n)$**: Linearithmic Time
-  - Splits and sorts or searches data.
-  - Example: Merge sort, quick sort.
-- **$\Omicron(n^2)$**: Polynomial Time
-  - Nested loops for each power of n.
-  - Example: Bubble sort (O(n2)).
+using namespace std;
 
-### Rules
+int main() {
+    int* num1 = new int(11); // Creates the value 22 at an available memory position and saves its address at num1
+    int* num2 = num1; // num2 will receive that same address that's in num1
 
-#### Drop constants
+    *num1 = 22; // The asterisk on the left means we're accessing the value at the address stored in num1
 
-- $\Omicron(10n) \equiv \Omicron(n)$;
-- $\Omicron(10n^2) \equiv \Omicron(n^2)$;
-- and so on.
+    cout << "num1 = " << *num1 << endl; // Will print 22
+    cout << "num2 = " << *num2 << endl; // Will print 22
+}
+```
 
-#### Drop Non-Dominant Terms
+### `new-delete` vs `malloc-free`
 
-- $\Omicron(n^2 + n) \equiv \Omicron(n^2)$;
-- $\Omicron(n^4 + n^3) \equiv \Omicron(n^4)$;
-- and so on.
+TODO
 
-## $\Theta$ notation
+### The `*void` type
 
-It tells you what to generally expect in terms of me complexity
+TODO
 
-## $\Omega$ notation
+## Classes
 
-Describes the best-case scenario for an algorithm.
+```c++
+// Declaration
+class Cookie {
+    private:
+        string color;
+    public:
+        Cookie (string color) {
+            this->color = color;
+        }
+};
+
+// Usage
+Cookie* cookie = new Cookie("green");
+```
+
+### `this` keyword
+
+### When to use `->`
+
+TODO
+
+## Linked List
