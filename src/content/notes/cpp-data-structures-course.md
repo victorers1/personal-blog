@@ -706,6 +706,10 @@ It's a set on questions with no video explanation, only text hints. The code bel
 
 #### Find Middle Node
 
+Implement a member function, findMiddleNode(), which finds and returns the middle node of the linked list.
+
+Note: this LinkedList implementation does not have a length member variable.
+
 ```c++
 Node *findMiddleNode()
 {
@@ -739,6 +743,14 @@ Node *findMiddleNode()
 ```
 
 #### Has Loop
+
+Implement a function called hasLoop to detect if a given singly-linked list contains a loop (a cycle) or not.
+
+The function should return true if a loop is detected in the linked list, and false otherwise.
+
+You are required to use Floyd's cycle-finding algorithm (also known as the "tortoise and the hare" algorithm) to detect the loop.
+
+This algorithm uses two pointers: a slow pointer and a fast pointer. The slow pointer moves one step at a time, while the fast pointer moves two steps at a time. If there is a loop in the linked list, the two pointers will eventually meet at some point. If there is no loop, the fast pointer will reach the end of the list.
 
 ```c++
 bool hasLoop()
@@ -779,6 +791,10 @@ bool hasLoop()
 
 #### Find Kth Node From End
 
+Implement the findKthFromEnd member function for the LinkedList class, which returns the k-th node from the end of the linked list WITHOUT USING THE LENGTH of the list.
+
+If the value of k is greater than the length of the list, the function should return nullptr.
+
 ```c++
 Node *findKthFromEnd(int k)
 {
@@ -803,3 +819,57 @@ Node *findKthFromEnd(int k)
     return slow;
 }
 ```
+
+#### Remove Duplicates
+
+Implement the removeDuplicates member function for the LinkedList class, which removes all duplicate values from a singly linked list.
+
+Note: This linked list class does NOT have a tail which will make this method easier to implement.
+
+```c++
+void removeDuplicates()
+{
+    Node *current = head;
+    Node *previousToRunner = head;
+
+    if (head == nullptr || head->next == nullptr)
+    {
+        return;
+    }
+
+    Node *runner = current->next;
+
+    while (current->next != nullptr)
+    {
+        while (runner != nullptr)
+        {
+            if (runner->value == current->value)
+            {
+                previousToRunner->next = runner->next;
+                delete runner;
+                runner = previousToRunner->next;
+                length--;
+            }
+            else
+            {
+
+                runner = runner->next;
+                previousToRunner = previousToRunner->next;
+            }
+        }
+
+        current = previousToRunner = current->next;
+        runner = current->next;
+    }
+}
+```
+
+## Double Linked List
+
+### Constructor
+
+TODO
+
+### Destructor
+
+TODO
