@@ -8,6 +8,51 @@ heroImage: '/cpp-gradient.png'
 
 ## Intro
 
+This notes has a bunch of C++ basic features. The best reference up-to-date: [cppreference.com](https://en.cppreference.com/w/)
+
+### ISO
+
+The **International Organization for Standardization** is an independent, non-governmental, international standard development organization composed of representatives from the national standards organizations of member countries.
+
+Although one might think *ISO* is an abbreviation, the letters do not officially represent an acronym or initialism. Because "International Organization for Standardization" would have different acronyms in different languages (IOS in English, OIN in French), the founders decided to give it the short form ISO. ISO is derived from the Greek word isos (ίσος, meaning "equal").
+
+### Standardization
+
+C++ is standardized by a group known as [ISO/IEC JTC 1/SC 22](https://www.iso.org/committee/45202.html). That soup letters has these meanings:
+
+- ISO: International Organization for Standardization
+- IEC: International Electrotechnical Commission
+- JTC 1: Joint Technical Committee number 1
+- SC 22: Sub Committe number 22
+
+So, they're a Sub Committe inside the Joint Technical Committee formed by ISO members and IEC members.
+
+Version's informal names carries a 2-digit code representing the year it was released, e.g., `C++98`, `C++03`, `C++11`, `C++14`, `C++17`, `C++20`, `C++23`, `C++26` and so on. Note that in 2011 they adopted a schedule of 3 year relase interval.
+
+| Year | ISO/IEC Standard | Informal name |
+| --- | --- | --- |
+|1998 | 14882:1998 | C++98|
+|2003 | 14882:2003 | C++03|
+|2011 | 14882:2011 | C++11, C++0x|
+|2014 | 14882:2014 | C++14, C++1y|
+|2017 | 14882:2017 | C++17, C++1z|
+|2020 | 14882:2020 | C++20, C++2a|
+|2023 | | C++23|
+
+Newer C++ standards usually do not make old code invalid, generally they just add features to the language and standard library. But, C++11 fundamentally changed the language. You should never use any language standard below that or resources that use any language standard below C++11.
+
+## Compilers
+
+Biggest ones are:
+
+- MSVC, developed by Microsoft for Windows.
+- g++, the GNU compiler developed for Linux, but also available as ports for Windows.
+- clang++, the C++ compiler developed by the LLVM project, available on all platforms. Aims to be a drop-in replacement for g++.
+
+## Behaviors
+
+## Undefined Behavior
+
 TODO
 
 ## Pointers
@@ -49,9 +94,31 @@ Cookie* cookie = new Cookie("green");
 
 TODO
 
-### Arrow operator (`->`)
+### Dot (`.`) and Arrow (`->`) operators
 
-TODO
+To access members of a structure, use the dot operator.
+
+```c++
+class Cookie() {
+    public:
+        string color;
+};
+
+Cookie cookie = Cookie();
+cookie.color = "black";
+```
+
+To access members of a structure through a pointer, use the arrow operator.
+
+```c++
+class Cookie() {
+    public:
+        string color;
+};
+
+Cookie* cookie = new Cookie();
+cookie->color = "black";
+```
 
 ### Desconstructor
 
