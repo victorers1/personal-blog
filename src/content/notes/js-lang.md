@@ -2,7 +2,7 @@
 title: 'JavaScript Language'
 description: 'Oh, great. Another standard 😑'
 pubDate: 'Feb 12 2024'
-# updatedDate: Feb 13 2024
+updatedDate: 'Feb 13 2024'
 heroImage: '/js-gradient.png'
 ---
 

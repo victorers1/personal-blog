@@ -2,7 +2,7 @@
 title: 'Dart Language'
 description: "a.k.a. Google's favorite"
 pubDate: 'Feb 11 2024'
-# updatedDate: Feb 11 2024
+# updatedDate: 'Feb 11 2024'
 heroImage: '/dart-gradient.png'
 ---
 

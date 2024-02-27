@@ -2,7 +2,7 @@
 title: 'Computational Complexity'
 description: "Notes from an Udemy Course"
 pubDate: 'Feb 24 2024'
-# updatedDate: Feb 12 2024
+updatedDate: 'Feb 24 2024'
 heroImage: '/complexity-gradient.png'
 ---
 
