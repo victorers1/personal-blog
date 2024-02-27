@@ -48,7 +48,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin-bottom: 0.5em;
 				color: rgb(var(--gray));
 			}
-			.last-updated-on {
+			.updated-on {
+				padding: 15px 0px 15px 0px;
 				font-style: italic;
 			}
 		</style>
@@ -76,8 +77,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							<FormattedDate date={pubDate} />
 							{
 								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on{" "}
+									<div class="updated-on">
+										Updated on{" "}
 										<FormattedDate date={updatedDate} />
 									</div>
 								)
