@@ -55,9 +55,9 @@ int main() {
 }
 ```
 
-## Linked List
+## Singly Linked List
 
-### Simple Node class
+### Node class
 
 ```c++
 class Node {
@@ -72,7 +72,7 @@ class Node {
 };
 ```
 
-### Simple LinkedList with constructor
+### Linked List with constructor
 
 ```c++
 class LinkedList {
@@ -864,12 +864,917 @@ void removeDuplicates()
 }
 ```
 
-## Double Linked List
+## Doubly Linked List
 
-### Constructor
+### Node Class
 
-TODO
+```c++
+class Node
+{
+public:
+    int value;
+    Node *next;
+    Node *prev;
+
+    Node(int value)
+    {
+        this->value = value;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+```
+
+### Doubly Linked List with Constructor
+
+```c++
+class DoublyLinkedList
+{
+private:
+    Node *head;
+    Node *tail;
+    int length;
+
+public:
+    DoublyLinkedList(int value)
+    {
+        Node *newNode = new Node(value);
+        head = newNode;
+        tail = newNode;
+        length = 1;
+    }
+};
+```
+
+### Usage
+
+```c++
+DoublyLinkedList* myDLL = new DoublyLinkedList(7);
+```
 
 ### Destructor
 
+```c++
+
+```
+
+### To String
+
+```c++
+string toString()
+{
+    Node *temp = head;
+
+    string result = "[";
+
+    while (temp != nullptr)
+    {
+        result += to_string(temp->value);
+
+        if (temp->next != nullptr)
+        {
+            result += "<->";
+        }
+
+        temp = temp->next;
+    }
+
+    result += "]";
+
+    return result;
+}
+```
+
+### Getters
+
+```c++
+Node *getHead()
+{
+    return head;
+}
+
+Node *getTail()
+{
+    return tail;
+}
+
+int size()
+{
+    return length;
+}
+```
+
+### Append
+
+```c++
+void append(int value)
+{
+    Node *newNode = new Node(value);
+
+    if (length == 0)
+    {
+        head = tail = newNode;
+    }
+    else
+    {
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+
+    length++;
+}
+```
+
+### Delete Last
+
+```c++
+void pop()
+{
+    if (length == 0)
+    {
+        return;
+    }
+    else if (length == 1)
+    {
+        delete head;
+        head = tail = nullptr;
+    }
+    else
+    {
+        tail = tail->prev;
+        delete tail->next;
+        tail->next = nullptr;
+    }
+
+    length--;
+}
+```
+
+### Prepend
+
+```c++
+void prepend(int value)
+{
+    Node *newNode = new Node(value);
+
+    if (length == 0)
+    {
+        head = tail = newNode;
+    }
+    else
+    {
+        head->prev = newNode;
+        newNode->next = head;
+        head = newNode;
+    }
+
+    length++;
+}
+```
+
+### Delete First
+
+```c++
+void deleteFirst()
+{
+    if (length == 0)
+    {
+        return;
+    }
+    else if (length == 1)
+    {
+        delete head;
+        head = tail = nullptr;
+    }
+    else
+    {
+        head = head->next;
+        delete head->prev;
+        head->prev = nullptr;
+    }
+    length--;
+}
+```
+
+### Get Node
+
+The algorithm made for Singly Linked List already does the jobs, but this version checks which end is closest to the given index and iterates from there.
+
+```c++
+Node *get(int index)
+{
+    if (!indexExists(index))
+    {
+        return nullptr;
+    }
+    else
+    {
+        Node *temp = head;
+        if (index < length / 2)
+        {
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp->next;
+            }
+        }
+        else
+        {
+            temp = tail;
+            for (int i = length - 1; i > index; i--)
+            {
+                temp = temp->prev;
+            }
+        }
+
+        return temp;
+    }
+}
+```
+
+### Set Node
+
+```c++
+bool set(int index, int value)
+{
+    Node *node = get(index);
+    if (node != nullptr)
+    {
+        node->value = value;
+        return true;
+    }
+    return false;
+}
+```
+
+### Insert Node
+
+Uses `prepend` and `append` to insert at list ends.
+
+```c++
+bool insert(int index, int value)
+{
+    if (index < 0 || index > length)
+    {
+        return false;
+    }
+    else if (index == 0)
+    {
+        prepend(value);
+        return true;
+    }
+    else if (index == length)
+    {
+        append(value);
+        return true;
+    }
+    else if (indexExists(index))
+    {
+        Node *newNode = new Node(value);
+        Node *before = get(index - 1);
+        Node *after = before->next;
+
+        before->next = newNode;
+        after->prev = newNode;
+        newNode->prev = before;
+        newNode->next = after;
+        length++;
+        return true;
+    }
+    return false;
+}
+```
+
+### Delete Node
+
+```c++
+void deleteNode(int index)
+{
+    if (!indexExists(index))
+    {
+        return;
+    }
+    else if (index == 0)
+    {
+        deleteFirst();
+    }
+    else if (index == length - 1)
+    {
+        pop();
+    }
+    else
+    {
+        Node *temp = get(index);
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        delete temp;
+        length--;
+    }
+}
+```
+
+### Final Code
+
+```c++
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Node
+{
+public:
+    int value;
+    Node *next;
+    Node *prev;
+
+    Node(int value)
+    {
+        this->value = value;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+class DoublyLinkedList
+{
+private:
+    Node *head;
+    Node *tail;
+    int length;
+
+public:
+    DoublyLinkedList(int value)
+    {
+        Node *newNode = new Node(value);
+        head = newNode;
+        tail = newNode;
+        length = 1;
+    }
+
+    Node *getHead()
+    {
+        return head;
+    }
+
+    Node *getTail()
+    {
+        return tail;
+    }
+
+    int size()
+    {
+        return length;
+    }
+
+    void append(int value)
+    {
+        Node *newNode = new Node(value);
+
+        if (length == 0)
+        {
+            head = tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+
+        length++;
+    }
+
+    void pop()
+    {
+        if (length == 0)
+        {
+            return;
+        }
+        else if (length == 1)
+        {
+            delete head;
+            head = tail = nullptr;
+        }
+        else
+        {
+            tail = tail->prev;
+            delete tail->next;
+            tail->next = nullptr;
+        }
+
+        length--;
+    }
+
+    void prepend(int value)
+    {
+        Node *newNode = new Node(value);
+
+        if (length == 0)
+        {
+            head = tail = newNode;
+        }
+        else
+        {
+            head->prev = newNode;
+            newNode->next = head;
+            head = newNode;
+        }
+
+        length++;
+    }
+
+    void deleteFirst()
+    {
+        if (length == 0)
+        {
+            return;
+        }
+        else if (length == 1)
+        {
+            delete head;
+            head = tail = nullptr;
+        }
+        else
+        {
+            head = head->next;
+            delete head->prev;
+            head->prev = nullptr;
+        }
+        length--;
+    }
+
+    Node *get(int index)
+    {
+        if (!indexExists(index))
+        {
+            return nullptr;
+        }
+        else
+        {
+            Node *temp = head;
+            if (index < length / 2)
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    temp = temp->next;
+                }
+            }
+            else
+            {
+                temp = tail;
+                for (int i = length - 1; i > index; i--)
+                {
+                    temp = temp->prev;
+                }
+            }
+
+            return temp;
+        }
+    }
+
+    bool set(int index, int value)
+    {
+        Node *node = get(index);
+        if (node != nullptr)
+        {
+            node->value = value;
+            return true;
+        }
+        return false;
+    }
+
+    bool insert(int index, int value)
+    {
+        if (index < 0 || index > length)
+        {
+            return false;
+        }
+        else if (index == 0)
+        {
+            prepend(value);
+            return true;
+        }
+        else if (index == length)
+        {
+            append(value);
+            return true;
+        }
+        else if (indexExists(index))
+        {
+            Node *newNode = new Node(value);
+            Node *before = get(index - 1);
+            Node *after = before->next;
+
+            before->next = newNode;
+            after->prev = newNode;
+            newNode->prev = before;
+            newNode->next = after;
+            length++;
+            return true;
+        }
+        return false;
+    }
+
+    void deleteNode(int index)
+    {
+        if (!indexExists(index))
+        {
+            return;
+        }
+        else if (index == 0)
+        {
+            deleteFirst();
+        }
+        else if (index == length - 1)
+        {
+            pop();
+        }
+        else
+        {
+            Node *temp = get(index);
+            temp->prev->next = temp->next;
+            temp->next->prev = temp->prev;
+            delete temp;
+            length--;
+        }
+    }
+
+    bool indexExists(int index)
+    {
+        return index >= 0 && index < length;
+    }
+
+    string toString()
+    {
+        Node *temp = head;
+
+        string result = "[";
+
+        while (temp != nullptr)
+        {
+            result += to_string(temp->value);
+
+            if (temp->next != nullptr)
+            {
+                result += " <-> ";
+            }
+
+            temp = temp->next;
+        }
+
+        result += "]";
+
+        return result;
+    }
+};
+
+int main()
+{
+    DoublyLinkedList *myDLL = new DoublyLinkedList(7);
+
+    cout << "Created Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->append(10);
+    myDLL->append(11);
+    cout << "Appended value 10 and 11 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->pop();
+    cout << "Popped value 11 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->prepend(99);
+    cout << "Prepends value 99 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->deleteFirst();
+    cout << "Deletes first value in Doubly Linked List: " << myDLL->toString() << endl;
+
+    cout << "Get value " << myDLL->get(1)->value << " in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->set(0, 1);
+    cout << "Set value " << myDLL->get(0)->value << " at index 0 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->set(1, 2);
+    cout << "Set value " << myDLL->get(1)->value << " at index 2 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->insert(0, 22);
+    cout << "Inserted value " << myDLL->get(0)->value << " at index 0 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->insert(myDLL->size(), 2);
+    cout << "Inserted value " << myDLL->get(myDLL->size() - 1)->value << " at index " << myDLL->size() - 1 << " in Doubly Linked List: " << myDLL->toString() << endl;
+
+
+    myDLL->deleteNode(2);
+    cout << "Deleted value at index 2 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    myDLL->deleteNode(0);
+    cout << "Deleted value at index 0 in Doubly Linked List: " << myDLL->toString() << endl;
+
+    return 0;
+}
+```
+
+### Interview Questions
+
+#### Swap First and Last Values
+
+Implement a member function called `swapFirstLast()` that swaps the values of the first and last nodes in the list.
+
+If the length of the list is less than 2, the function should not perform any operation.
+
+```c++
+void swapFirstLast()
+{
+    if (length > 1)
+    {
+        int temp = head->value;
+        head->value = tail->value;
+        tail->value = temp;
+    }
+}
+```
+
+#### Reverse List
+
+Implement a member function called `reverse()` that reverses the order of the nodes in the list.
+
+```c++
+void reverse()
+{
+    if (length <= 1)
+    {
+        return;
+    }
+
+    Node *temp = head;
+    while (temp!=nullptr)
+    {
+        Node* node = temp->next;
+        temp->next = temp->prev;
+        temp->prev = node;
+
+        temp = temp->prev;
+    }
+
+    temp = head;
+    head = tail;
+    tail = temp;
+}
+```
+
+#### Palindrome Checker
+
+Implement a member function called `isPalindrome()` that checks if the list is a palindrome, i.e., its elements read the same forward and backward.
+
+```c++
+bool isPalindrome()
+{
+    if (length == 0)
+    {
+        return false;
+    }
+    else if (length == 1)
+    {
+        return true;
+    }
+    else
+    {
+        Node *forward = head;
+        Node *backward = tail;
+
+        while (forward != backward && forward->prev != backward)
+        {
+            if (forward->value != backward->value)
+            {
+                return false;
+            }
+
+            forward = forward->next;
+            backward = backward->prev;
+        }
+        return true;
+    }
+}
+```
+
+## Stack
+
+LIFO: Last in, First Out
+
+### Node
+
+Identical to the Singly Linked List node.
+
+### Class Stack with Constructor
+
+```c++
+class Stack
+{
+private:
+    Node *top;
+    int height;
+
+public:
+    Stack(int value)
+    {
+        top = new Node(value);
+        height = 1;
+    }
+};
+```
+
+### To String
+
+```c++
+string toString()
+{
+    Node *temp = top;
+    string result = "";
+    while (temp != nullptr)
+    {
+        result += "| " + to_string(temp->value) + " |\n";
+        temp = temp->next;
+    }
+    return result;
+}
+```
+
+### Getters
+
+```c++
+int getTop()
+{
+    return top->value;
+}
+
+int getHeight()
+{
+    return height;
+}
+```
+
+### Push
+
+```c++
+void push(int value)
+{
+    Node *newNode = new Node(value);
+    newNode->next = top;
+    top = newNode;
+    height++;
+}
+```
+
+### Pop
+
+```c++
+int pop()
+{
+    if (height == 0)
+    {
+        return INT_MIN;
+    }
+    int poppedValue = top->value;
+    Node *temp = top->next;
+    delete top;
+    top = temp;
+    height--;
+    return poppedValue;
+}
+```
+
+### Interview Questions
+
+#### Push for a Stack That Uses a Vector
+
+Write the push() method to add an item onto a stack that is implemented with a vector.
+
+```c++
+void push(int value)
+{
+    stackVector.push_back(value);
+}
+```
+
+#### Pop for a Stack That Uses a Vector
+
+```c++
+void pop()
+{
+    if (stackVector.size() > 0)
+    {
+        stackVector.pop_back();
+    }
+}
+```
+
+#### Reverse String
+
+Implement a function called reverseString() that reverses the input string using a stack data structure.
+
+```c++
+string reverseString(const string &str)
+{
+    string result = "";
+
+    stack<char> reverser = stack<char>();
+
+    for (int i = 0; i < str.length(); i++)
+    {
+        reverser.push(str[i]);
+    }
+
+    for (int i = 0; i < str.length(); i++)
+    {
+        result += reverser.top();
+        reverser.pop();
+    }
+
+    return result;
+}
+```
+
+## Queue
+
+FIFO: First in, First out.
+
+We'll implement it using Singly Linked List under the hood. The left-most element (head) will be the first in queue, the right-most element (tail) will be the last in queue;
+
+### Node
+
+Exactly the same of Singly Linked List and Stack.
+
+### Class with Constructor
+
+```c++
+class Queue
+{
+private:
+    Node *first;
+    Node *last;
+    int length;
+
+public:
+    Queue(int value)
+    {
+        first = new Node(value);
+        last = first;
+        length = 1;
+    }
+};
+```
+
+### Enqueue
+
+```c++
+void enqueue(int value)
+{
+    Node *newNode = new Node(value);
+    if (length == 0)
+    {
+        first = last = newNode;
+    }
+    else
+    {
+        last->next = newNode;
+        last = last->next;
+    }
+    length++;
+}
+```
+
+### Dequeue
+
+```c++
+int dequeue()
+{
+    if (length == 0)
+    {
+        return INT_MIN;
+    }
+    else if (length == 1)
+    {
+        int dequeuedValue = first->value;
+        delete first;
+        first = last = nullptr;
+        length--;
+        return dequeuedValue;
+    }
+    else
+    {
+        int dequeuedValue = first->value;
+        Node *temp = first->next;
+        delete first;
+        first = temp;
+        length--;
+        return dequeuedValue;
+    }
+}
+```
+
+### Interview Questions
+
 TODO
+
+```c++
+
+```
