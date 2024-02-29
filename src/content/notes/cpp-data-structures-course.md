@@ -13,7 +13,7 @@ heroImage: '/cpp-gradient.png'
 - Compiler: I downloaded the [MSYS2](https://www.msys2.org/) tools collection to get `GCC`, `mingw-w64` and `pacman` package manager at once.
 - IDE: VSCode
 
-The code below is an indistinguishable mix of mine and the teacher's implementation (mostly his).
+The code below is an indistinguishable mix of mine and the teacher's implementation (mostly his). Similarly, the text below is a mix of mine and the teacher's words.
 
 ## Pointers
 
@@ -1693,6 +1693,37 @@ string reverseString(const string &str)
 }
 ```
 
+#### Balanced Parentheses Detector
+
+Implement a function called isBalancedParentheses() that checks if the input string contains balanced parentheses.
+
+```c++
+bool isBalancedParentheses(const string &parentheses)
+{
+    stack<char> parenthesesStack = stack<char>();
+
+    for (char c : parentheses)
+    {
+        if (c == '(')
+        {
+            parenthesesStack.push(c);
+        }
+        else if (c == ')')
+        {
+            if (parenthesesStack.size() > 0 && parenthesesStack.top() == '(')
+            {
+                parenthesesStack.pop();
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return parenthesesStack.size() == 0;
+}
+```
+
 ## Queue
 
 FIFO: First in, First out.
@@ -1773,8 +1804,411 @@ int dequeue()
 
 ### Interview Questions
 
-TODO
+#### Queue Using Stacks
+
+In a typical queue, the `enqueue` operation is used to add an item to the end of the queue. In this problem, you are required to implement the `enqueue` method, but there's a twist. The underlying data structure is not a typical array or linked list; instead, you are using two stacks (`stack1` and `stack2`) to simulate the behavior of a queue.
+
+**Background**:
+
+A stack is a Last-In-First-Out (LIFO) data structure. A queue, on the other hand, is a First-In-First-Out (FIFO) data structure. The challenge here is to use the properties of two stacks to simulate the behavior of a queue. Specifically, you will be working with the `enqueue` operation, which should add items to the end of the simulated queue.
+
+You're provided with a partial implementation of the `QueueUsingTwoStacks` class. Here's what you have:
+
+- A `front` method that retrieves the front element of the queue without removing it.
+- An `isEmpty` method that checks if the queue is empty.
+- A partially implemented `enqueue` method.
+
+The two stacks are represented by `stack1` and `stack2`.
+
+**Task**:
+
+Complete the `enqueue` and `dequeue` methods of the `QueueUsingTwoStacks` class.
 
 ```c++
+#include <stack>
+#include <climits>
 
+using namespace std;
+
+class QueueUsingTwoStacks
+{
+private:
+    stack<int> stack1, stack2;
+
+public:
+    int front()
+    {
+        if (stack2.empty())
+        {
+            while (!stack1.empty())
+            {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+
+        if (stack2.empty())
+        {
+            return INT_MIN;
+        }
+
+        return stack2.top();
+    }
+
+    bool isEmpty()
+    {
+        return stack1.empty() && stack2.empty();
+    }
+
+    void enqueue(int value)
+    {
+        stack1.push(value);
+    }
+
+    int dequeue()
+    {
+        int dequeuedValue = front();
+
+        if (stack2.empty())
+        {
+            return INT_MIN;
+        }
+        else
+        {
+            stack2.pop();
+            return dequeuedValue;
+        }
+    }
+};
 ```
+
+## Trees
+
+### Terminology
+
+#### Applied to Nodes
+
+**Node**: a structure that is somehow associated with others of its onw kind. A node generally carries an information inside itself.
+
+**Parent**: a node that points to at least another one. That is, it has at least one child.
+
+**Child**: a node that is pointed to by another. That is, a node that has parents.
+
+**Siblings**: are nodes that have the same parent node.
+
+**Root**: the first node added in a tree. The top most node.
+
+**Leaf**: a child node that has no children. Those at the bottom of the tree.
+
+#### Applied to Trees
+
+**Subtree**: it's like the subset concept. Given an existent tree T1, take any of its node, say N1, and imagine it as beeing a root of a smaller tree that preserves N1 children. The resulting tree is called a subtree of T1.
+
+**Branch**: it's any list of nodes in a tree that are in a non-repeating path from the root to any of its leafs.
+
+**Height**: it's an interger given by the longest branch length.
+
+**Full**: when every node points to exactly 0 or the maximum number of nodes it can have. For binary tree, it's when every node has exactly 0 or 2 children.
+
+**Perfect**: when every level of the tree is completely filled. That is, the graphical diagram is a perfectly simetrical triangle.
+
+**Complete**: when a tree was filled from left to right with no gaps.
+
+**Binary Tree**: when all nodes of a tree has 2 pointers, commonly called `left` and `right`. These pointers can have null value, but they always exists.
+
+**Balanced Binary Tree**: The absolute difference of heights of left and right subtrees at any node is less than 1.
+
+### Binary Search Tree
+
+A BST is a Binary Tree that follows this rule when a new node is inserted: *If the new node has an inner value lesser than the parent, it will be possitioned on the left; if it has an inner value greater that the parent, it'll be positioned on the right*.
+
+#### Big $\Omicron$
+
+Lookup, insert and remove algorithms can be $\Omicron(n)$ in the worst possible case, when the tree has only one straight branch with no forks. But that would not be a tree, but a singly linked list. Because actual trees has multiple branches, this case isn't considered. So, those operations mentioned earlier are actually considered $\Omicron(\log n)$.
+
+#### Node class
+
+```c++
+class Node
+{
+public:
+    int value;
+    Node *left;
+    Node *right;
+
+    Node(int value)
+    {
+        this->value = value;
+        left = right = nullptr;
+    }
+};
+```
+
+#### Tree Class with Constuctor
+
+```c++
+class BinarySearchTree
+{
+private:
+    Node *root;
+
+public:
+    BinarySearchTree()
+    {
+        root = nullptr;
+    }
+
+    BinarySearchTree(int value)
+    {
+        root = new Node(value);
+    }
+};
+```
+
+#### Insert
+
+```c++
+bool insert(int value)
+{
+    Node *newNode = new Node(value);
+
+    if (root == nullptr)
+    {
+        root = newNode;
+        return true;
+    }
+
+    Node *temp = root;
+    while (true)
+    {
+        if (temp->value == value)
+        {
+            return false;
+        }
+        else if (temp->value > value)
+        {
+            if (temp->left == nullptr)
+            {
+                temp->left = newNode;
+                return true;
+            }
+            temp = temp->left;
+        }
+        else if (temp->value < value)
+        {
+            if (temp->right == nullptr)
+            {
+                temp->right = newNode;
+                return true;
+            }
+            temp = temp->right;
+        }
+    }
+    return false;
+}
+```
+
+#### Contains
+
+```c++
+bool contains(int value)
+{
+    if (root == nullptr)
+    {
+        return false;
+    }
+
+    Node *temp = root;
+    while (temp != nullptr)
+    {
+        if (temp->value == value)
+        {
+            return true;
+        }
+        else if (temp->value > value)
+        {
+            temp = temp->left;
+        }
+        else if (temp->value < value)
+        {
+            temp = temp->right;
+        }
+    }
+    return false;
+}
+```
+
+#### Final Code
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Node
+{
+public:
+    int value;
+    Node *left;
+    Node *right;
+
+    Node(int value)
+    {
+        this->value = value;
+        left = right = nullptr;
+    }
+};
+
+class BinarySearchTree
+{
+private:
+    Node *root;
+
+public:
+    BinarySearchTree()
+    {
+        root = nullptr;
+    }
+
+    BinarySearchTree(int value)
+    {
+        root = new Node(value);
+    }
+
+    Node *getRoot()
+    {
+        return root;
+    }
+
+    bool insert(int value)
+    {
+        Node *newNode = new Node(value);
+
+        if (root == nullptr)
+        {
+            root = newNode;
+            return true;
+        }
+
+        Node *temp = root;
+        while (true)
+        {
+            if (temp->value == value)
+            {
+                return false;
+            }
+            else if (temp->value > value)
+            {
+                if (temp->left == nullptr)
+                {
+                    temp->left = newNode;
+                    return true;
+                }
+                temp = temp->left;
+            }
+            else if (temp->value < value)
+            {
+                if (temp->right == nullptr)
+                {
+                    temp->right = newNode;
+                    return true;
+                }
+                temp = temp->right;
+            }
+        }
+        return false;
+    }
+
+    bool contains(int value)
+    {
+        if (root == nullptr)
+        {
+            return false;
+        }
+
+        Node *temp = root;
+        while (temp != nullptr)
+        {
+            if (temp->value == value)
+            {
+                return true;
+            }
+            else if (temp->value > value)
+            {
+                temp = temp->left;
+            }
+            else if (temp->value < value)
+            {
+                temp = temp->right;
+            }
+        }
+        return false;
+    }
+};
+
+int main()
+{
+    BinarySearchTree emptyTree = BinarySearchTree();
+    BinarySearchTree tree = BinarySearchTree(47);
+
+    cout << "Creates an empty tree: " << emptyTree.getRoot() << endl;
+    cout << "Creates an tree with root 47: " << tree.getRoot() << endl;
+
+    tree.insert(21);
+    tree.insert(76);
+    tree.insert(18);
+    tree.insert(52);
+    tree.insert(82);
+    tree.insert(27);
+
+    cout << "Inserted values 21, 76, 18, 52, 82 and 27 to the tree" << endl;
+
+    cout << "Root: " << tree.getRoot()->value << endl;
+    cout << "Root -> left: " << tree.getRoot()->left->value << endl;
+    cout << "Root -> left -> left : " << tree.getRoot()->left->left->value << endl;
+    cout << "Root -> left -> right: " << tree.getRoot()->left->right->value << endl;
+    cout << "Root -> right: " << tree.getRoot()->right->value << endl;
+    cout << "Root -> right -> left: " << tree.getRoot()->right->left->value << endl;
+    cout << "Root -> right -> right: " << tree.getRoot()->right->right->value << endl;
+
+    cout << "Value 1" << (tree.contains(1) ? " is " : " is not ") << "in the tree" << endl;
+    cout << "Value 76" << (tree.contains(76) ? " is " : " is not ") << "in the tree" << endl;
+    cout << "Value 18" << (tree.contains(18) ? " is " : " is not ") << "in the tree" << endl;
+    cout << "Value 19" << (tree.contains(19) ? " is " : " is not ") << "in the tree" << endl;
+    cout << "Value 27" << (tree.contains(27) ? " is " : " is not ") << "in the tree" << endl;
+
+    return 0;
+}
+```
+
+## Hash Table
+
+### Intro
+
+Basically a table that assossiates an access address to a set of values or objects or anything that engineers will invent to store data. The table is commonly implemented as a sequential array.
+
+When a new data will be inserted on the hash table, that data is somehow used to calculate its access address in the array. The calculation is done by the *Hash Function*.
+
+### Collisions
+
+Some times, different datas can lead to the same access address in the hash table. There are two ways of handling this:
+
+### Separate Chaining
+
+The hash table has some ways of storing both data in the same address. It can be done, for example, implementing the hash table as an array of linked lists. That way, each position can support any quantity of data.
+
+### Linear Probing
+
+Instead of storing multiple data in the same address, when the hash function points to a spot that is already taken, the hash table can iterate through the following positions until it finds an available address.
+
+### Hash Function
+
+### Set
+
+### Get
+
+### Keys
+
+### Big $\Omicron$
+
+### Interview Questions
