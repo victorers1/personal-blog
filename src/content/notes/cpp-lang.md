@@ -2,7 +2,7 @@
 title: 'C++'
 description: "Notes about C++"
 pubDate: 'Feb 26 2024'
-updatedDate: 'Feb 26 2024'
+updatedDate: 'Feb 29 2024'
 heroImage: '/cpp-gradient.png'
 ---
 
@@ -51,11 +51,45 @@ Biggest ones are:
 
 ## Behaviors
 
-## Undefined Behavior
+### Undefined Behavior
+
+TODO
+
+## C/C++ Strings
 
 TODO
 
 ## Pointers
+
+TODO
+
+## Arrays
+
+Arrays are used to store multiple values of the same type sequentially in memory. The array, as well as its elements, has a predefined amount of bytes that are allocated right after its declaration.
+
+Declaration of an empty array of `int`s:
+
+```c++
+int integers[4];
+```
+
+The command above sequentially allocates in memory 4 slots that can contains an integer each. As an `int` has 4 bytes, the whole array occupies 16 bytes. `integers` is a pointer to the first element, if there is any. That can be verified running:
+
+```c++
+int integers[4] = {0, 1, 2};
+cout << "integers: " << integers << endl;
+cout << "&integers[0]: " << &integers[0] << endl;
+
+// Output example:
+// integers: 0x5ffdf0
+// &integers[0]: 0x5ffdf0
+```
+
+Note that `integers` and `&integers[0]` will return the same memory address. And since all elements has the same size (4 bytes), it's easy to get the second one, that's on address `0x5ffdf0 + 4 = 0x5ffdf4`. That's exactly what the `[]` operator does to get any element in an array.
+
+Let's say you want to get the position 10 of an array of `double` stored in `0x5ffdf0`. Each `double` ocuppies 8 byte. So, if the first element is at `0x5ffdf0`, the aimed value is `sizeof(double) * index` positions after. The `[]` operator has to return the value stored at `0x5ffdf0 + 8 * 10 = 0x5ffe40`.
+
+## `vector` class
 
 TODO
 
@@ -133,12 +167,6 @@ class Cookie {
         }
 };
 ```
-
-## `vector` class
-
-A vector is a type of container which can store elements of a similar type.
-
-TODO
 
 ## Unit testing
 
