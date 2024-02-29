@@ -2,7 +2,7 @@
 title: 'Data Structures & Algorithms in C++'
 description: "Notes from an Udemy Course"
 pubDate: 'Feb 24 2024'
-updatedDate: 'Feb 26 2024'
+updatedDate: 'Feb 29 2024'
 heroImage: '/cpp-gradient.png'
 ---
 
@@ -2191,7 +2191,7 @@ When a new data will be inserted on the hash table, that data is somehow used to
 
 ### Collisions
 
-Some times, different datas can lead to the same access address in the hash table. There are two ways of handling this:
+Some times, different datas can lead to the same access address in the hash table. There are two ways of handling this.
 
 ### Separate Chaining
 
@@ -2201,14 +2201,431 @@ The hash table has some ways of storing both data in the same address. It can be
 
 Instead of storing multiple data in the same address, when the hash function points to a spot that is already taken, the hash table can iterate through the following positions until it finds an available address.
 
+### Node Class
+
+```c++
+class Node
+{
+public:
+    string key;
+    int value;
+    Node *next;
+
+    Node(string key, int value)
+    {
+        this->key = key;
+        this->value = value;
+        next = nullptr;
+    }
+};
+```
+
+### Hash Table Class
+
+```c++
+class HashTable
+{
+private:
+    static const int SIZE = 7;
+    Node *dataMap[SIZE];
+};
+```
+
+### To String
+
+```c++
+string toString()
+{
+    string result = "";
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        result += to_string(i) + ":\n";
+
+        if (dataMap[i] != nullptr)
+        {
+            Node *temp = dataMap[i];
+            while (temp != nullptr)
+            {
+                result += "  {" + temp->key + ", " + to_string(temp->value) + "}";
+                temp = temp->next;
+            }
+            result += "\n";
+        }
+    }
+
+    return result;
+}
+```
+
 ### Hash Function
+
+The function used in this course basically does:
+
+- Iterates through each `char` of the the given key
+- Multiplies each `char`s ascii values by 23 (an arbitrary prime number)
+- Sums all of the previous multiplications results to get an integer
+- Calculates de module of SIZE and the previous result
+- The previous result is the hash, the address in the table
+
+```c++
+int hash(string key)
+{
+    int hash = 0;
+    for (int i = 0; i < key.length(); i++)
+    {
+        int asciiValue = int(key[i]);
+        hash = (hash + asciiValue * 23) % SIZE;
+    }
+    return hash;
+}
+```
 
 ### Set
 
+```c++
+void set(string key, int value)
+{
+    int index = hash(key);
+    Node *newNode = new Node(key, value);
+
+    if (dataMap[index] == nullptr)
+    {
+        dataMap[index] = newNode;
+    }
+    else
+    {
+        Node *temp = dataMap[index];
+        while (temp->next != nullptr)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
+```
+
 ### Get
+
+When `key` isn't present in the Hash table, returned value will be `0`.
+
+```c++
+int get(string key)
+{
+    int index = hash(key);
+    if (dataMap[index] != nullptr)
+    {
+        Node *temp = dataMap[index];
+        while (temp != nullptr)
+        {
+            if (temp->key == key)
+            {
+                return temp->value;
+            }
+            temp = temp->next;
+        }
+    }
+    return 0;
+}
+```
 
 ### Keys
 
+```c++
+vector<string> keys()
+{
+    vector<string> allKeys = vector<string>();
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (dataMap[i] != nullptr)
+        {
+            Node *temp = dataMap[i];
+            while (temp != nullptr)
+            {
+                allKeys.push_back(temp->key);
+                temp = temp->next;
+            }
+        }
+    }
+    return allKeys;
+}
+```
+
+### Final Code
+
+```c++
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Node
+{
+public:
+    string key;
+    int value;
+    Node *next;
+
+    Node(string key, int value)
+    {
+        this->key = key;
+        this->value = value;
+        next = nullptr;
+    }
+};
+
+class HashTable
+{
+private:
+    static const int SIZE = 7;
+    Node *dataMap[SIZE];
+
+public:
+    string toString()
+    {
+        string result = "";
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            result += to_string(i) + ":\n";
+
+            if (dataMap[i] != nullptr)
+            {
+                Node *temp = dataMap[i];
+                while (temp != nullptr)
+                {
+                    result += "  {" + temp->key + ", " + to_string(temp->value) + "}";
+                    temp = temp->next;
+                }
+                result += "\n";
+            }
+        }
+
+        return result;
+    }
+
+    int hash(string key)
+    {
+        int hash = 0;
+        for (int i = 0; i < key.length(); i++)
+        {
+            int asciiValue = int(key[i]);
+            hash = (hash + asciiValue * 23) % SIZE;
+        }
+        return hash;
+    }
+
+    void set(string key, int value)
+    {
+        int index = hash(key);
+        Node *newNode = new Node(key, value);
+
+        if (dataMap[index] == nullptr)
+        {
+            dataMap[index] = newNode;
+        }
+        else
+        {
+            Node *temp = dataMap[index];
+            while (temp->next != nullptr)
+            {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    int get(string key)
+    {
+        int index = hash(key);
+        if (dataMap[index] != nullptr)
+        {
+            Node *temp = dataMap[index];
+            while (temp != nullptr)
+            {
+                if (temp->key == key)
+                {
+                    return temp->value;
+                }
+                temp = temp->next;
+            }
+        }
+        return 0;
+    }
+
+    vector<string> keys()
+    {
+        vector<string> allKeys = vector<string>();
+        for (int i = 0; i < SIZE; i++)
+        {
+            if (dataMap[i] != nullptr)
+            {
+                Node *temp = dataMap[i];
+                while (temp != nullptr)
+                {
+                    allKeys.push_back(temp->key);
+                    temp = temp->next;
+                }
+            }
+        }
+        return allKeys;
+    }
+};
+
+string vectorToString(vector<string> vector)
+{
+    string result = "";
+    for (string s : vector)
+    {
+        result += s + " ";
+    }
+    return result;
+}
+
+int main()
+{
+
+    HashTable *myHT = new HashTable();
+    cout << "Created empty HashTable:\n"
+         << myHT->toString() << endl;
+
+    myHT->set("dog", 2);
+    myHT->set("cat", 20);
+    myHT->set("pizza", 15);
+    myHT->set("nails", 100);
+    myHT->set("tile", 50);
+    myHT->set("lumber", 80);
+    myHT->set("bolts", 200);
+    myHT->set("screws", 140);
+
+    cout << "Added nodes to the HashTable:\n"
+         << myHT->toString() << endl;
+
+    cout << "Getting key dog: " << myHT->get("dog") << endl;
+    cout << "Getting key cat: " << myHT->get("cat") << endl;
+    cout << "Getting key nails: " << myHT->get("nails") << endl;
+    cout << "Getting key bolts: " << myHT->get("bolts") << endl;
+    cout << "Getting key abc: " << myHT->get("abc") << endl;
+
+    cout << "HashTable keys: " + vectorToString(myHT->keys()) << endl;
+
+    return 0;
+}
+```
+
 ### Big $\Omicron$
 
+#### Hash Function
+
+To calculate the complexity of an algorithm, the variable N is used to represent the number of data that the algorithm has to process. In the context of Hash tables, N is the number of key-values pairs stored in it.
+
+The hash function receives a `string` of length L as input and its internal complexity can be any one of the previouly mentioned, say $\Omicron(L^{2})$. But, to evaluate the general performance of the others algorithms in a hash table, the hash function is always considered $\Omicron(1)$. That is because it generally is $\Omicron(1)$ for real, but also because the string's length is not big enough to make a difference.
+
+Note that the complexities of `get()` and `set()` algorithms below doesn't consider the `hash()`'s big $O$.
+
+#### Get and Set
+
+In a most technical sense, the worst case of a Hash table is when all of its values are stored in the same address. So theoretically, it's $\Omicron(n)$.
+
+But, as this case has a probability of occurrence that tends to zero, to calculate $\Omicron(n)$, we do not take the actual worst case, but the worst case that occurs in practice. The complexity of the worst case, when all positions in the table have the same number of elements, is $\Omicron(1)$.
+
 ### Interview Questions
+
+#### Item In Common
+
+Implement a function called `itemInCommon()` that checks if two input vectors have at least one common item.
+
+```c++
+bool itemInCommon(vector<int> vect1, vector<int> vect2)
+{
+    unordered_map<int, bool> table = unordered_map<int, bool>();
+    for (int v : vect1)
+    {
+        table[v] = true;
+    }
+    for (int v : vect2)
+    {
+        if (table[v])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+#### Find Duplicates
+
+Implement a function called findDuplicates() that finds and returns all the duplicate elements in a given vector of integers.
+
+```c++
+vector<int> findDuplicates(const vector<int> &nums)
+{
+    unordered_map<int, bool> table = unordered_map<int, bool>();
+    vector<int> repeated = vector<int>();
+
+    for (int n : nums)
+    {
+        if (table[n])
+        {
+            repeated.push_back(n);
+        }
+        else
+        {
+            table[n] = true;
+        }
+    }
+
+    return repeated;
+}
+```
+
+#### First Non-Repeating Character
+
+Implement a function called `firstNonRepeatingChar()` that finds and returns the first non-repeating character in a given string.
+
+```c++
+char firstNonRepeatingChar(const string &input_string)
+{
+    unordered_map<char, int> table = unordered_map<char, int>();
+
+    for (char c : input_string)
+    {
+        table[c] = table[c] + 1;
+    }
+
+    for (char c : input_string)
+    {
+        if (table[c] == 1)
+        {
+            return c;
+        }
+    }
+
+    return '\0';
+}
+```
+
+#### Group Anagram
+
+Implement a function called `groupAnagrams()` that groups a list of strings based on their anagram equivalence.
+
+```c++
+vector<vector<string>> groupAnagrams(const vector<string> &strings)
+{
+    unordered_map<string, vector<string>> table = unordered_map<string, vector<string>>();
+    for (string s : strings)
+    {
+        string cannonicalString = s;
+        sort(cannonicalString.begin(), cannonicalString.end());
+        table[cannonicalString].push_back(s);
+    }
+    vector<vector<string>> result = vector<vector<string>>();
+    for (const auto [key, value] : table)
+    {
+        result.push_back(value);
+    }
+    return result;
+}
+```
