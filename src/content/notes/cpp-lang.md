@@ -49,11 +49,27 @@ Biggest ones are:
 - g++, the GNU compiler developed for Linux, but also available as ports for Windows.
 - clang++, the C++ compiler developed by the LLVM project, available on all platforms. Aims to be a drop-in replacement for g++.
 
-## C/C++ Strings
+## Standard Containers
+
+A container is a holder object that stores a collection of other objects (its elements). The container manages the storage space for its elements and provides member functions to access them, either directly or through iterators.
+
+Containers replicate structures very commonly used in programming: dynamic arrays ([`vector`](https://cplusplus.com/reference/vector/vector/)), queues ([`queue`](https://cplusplus.com/reference/queue/queue/)), stacks ([`stack`](https://cplusplus.com/reference/stack/stack/)), heaps ([`priority_queue`](https://cplusplus.com/reference/queue/priority_queue/)), linked lists ([`list`](https://cplusplus.com/reference/list/list/)), trees ([`set`](https://cplusplus.com/set)), associative arrays ([`map`](https://cplusplus.com/map)), among others.
+
+### `vector` class
 
 TODO
 
+## C/C++ Strings
+
+In C, a string is a list of single `char`s ending with a special null-termination character, `\0`. For example, `char a[3] = {'a', 'b', 'c'};` isn't a string, just a list of chars. But,`"abc"` is a four characters string: 'a', 'b', 'c' plus the ending null-terminator. That's why `char a[3] = "abc"` will produce a compile error, `char a[3]` cannot contains 4 characters.
+
+In C++, the standard library provides us the `std::string` class. Thus, strings are **objects** that represent sequences of characters. The `string` class provides an interface similar to that of a **standard container** of bytes and uses C-strings under the hood.
+
 ## Pointers
+
+TODO
+
+### The `*void` type
 
 TODO
 
@@ -82,14 +98,6 @@ cout << "&integers[0]: " << &integers[0] << endl;
 Note that `integers` and `&integers[0]` will return the same memory address. And since all elements have the same size (4 bytes), it's easy to get the second one, that's on address `0x5ffdf0 + 4 = 0x5ffdf4`. That's exactly what the `[]` operator does to get any element in an array.
 
 Let's say you want to get the position 10 of an array of `double` stored in `0x5ffdf0`. Each `double` occupies 8 bytes. So, if the first element is at `0x5ffdf0`, the aimed value is `sizeof(double) * index` positions after. The `[]` operator has to return the value stored at `0x5ffdf0 + 8 * 10 = 0x5ffe40`.
-
-## `vector` class
-
-TODO
-
-### The `*void` type
-
-TODO
 
 ## Memory Allocation
 
@@ -150,7 +158,7 @@ cookie->color = "black";
 
 ### Destructor
 
-Even if it's not declared, every class has a default destructor that deallocates the memory used by its attributes. But, have in mind that it doesn't perform deep-deallocation;
+Even if it isn't declared, every class has a default destructor that deallocates the memory used by its attributes. But, have in mind that it doesn't perform deep-deallocation.
 
 Example:
 

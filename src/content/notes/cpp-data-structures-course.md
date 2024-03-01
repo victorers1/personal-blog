@@ -2116,11 +2116,11 @@ When a new data will be inserted on the hash table, that data is somehow used to
 
 Sometimes, different data can lead to the same access address in the hash table. There are two ways of handling this.
 
-### Separate Chaining
+#### Separate Chaining
 
 The hash table has some ways of storing both data in the same address. It can be done, for example, implementing the hash table as an array of linked lists. That way, each position can support any quantity of data.
 
-### Linear Probing
+#### Linear Probing
 
 Instead of storing multiple data in the same address, when the hash function points to a spot that is already taken, the hash table can iterate through the following positions until it finds an available address.
 
@@ -2536,5 +2536,247 @@ vector<vector<string>> groupAnagrams(const vector<string> &strings)
         result.push_back(value);
     }
     return result;
+}
+```
+
+## Set
+
+We're going to used the standard library's `unordered_set` class.
+
+### Interview Questions
+
+#### Remove Duplicates
+
+Write a function called `removeDuplicates`.
+
+This function takes a list of numbers as input and returns a new list that has all the duplicate numbers removed.
+
+```c++
+vector<int> removeDuplicates(const vector<int> &myList)
+{
+    unordered_set<int> set = unordered_set<int>();
+    for (int i : myList)
+    {
+        set.insert(i);
+    }
+    vector<int> result = vector<int>();
+    for (unordered_set<int>::iterator i = set.begin(); i != set.end(); i++)
+    {
+        result.push_back(*i);
+    }
+    return result;
+}
+```
+
+#### Has Unique Chars
+
+Write a function named `hasUniqueChars`. The function checks if all the characters in a given text are unique or not. If they are unique, the function will return true. If even one character is repeated, the function will return false.
+
+**What Do We Mean by "Unique"?**
+
+Unique means that no letter shows up more than once. For example, the word "apple" does not have unique characters because 'p' appears twice. But the word "orange" has unique characters because each letter is different.
+
+```c++
+bool hasUniqueChars(const string &str)
+{
+    unordered_set<int> set = unordered_set<int>();
+    for (int i : str)
+    {
+        int setSize = set.size();
+        set.insert(i);
+        if (setSize == set.size())
+        {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+#### Find Pairs
+
+Write a function called `findPairs`. This function takes two lists of numbers and a target number. It then finds pairs of numbers where one number is from the first list and the other is from the second list, and their sum equals the target number.
+
+The function returns these pairs.
+
+**What Do We Mean by "Pairs"?**
+
+Pairs are sets of two numbers. For example, if we have 4 in one list and 6 in another, and our target number is 10, then (4, 6) is a pair that adds up to 10.
+
+```c++
+vector<vector<int>> findPairs(const vector<int> &arr1, const vector<int> &arr2, int target)
+{
+    unordered_set<int> set = unordered_set<int>();
+    vector<vector<int>> pairs = vector<vector<int>>();
+    for (int i : arr1)
+    {
+        set.insert(i);
+    }
+    for (int i : arr2)
+    {
+        int desiredValue = target - i;
+        if (set.find(desiredValue) != set.end())
+        {
+            pairs.push_back(vector<int>{desiredValue, i});
+        }
+    }
+    return pairs;
+}
+```
+
+## Graphs
+
+### Terminology
+
+**Node or Vertex**: a structure that can be associated with others of the same type and carries some information. It is possible to have a disconnected Node.
+
+**Edge or Connection**: it's what bounds two nodes together. It can be unidirectional (A -> B) or bidirectional (A <-> B).
+
+**Weight**: scalar associated with an edge.
+
+### Adjacency Matrix
+
+After incrementally indexing every node of a graph with numbers from 0 to N, we can construct a (N+1)x(N+1) matrix where the element ij is 1 if the node i has an edge to j, and 0 otherwise. If the edges has weights, the adjacency matrix is filled up is them.
+
+In a bidirectional graph, the resulting matrix is always symmetric. In a graph that nodes can't points to itself, the main diagonal is always zero.
+
+### Adjacency List
+
+After labeling every node of a graph with strings, we can create a Map whose keys are labels and each value is a list with the labels of the adjacent nodes.
+
+Example:
+
+```json
+{
+    "A": ["B", "E"],
+    "B": ["A", "C"],
+    "C": ["B", "D"],
+    "D": ["C", "E"],
+    "E": ["A", "D"]
+}
+```
+
+By the adjacency list above we can conclude that the node A is adjacent to nodes B and E, and so on.
+
+### Big $\Omicron$
+
+#### Space complexity
+
+The Space complexity of a graph stored as an adjacency matrix is $\Omicron(V^{2})$, while a graph stored as an adjacency list is $\Omicron(V + E)$. V = number of vertices, E = number of edges.
+
+#### Time complexity
+
+**Adding a vertex**: using an adjacency matrix, we need to create a new line and colum, which can only be done by recreating the whole matrix, so it's $\Omicron(V^{2})$. If we're using adjacency list, we simply have to add a new key in the Map $\Omicron(1)$.
+
+**Adding an edge between vertices**: it is simply done by changing two values on a matrix or pushing back two elements on a list. Either way it's $\Omicron(1)$.
+
+**Removing an edge between vertices**: similar to adding an edge, it's done by changing two values on a matrix or removing two items in a list of labels. Either way it's $\Omicron(1)$.
+
+**Removing a vertex**: similar to adding a node, the adjacency matrix needs to be rewritten, so it's $\Omicron(V^{2})$. But, if the graph was implementated with an adjacency list, each list of labels needs to be iterated to find the occurrences of the node to be deleted, so it's $\Omicron(V)$.
+
+### Bidirectional Graph class
+
+```c++
+#include <unordered_set>
+#include <unordered_map>
+
+using namespace std;
+
+class Graph
+{
+private:
+    unordered_map<string, unordered_set<string>> adjList;
+};
+```
+
+All the following code will work with bidirectional graphs.
+
+### To String
+
+```c++
+string toString()
+{
+    string result = "";
+    for (auto [vertex, edges] : adjList)
+    {
+        result += vertex + ": [ ";
+        for (auto edge : edges)
+        {
+            result += edge + " ";
+        }
+        result += "]\n";
+    }
+    return result;
+}
+```
+
+### Add Vertex
+
+```c++
+bool addVertex(string vertex)
+{
+    if (adjList.count(vertex) == 0)
+    {
+        adjList[vertex];
+        return true;
+    }
+    return false;
+}
+```
+
+### Add Edge
+
+```c++
+bool addEdge(string vertex1, string vertex2)
+{
+    if (adjList.count(vertex1) != 0 && adjList.count(vertex2) != 0)
+    {
+        adjList.at(vertex1).insert(vertex2);
+        adjList.at(vertex2).insert(vertex1);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+```
+
+### Remove Edge
+
+```c++
+bool removeEdge(string vertex1, string vertex2)
+{
+    if (adjList.count(vertex1) != 0 && adjList.count(vertex2) != 0)
+    {
+        adjList[vertex1].erase(vertex2);
+        adjList[vertex2].erase(vertex1);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+```
+
+### Remove Vertex
+
+```c++
+bool removeVertex(string vertex)
+{
+    if (adjList.count(vertex) != 0)
+    {
+        for (string label : adjList[vertex])
+        {
+            adjList[label].erase(vertex);
+        }
+        adjList.erase(vertex);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 ```
