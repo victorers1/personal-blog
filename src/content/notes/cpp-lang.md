@@ -8,7 +8,7 @@ heroImage: '/cpp-gradient.png'
 
 ## Intro
 
-This notes has a bunch of C++ basic features. The best reference up-to-date: [cppreference.com](https://en.cppreference.com/w/)
+These notes covers a bunch of C++ basic features. The best up-to-date reference is [cppreference.com](https://en.cppreference.com/w/)
 
 ### ISO
 
@@ -23,11 +23,11 @@ C++ is standardized by a group known as [ISO/IEC JTC 1/SC 22](https://www.iso.or
 - ISO: International Organization for Standardization
 - IEC: International Electrotechnical Commission
 - JTC 1: Joint Technical Committee number 1
-- SC 22: Sub Committe number 22
+- SC 22: Subcommittee number 22
 
-So, they're a Sub Committe inside the Joint Technical Committee formed by ISO members and IEC members.
+So, they're a Subcommittee inside the Joint Technical Committee formed by ISO members and IEC members.
 
-Version's informal names carries a 2-digit code representing the year it was released, e.g., `C++98`, `C++03`, `C++11`, `C++14`, `C++17`, `C++20`, `C++23`, `C++26` and so on. Note that in 2011 they adopted a schedule of 3 year relase interval.
+Version's informal names carries a 2-digit code representing the year it was released, e.g., `C++98`, `C++03`, `C++11`, `C++14`, `C++17`, `C++20`, `C++23`, `C++26` and so on. Note that in 2011 they adopted a schedule of 3 year release interval.
 
 | Year | ISO/IEC Standard | Informal name |
 | --- | --- | --- |
@@ -49,12 +49,6 @@ Biggest ones are:
 - g++, the GNU compiler developed for Linux, but also available as ports for Windows.
 - clang++, the C++ compiler developed by the LLVM project, available on all platforms. Aims to be a drop-in replacement for g++.
 
-## Behaviors
-
-### Undefined Behavior
-
-TODO
-
 ## C/C++ Strings
 
 TODO
@@ -73,7 +67,7 @@ Declaration of an empty array of `int`s:
 int integers[4];
 ```
 
-The command above sequentially allocates in memory 4 slots that can contains an integer each. As an `int` has 4 bytes, the whole array occupies 16 bytes. `integers` is a pointer to the first element, if there is any. That can be verified running:
+That command above allocates in memory 4 sequential slots that can contain an integer each. As an `int` has 4 bytes, the whole array occupies 16 bytes. `integers` is a pointer to the first element, if there is any. That can be verified running:
 
 ```c++
 int integers[4] = {0, 1, 2};
@@ -85,9 +79,9 @@ cout << "&integers[0]: " << &integers[0] << endl;
 // &integers[0]: 0x5ffdf0
 ```
 
-Note that `integers` and `&integers[0]` will return the same memory address. And since all elements has the same size (4 bytes), it's easy to get the second one, that's on address `0x5ffdf0 + 4 = 0x5ffdf4`. That's exactly what the `[]` operator does to get any element in an array.
+Note that `integers` and `&integers[0]` will return the same memory address. And since all elements have the same size (4 bytes), it's easy to get the second one, that's on address `0x5ffdf0 + 4 = 0x5ffdf4`. That's exactly what the `[]` operator does to get any element in an array.
 
-Let's say you want to get the position 10 of an array of `double` stored in `0x5ffdf0`. Each `double` ocuppies 8 byte. So, if the first element is at `0x5ffdf0`, the aimed value is `sizeof(double) * index` positions after. The `[]` operator has to return the value stored at `0x5ffdf0 + 8 * 10 = 0x5ffe40`.
+Let's say you want to get the position 10 of an array of `double` stored in `0x5ffdf0`. Each `double` occupies 8 bytes. So, if the first element is at `0x5ffdf0`, the aimed value is `sizeof(double) * index` positions after. The `[]` operator has to return the value stored at `0x5ffdf0 + 8 * 10 = 0x5ffe40`.
 
 ## `vector` class
 
@@ -154,7 +148,7 @@ Cookie* cookie = new Cookie();
 cookie->color = "black";
 ```
 
-### Desconstructor
+### Destructor
 
 Even if it's not declared, every class has a default destructor that deallocates the memory used by its attributes. But, have in mind that it doesn't perform deep-deallocation;
 

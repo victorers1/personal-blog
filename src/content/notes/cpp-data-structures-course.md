@@ -17,7 +17,7 @@ The code below is an indistinguishable mix of mine and the teacher's implementat
 
 ## Pointers
 
-Variables that stores memory addresses, not actual values.
+Variables that store memory addresses, not actual values.
 
 ### What it isn't
 
@@ -99,7 +99,7 @@ LinkedList* myLL = new LinkedList(4);
 
 ### Destructor
 
-By default a destrutor will erase from memory the class attributes, that means that if you run the command `delete myLL`, only the variables `head`, `tail` and `length` will be freed. The Nodes will persist on memory forever if they are not manually deleted.
+By default, a destructor will erase from memory the class attributes, that means that if you run the command `delete myLL`, only the variables `head`, `tail` and `length` will be freed. The Nodes will persist in memory forever if they are not manually deleted.
 
 ```c++
 ~LinkedList()
@@ -159,7 +159,7 @@ void prepend(int value)
 
 ### Delete Last
 
-A.k.a `pop()`, it's the operation that removes a linked list tail. As it's a deletion operator, it must be prepared to when `length == 0`, when `length == 1`, and when `length > 1`.
+A.k.a `pop()`, it's the operation that removes a linked list tail. As it's a deletion operator, it must be prepared for when `length == 0`, when `length == 1`, and when `length > 1`.
 
 ```c++
 /**
@@ -231,7 +231,7 @@ bool indexExists(int index) {
 
 ### Get Node by Index
 
-Operation that retrieves a Node without changing anythingin the LinkedLink.
+Operation that retrieves a Node without changing anything in the Linked List.
 
 ```c++
 Node *get(int index)
@@ -270,7 +270,7 @@ bool set(int index, int value)
 
 ### Insert Node
 
-I like to return the created Node;
+I like to return the created Node.
 
 ```c++
 Node *insert(int index, int value)
@@ -337,7 +337,7 @@ void deleteNode(int index)
 
 ### Reverse
 
-Generally it's an *inplace* operation, that is, the LinkedList reverses itself instead of creating a reversed copy.
+Generally it's an *in-place* operation, that is, the LinkedList reverses itself instead of creating a reversed copy.
 
 ```c++
 void reverse()
@@ -1728,11 +1728,11 @@ bool isBalancedParentheses(const string &parentheses)
 
 FIFO: First in, First out.
 
-We'll implement it using Singly Linked List under the hood. The left-most element (head) will be the first in queue, the right-most element (tail) will be the last in queue;
+We'll implement it using a Singly Linked List under the hood. The leftmost element (head) will be the first in queue, the right-most element (tail) will be the last in queue;
 
 ### Node
 
-Exactly the same of Singly Linked List and Stack.
+Exactly the same as Singly Linked List and Stack.
 
 ### Class with Constructor
 
@@ -1888,7 +1888,7 @@ public:
 
 #### Applied to Nodes
 
-**Node**: a structure that is somehow associated with others of its onw kind. A node generally carries an information inside itself.
+**Node**: a structure that is somehow associated with others of its onw kind. A node generally carries information inside itself.
 
 **Parent**: a node that points to at least another one. That is, it has at least one child.
 
@@ -1902,29 +1902,29 @@ public:
 
 #### Applied to Trees
 
-**Subtree**: it's like the subset concept. Given an existent tree T1, take any of its node, say N1, and imagine it as beeing a root of a smaller tree that preserves N1 children. The resulting tree is called a subtree of T1.
+**Subtree**: it's like the subset concept. Given an existent tree T1, take any of its nodes, say N1, and imagine it as being a root of a smaller tree that preserves N1 children. The resulting tree is called a subtree of T1.
 
-**Branch**: it's any list of nodes in a tree that are in a non-repeating path from the root to any of its leafs.
+**Branch**: it's any list of nodes in a tree that are in a non-repeating path from the root to any of its leaves.
 
-**Height**: it's an interger given by the longest branch length.
+**Height**: it's an integer given by the longest branch length.
 
-**Full**: when every node points to exactly 0 or the maximum number of nodes it can have. For binary tree, it's when every node has exactly 0 or 2 children.
+**Full**: when every node points to exactly 0 or the maximum number of nodes it can have. For a binary tree, it's when every node has exactly 0 or 2 children.
 
-**Perfect**: when every level of the tree is completely filled. That is, the graphical diagram is a perfectly simetrical triangle.
+**Perfect**: when every level of the tree is completely filled. That is, the graphical diagram is a perfectly symmetrical triangle.
 
 **Complete**: when a tree was filled from left to right with no gaps.
 
-**Binary Tree**: when all nodes of a tree has 2 pointers, commonly called `left` and `right`. These pointers can have null value, but they always exists.
+**Binary Tree**: when all nodes of a tree have 2 pointers, commonly called `left` and `right`. These pointers can have null value, but they always exist.
 
 **Balanced Binary Tree**: The absolute difference of heights of left and right subtrees at any node is less than 1.
 
 ### Binary Search Tree
 
-A BST is a Binary Tree that follows this rule when a new node is inserted: *If the new node has an inner value lesser than the parent, it will be possitioned on the left; if it has an inner value greater that the parent, it'll be positioned on the right*.
+A BST is a Binary Tree that follows this rule when a new node is inserted: *If the new node has an inner value lesser than the parent, it will be positioned on the left; if it has an inner value greater that the parent, it'll be positioned on the right*.
 
 #### Big $\Omicron$
 
-Lookup, insert and remove algorithms can be $\Omicron(n)$ in the worst possible case, when the tree has only one straight branch with no forks. But that would not be a tree, but a singly linked list. Because actual trees has multiple branches, this case isn't considered. So, those operations mentioned earlier are actually considered $\Omicron(\log n)$.
+Lookup, insert and remove algorithms can be $\Omicron(n)$ in the worst possible case, when the tree has only one straight branch with no forks. But that would not be a tree, but a singly linked list. Because actual trees have multiple branches, this case isn't considered. So, those operations mentioned earlier are actually considered $\Omicron(\log n)$.
 
 #### Node class
 
@@ -2185,13 +2185,13 @@ int main()
 
 ### Intro
 
-Basically a table that assossiates an access address to a set of values or objects or anything that engineers will invent to store data. The table is commonly implemented as a sequential array.
+Basically a table that associates an access address to a set of values or objects or anything that engineers will invent to store data. The table is commonly implemented as a sequential array.
 
 When a new data will be inserted on the hash table, that data is somehow used to calculate its access address in the array. The calculation is done by the *Hash Function*.
 
 ### Collisions
 
-Some times, different datas can lead to the same access address in the hash table. There are two ways of handling this.
+Sometimes, different data can lead to the same access address in the hash table. There are two ways of handling this.
 
 ### Separate Chaining
 
@@ -2307,7 +2307,7 @@ void set(string key, int value)
 
 ### Get
 
-When `key` isn't present in the Hash table, returned value will be `0`.
+When `key` isn't present in the Hash table, return value will be `0`.
 
 ```c++
 int get(string key)
@@ -2520,9 +2520,9 @@ int main()
 
 To calculate the complexity of an algorithm, the variable N is used to represent the number of data that the algorithm has to process. In the context of Hash tables, N is the number of key-values pairs stored in it.
 
-The hash function receives a `string` of length L as input and its internal complexity can be any one of the previouly mentioned, say $\Omicron(L^{2})$. But, to evaluate the general performance of the others algorithms in a hash table, the hash function is always considered $\Omicron(1)$. That is because it generally is $\Omicron(1)$ for real, but also because the string's length is not big enough to make a difference.
+The hash function receives a `string` of length L as input and its internal complexity can be any one of the previously mentioned, say $\Omicron(L^{2})$. But, to evaluate the general performance of the other algorithms in a hash table, the hash function is always considered $\Omicron(1)$. That is because it generally is $\Omicron(1)$ for real, but also because the string's length is not big enough to make a difference.
 
-Note that the complexities of `get()` and `set()` algorithms below doesn't consider the `hash()`'s big $O$.
+Note that the complexities of `get()` and `set()` algorithms below don't consider the `hash()`'s big $O$.
 
 #### Get and Set
 
