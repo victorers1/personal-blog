@@ -2,7 +2,7 @@
 title: 'C++'
 description: "Notes about C++"
 pubDate: 'Feb 26 2024'
-updatedDate: 'Feb 29 2024'
+updatedDate: 'Mar 1 2024'
 heroImage: '/cpp-gradient.png'
 ---
 

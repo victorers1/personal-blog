@@ -2,7 +2,7 @@
 title: 'Data Structures & Algorithms in C++'
 description: "Notes from an Udemy Course"
 pubDate: 'Feb 24 2024'
-updatedDate: 'Feb 29 2024'
+updatedDate: 'Mar 1 2024'
 heroImage: '/cpp-gradient.png'
 ---
 
@@ -168,7 +168,6 @@ A.k.a `pop()`, it's the operation that removes a linked list tail. As it's a del
 int pop()
 {
     int poppedValue = 0;
-
     if (length == 1)
     {
         poppedValue = head->value;
@@ -214,7 +213,6 @@ int deleteFirst()
         delete temp;
         length--;
     }
-
     return deletedValue;
 }
 ```
@@ -258,7 +256,6 @@ Node *get(int index)
 bool set(int index, int value)
 {
     Node *temp = get(index);
-
     if (temp != nullptr)
     {
         temp->value = value;
@@ -345,10 +342,8 @@ void reverse()
     Node *temp = head;
     head = tail;
     tail = temp;
-
     Node *after = temp->next;
     Node *before = nullptr;
-
     for (int i = 0; i < length; i++)
     {
         after = temp->next;
@@ -443,7 +438,6 @@ public:
     bool set(int index, int value)
     {
         Node *temp = get(index);
-
         if (temp != nullptr)
         {
             temp->value = value;
@@ -527,7 +521,6 @@ public:
     int pop()
     {
         int poppedValue = 0;
-
         if (length == 1)
         {
             poppedValue = head->value;
@@ -569,7 +562,6 @@ public:
             delete temp;
             length--;
         }
-
         return deletedValue;
     }
 
@@ -602,10 +594,8 @@ public:
         Node *temp = head;
         head = tail;
         tail = temp;
-
         Node *after = temp->next;
         Node *before = nullptr;
-
         for (int i = 0; i < length; i++)
         {
             after = temp->next;
@@ -622,21 +612,16 @@ public:
     {
         Node *temp = head;
         string result = "[";
-
         while (temp != nullptr)
         {
             result += to_string(temp->value);
-
             if (temp->next != nullptr)
             {
                 result += " -> ";
             }
-
             temp = temp->next;
         }
-
         result += "]";
-
         return result;
     }
 };
@@ -725,18 +710,15 @@ Node *findMiddleNode()
     {
         Node *slow = head;
         Node *fast = head;
-
         while (fast != nullptr && fast->next!=nullptr)
         {
             slow = slow->next;
             fast = fast->next;
-
             if (fast != nullptr)
             {
                 fast = fast->next;
             }
         }
-
         return slow;
     }
 }
@@ -768,7 +750,6 @@ bool hasLoop()
     {
         Node *slow = head;
         Node *fast = head;
-
         while (fast != nullptr && fast->next != nullptr)
         {
             slow = slow->next;
@@ -777,13 +758,11 @@ bool hasLoop()
             {
                 fast = fast->next;
             }
-
             if (fast == slow)
             {
                 return true;
             }
         }
-
         return false;
     }
 }
@@ -800,7 +779,6 @@ Node *findKthFromEnd(int k)
 {
     Node *fast = head;
     Node *slow = head;
-
     for (int i = 0; i < k; i++)
     {
         if (fast == nullptr)
@@ -809,13 +787,11 @@ Node *findKthFromEnd(int k)
         }
         fast = fast->next;
     }
-
     while (fast != nullptr)
     {
         fast = fast->next;
         slow = slow->next;
     }
-
     return slow;
 }
 ```
@@ -831,14 +807,11 @@ void removeDuplicates()
 {
     Node *current = head;
     Node *previousToRunner = head;
-
     if (head == nullptr || head->next == nullptr)
     {
         return;
     }
-
     Node *runner = current->next;
-
     while (current->next != nullptr)
     {
         while (runner != nullptr)
@@ -857,7 +830,6 @@ void removeDuplicates()
                 previousToRunner = previousToRunner->next;
             }
         }
-
         current = previousToRunner = current->next;
         runner = current->next;
     }
@@ -916,6 +888,8 @@ DoublyLinkedList* myDLL = new DoublyLinkedList(7);
 
 ```c++
 
+TODO
+
 ```
 
 ### To String
@@ -924,9 +898,7 @@ DoublyLinkedList* myDLL = new DoublyLinkedList(7);
 string toString()
 {
     Node *temp = head;
-
     string result = "[";
-
     while (temp != nullptr)
     {
         result += to_string(temp->value);
@@ -935,12 +907,9 @@ string toString()
         {
             result += "<->";
         }
-
         temp = temp->next;
     }
-
     result += "]";
-
     return result;
 }
 ```
@@ -952,12 +921,10 @@ Node *getHead()
 {
     return head;
 }
-
 Node *getTail()
 {
     return tail;
 }
-
 int size()
 {
     return length;
@@ -970,7 +937,6 @@ int size()
 void append(int value)
 {
     Node *newNode = new Node(value);
-
     if (length == 0)
     {
         head = tail = newNode;
@@ -981,7 +947,6 @@ void append(int value)
         newNode->prev = tail;
         tail = newNode;
     }
-
     length++;
 }
 ```
@@ -1006,7 +971,6 @@ void pop()
         delete tail->next;
         tail->next = nullptr;
     }
-
     length--;
 }
 ```
@@ -1017,7 +981,6 @@ void pop()
 void prepend(int value)
 {
     Node *newNode = new Node(value);
-
     if (length == 0)
     {
         head = tail = newNode;
@@ -1028,7 +991,6 @@ void prepend(int value)
         newNode->next = head;
         head = newNode;
     }
-
     length++;
 }
 ```
@@ -1086,7 +1048,6 @@ Node *get(int index)
                 temp = temp->prev;
             }
         }
-
         return temp;
     }
 }
@@ -1133,7 +1094,6 @@ bool insert(int index, int value)
         Node *newNode = new Node(value);
         Node *before = get(index - 1);
         Node *after = before->next;
-
         before->next = newNode;
         after->prev = newNode;
         newNode->prev = before;
@@ -1178,7 +1138,6 @@ void deleteNode(int index)
 ```c++
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 class Node
@@ -1216,12 +1175,10 @@ public:
     {
         return head;
     }
-
     Node *getTail()
     {
         return tail;
     }
-
     int size()
     {
         return length;
@@ -1230,7 +1187,6 @@ public:
     void append(int value)
     {
         Node *newNode = new Node(value);
-
         if (length == 0)
         {
             head = tail = newNode;
@@ -1241,7 +1197,6 @@ public:
             newNode->prev = tail;
             tail = newNode;
         }
-
         length++;
     }
 
@@ -1262,14 +1217,12 @@ public:
             delete tail->next;
             tail->next = nullptr;
         }
-
         length--;
     }
 
     void prepend(int value)
     {
         Node *newNode = new Node(value);
-
         if (length == 0)
         {
             head = tail = newNode;
@@ -1280,7 +1233,6 @@ public:
             newNode->next = head;
             head = newNode;
         }
-
         length++;
     }
 
@@ -1328,7 +1280,6 @@ public:
                     temp = temp->prev;
                 }
             }
-
             return temp;
         }
     }
@@ -1408,23 +1359,17 @@ public:
     string toString()
     {
         Node *temp = head;
-
         string result = "[";
-
         while (temp != nullptr)
         {
             result += to_string(temp->value);
-
             if (temp->next != nullptr)
             {
                 result += " <-> ";
             }
-
             temp = temp->next;
         }
-
         result += "]";
-
         return result;
     }
 };
@@ -1504,17 +1449,14 @@ void reverse()
     {
         return;
     }
-
     Node *temp = head;
     while (temp!=nullptr)
     {
         Node* node = temp->next;
         temp->next = temp->prev;
         temp->prev = node;
-
         temp = temp->prev;
     }
-
     temp = head;
     head = tail;
     tail = temp;
@@ -1540,14 +1482,12 @@ bool isPalindrome()
     {
         Node *forward = head;
         Node *backward = tail;
-
         while (forward != backward && forward->prev != backward)
         {
             if (forward->value != backward->value)
             {
                 return false;
             }
-
             forward = forward->next;
             backward = backward->prev;
         }
@@ -1605,7 +1545,6 @@ int getTop()
 {
     return top->value;
 }
-
 int getHeight()
 {
     return height;
@@ -1675,20 +1614,16 @@ Implement a function called reverseString() that reverses the input string using
 string reverseString(const string &str)
 {
     string result = "";
-
     stack<char> reverser = stack<char>();
-
     for (int i = 0; i < str.length(); i++)
     {
         reverser.push(str[i]);
     }
-
     for (int i = 0; i < str.length(); i++)
     {
         result += reverser.top();
         reverser.pop();
     }
-
     return result;
 }
 ```
@@ -1701,7 +1636,6 @@ Implement a function called isBalancedParentheses() that checks if the input str
 bool isBalancedParentheses(const string &parentheses)
 {
     stack<char> parenthesesStack = stack<char>();
-
     for (char c : parentheses)
     {
         if (c == '(')
@@ -1827,7 +1761,6 @@ Complete the `enqueue` and `dequeue` methods of the `QueueUsingTwoStacks` class.
 ```c++
 #include <stack>
 #include <climits>
-
 using namespace std;
 
 class QueueUsingTwoStacks
@@ -1846,12 +1779,10 @@ public:
                 stack1.pop();
             }
         }
-
         if (stack2.empty())
         {
             return INT_MIN;
         }
-
         return stack2.top();
     }
 
@@ -1868,7 +1799,6 @@ public:
     int dequeue()
     {
         int dequeuedValue = front();
-
         if (stack2.empty())
         {
             return INT_MIN;
@@ -1971,13 +1901,11 @@ public:
 bool insert(int value)
 {
     Node *newNode = new Node(value);
-
     if (root == nullptr)
     {
         root = newNode;
         return true;
     }
-
     Node *temp = root;
     while (true)
     {
@@ -2017,7 +1945,6 @@ bool contains(int value)
     {
         return false;
     }
-
     Node *temp = root;
     while (temp != nullptr)
     {
@@ -2042,7 +1969,6 @@ bool contains(int value)
 
 ```c++
 #include <iostream>
-
 using namespace std;
 
 class Node
@@ -2083,13 +2009,11 @@ public:
     bool insert(int value)
     {
         Node *newNode = new Node(value);
-
         if (root == nullptr)
         {
             root = newNode;
             return true;
         }
-
         Node *temp = root;
         while (true)
         {
@@ -2125,7 +2049,6 @@ public:
         {
             return false;
         }
-
         Node *temp = root;
         while (temp != nullptr)
         {
@@ -2237,11 +2160,9 @@ private:
 string toString()
 {
     string result = "";
-
     for (int i = 0; i < SIZE; i++)
     {
         result += to_string(i) + ":\n";
-
         if (dataMap[i] != nullptr)
         {
             Node *temp = dataMap[i];
@@ -2253,7 +2174,6 @@ string toString()
             result += "\n";
         }
     }
-
     return result;
 }
 ```
@@ -2288,7 +2208,6 @@ void set(string key, int value)
 {
     int index = hash(key);
     Node *newNode = new Node(key, value);
-
     if (dataMap[index] == nullptr)
     {
         dataMap[index] = newNode;
@@ -2357,7 +2276,6 @@ vector<string> keys()
 #include <iostream>
 #include <string>
 #include <vector>
-
 using namespace std;
 
 class Node
@@ -2385,11 +2303,9 @@ public:
     string toString()
     {
         string result = "";
-
         for (int i = 0; i < SIZE; i++)
         {
             result += to_string(i) + ":\n";
-
             if (dataMap[i] != nullptr)
             {
                 Node *temp = dataMap[i];
@@ -2401,7 +2317,6 @@ public:
                 result += "\n";
             }
         }
-
         return result;
     }
 
@@ -2420,7 +2335,6 @@ public:
     {
         int index = hash(key);
         Node *newNode = new Node(key, value);
-
         if (dataMap[index] == nullptr)
         {
             dataMap[index] = newNode;
@@ -2564,7 +2478,6 @@ vector<int> findDuplicates(const vector<int> &nums)
 {
     unordered_map<int, bool> table = unordered_map<int, bool>();
     vector<int> repeated = vector<int>();
-
     for (int n : nums)
     {
         if (table[n])
@@ -2576,7 +2489,6 @@ vector<int> findDuplicates(const vector<int> &nums)
             table[n] = true;
         }
     }
-
     return repeated;
 }
 ```
@@ -2589,12 +2501,10 @@ Implement a function called `firstNonRepeatingChar()` that finds and returns the
 char firstNonRepeatingChar(const string &input_string)
 {
     unordered_map<char, int> table = unordered_map<char, int>();
-
     for (char c : input_string)
     {
         table[c] = table[c] + 1;
     }
-
     for (char c : input_string)
     {
         if (table[c] == 1)
@@ -2602,7 +2512,6 @@ char firstNonRepeatingChar(const string &input_string)
             return c;
         }
     }
-
     return '\0';
 }
 ```
