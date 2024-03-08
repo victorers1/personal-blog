@@ -2,7 +2,7 @@
 title: 'Data Structures & Algorithms in C++'
 description: "Notes from an Udemy Course"
 pubDate: 'Feb 24 2024'
-updatedDate: 'Mar 1 2024'
+updatedDate: 'Mar 8 2024'
 heroImage: '/cpp-gradient.png'
 ---
 
