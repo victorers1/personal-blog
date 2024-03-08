@@ -2780,3 +2780,745 @@ bool removeVertex(string vertex)
     }
 }
 ```
+
+### Final Code
+
+```c++
+#include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+
+using namespace std;
+
+class Graph
+{
+private:
+    unordered_map<string, unordered_set<string>> adjList;
+
+public:
+    string toString()
+    {
+        string result = "";
+        for (auto [vertex, edges] : adjList)
+        {
+            result += vertex + ": [ ";
+            for (auto edge : edges)
+            {
+                result += edge + " ";
+            }
+            result += "]\n";
+        }
+        return result;
+    }
+
+    bool addVertex(string vertex)
+    {
+        if (adjList.count(vertex) == 0)
+        {
+            adjList[vertex];
+            return true;
+        }
+        return false;
+    }
+
+    bool addEdge(string vertex1, string vertex2)
+    {
+        if (adjList.count(vertex1) != 0 && adjList.count(vertex2) != 0)
+        {
+            adjList.at(vertex1).insert(vertex2);
+            adjList.at(vertex2).insert(vertex1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool removeEdge(string vertex1, string vertex2)
+    {
+        if (adjList.count(vertex1) != 0 && adjList.count(vertex2) != 0)
+        {
+            adjList[vertex1].erase(vertex2);
+            adjList[vertex2].erase(vertex1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool removeVertex(string vertex)
+    {
+        if (adjList.count(vertex) != 0)
+        {
+            for (string label : adjList[vertex])
+            {
+                adjList[label].erase(vertex);
+            }
+            adjList.erase(vertex);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+};
+
+int main()
+{
+    Graph *myGraph = new Graph();
+
+    cout << "Created Graph: " << myGraph->toString() << endl;
+
+    myGraph->addVertex("A");
+    myGraph->addVertex("B");
+    myGraph->addVertex("C");
+    myGraph->addVertex("D");
+
+    cout << "Added vertices to Graph: " << endl
+         << myGraph->toString() << endl;
+
+    myGraph->addEdge("A", "Z");
+    myGraph->addEdge("A", "B");
+    myGraph->addEdge("B", "A");
+    myGraph->addEdge("A", "D");
+    myGraph->addEdge("D", "C");
+    myGraph->addEdge("Z", "A");
+
+    cout << "Added edges to the Graph:" << endl
+         << myGraph->toString() << endl;
+
+    myGraph->removeEdge("A", "B");
+
+    cout << "Removes edge A->B of the Graph:" << endl
+         << myGraph->toString() << endl;
+
+    myGraph->removeVertex("Z");
+    myGraph->removeVertex("A");
+    myGraph->removeVertex("D");
+
+    cout << "Removes vertices A and D of the Graph:" << endl
+         << myGraph->toString() << endl;
+}
+```
+
+## Recursion
+
+We a function call itself... until it doesn't.
+
+### Tree Traversal
+
+#### Breadth First Search
+
+Note this is a member method of the previous `BinarySearchTree` class and we're using a `queue` object.
+
+```c++
+void BreadthFirstSearch()
+{
+    queue<Node *> myQueue;
+    myQueue.push(root);
+    while (myQueue.size() > 0)
+    {
+        Node *currentNode = myQueue.front();
+        myQueue.pop();
+        cout << currentNode->value << " ";
+        if (currentNode->left != nullptr)
+        {
+            myQueue.push(currentNode->left);
+        }
+        if (currentNode->right != nullptr)
+        {
+            myQueue.push(currentNode->right);
+        }
+    }
+}
+```
+
+#### Depth First Search (PreOrder)
+
+Print value first, recurse later.
+
+```c++
+void DFSPreOrder(Node *currentNode)
+{
+    cout << currentNode->value << " ";
+    if (currentNode->left != nullptr)
+    {
+        DFSPreOrder(currentNode->left);
+    }
+    if (currentNode->right != nullptr)
+    {
+        DFSPreOrder(currentNode->right);
+    }
+}
+```
+
+#### Depth First Search (PostOrder)
+
+Print children values first, then prints itself.
+
+```c++
+void DFSPostOrder(Node *currentNode)
+{
+    if (currentNode->left != nullptr)
+    {
+        DFSPostOrder(currentNode->left);
+    }
+    if (currentNode->right != nullptr)
+    {
+        DFSPostOrder(currentNode->right);
+    }
+    cout << currentNode->value << " ";
+}
+```
+
+#### Depth First Search (InOrder)
+
+This will print all tree values sorted in ascending order.
+
+```c++
+void DFSInOrder(Node *currentNode)
+{
+    if (currentNode->left != nullptr)
+    {
+        DFSInOrder(currentNode->left);
+    }
+    cout << currentNode->value << " ";
+    if (currentNode->right != nullptr)
+    {
+        DFSInOrder(currentNode->right);
+    }
+}
+```
+
+## Sorting Algorithms
+
+### Selection Sort
+
+At every step, search for the smallest element and put it at the first non-sorted position. After doing that for `array.size()-1` times, the array is sorted.
+
+```c++
+void selectionSort(int array[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        int minIndex = i;
+        for (int j = i + 1; j < size; j++)
+        {
+            if (array[j] < array[minIndex])
+            {
+                minIndex = j;
+            }
+        }
+        if (i != minIndex)
+        {
+            int temp = array[minIndex];
+            array[minIndex] = array[i];
+            array[i] = temp;
+        }
+    }
+}
+```
+
+### Insertion Sort
+
+This algorithm has an advantage when dealing with already sorted or almost sorted array. Insertion sort time complexity is usually $\Omicron(n^{2})$, but in those mentioned cases, it's just $\Omicron(n)$.
+
+```c++
+void insertionSort(int array[], int size)
+{
+    for (int i = 1; i < size; i++)
+    {
+        int temp = array[i];
+        int j = i - 1;
+        while (j > -1 && temp < array[j])
+        {
+            array[j + 1] = array[j];
+            array[j] = temp;
+            j--;
+        }
+    }
+}
+```
+
+### Merge Sort
+
+Really cool algorithm that has a Space complexity of $\Omicron(n)$, and Time complexity of $\Omicron(n \log n)$.
+
+First, we have to create an algorithm that given an array and valid indexes that represents the beginning, the middle and finish of the section we'll work with, creates two sub-arrays: one from beginning to middle, other from middle+1 to finish. After that, it'll overwrite the original array section with the sub-arrays values in a way they end up sorted. To place the values in a sorted way, we'll iterate through both sub-arrays, and at the iteration we'll check which of them has the smallest leftmost element. The smalles leftmost value will enter first the the original array.
+
+Notice that this algorithm by itself doesn't completelly sort an array, it just garantees that the half with the smallest elements will be at the left side, and the half with the biggests elements will be at the right side.
+
+```c++
+void merge(int array[], int leftIndex, int midIndex, int rightIndex)
+{
+    int leftArraySize = midIndex - leftIndex + 1;
+    int rightArraySize = rightIndex - midIndex;
+    int leftArray[leftArraySize];
+    int rightArray[rightArraySize];
+    for (int i = 0; i < leftArraySize; i++)
+    {
+        leftArray[i] = array[leftIndex + i];
+    }
+    for (int i = 0; i < rightArraySize; i++)
+    {
+        rightArray[i] = array[midIndex + 1 + i];
+    }
+    int index = leftIndex;
+    int i = 0;
+    int j = 0;
+    while (i < leftArraySize && j < rightArraySize)
+    {
+        if (leftArray[i] <= rightArray[j])
+        {
+            array[index] = leftArray[i];
+            index++;
+            i++;
+        }
+        else
+        {
+            array[index] = rightArray[j];
+            index++;
+            j++;
+        }
+    }
+    while (i < leftArraySize)
+    {
+        array[index] = leftArray[i];
+        index++;
+        i++;
+    }
+    while (j < rightArraySize)
+    {
+        array[index] = rightArray[j];
+        index++;
+        j++;
+    }
+}
+
+```
+
+The real merge sort algorithm is below. It recursively calls itself two times, each one in a different half. When the array length reaches length == 1, it just returns doing nothing, because it's already sorted. If the length is greater than 1, it merges the given array passing indexes that divides it by half.
+
+``` c++
+void mergeSort(int array[], int leftIndex, int rightIndex)
+{
+    if (leftIndex >= rightIndex)
+    {
+        return;
+    }
+    int midIndex = leftIndex + (rightIndex - leftIndex) / 2;
+    mergeSort(array, leftIndex, midIndex);
+    mergeSort(array, midIndex + 1, rightIndex);
+    merge(array, leftIndex, midIndex, rightIndex);
+}
+```
+
+### Quick Sort
+
+#### Swap Function
+
+Since this operation is used a lot, we created a function to swap two values in an array.
+
+```c++
+void swap(int array[], int firstIndex, int secondIndex)
+{
+    int temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;
+}
+```
+
+#### Pivot Function
+
+It's the algorithm that does one iteration of quick sort in a sub-array of a given `array`. It begins iterating the sub-array inside `pivotIndex + 1` and `endIndex`. It basically places all the elements lesser than the pivot on the left and the elements greater than the pivot on the right, then inserts the pivot on the middle of those sub-arrays. The returned value is the index where the pivot ended.
+
+```c++
+int pivot(int array[], int pivotIndex, int endIndex)
+{
+    int swapIndex = pivotIndex;
+    for (int i = pivotIndex + 1; i <= endIndex; i++)
+    {
+        if (array[i] < array[pivotIndex])
+        {
+            swapIndex++;
+            swap(array, swapIndex, i);
+        }
+    }
+    swap(array, pivotIndex, swapIndex);
+    return swapIndex;
+}
+```
+
+#### Final Code
+
+```c++
+void swap(int array[], int firstIndex, int secondIndex)
+{
+    int temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;
+}
+
+int pivot(int array[], int pivotIndex, int endIndex)
+{
+    int swapIndex = pivotIndex;
+    for (int i = pivotIndex + 1; i <= endIndex; i++)
+    {
+        if (array[i] < array[pivotIndex])
+        {
+            swapIndex++;
+            swap(array, swapIndex, i);
+        }
+    }
+    swap(array, pivotIndex, swapIndex);
+    return swapIndex;
+}
+
+void quickSort(int array[], int leftIndex, int rightIndex)
+{
+    if (leftIndex >= rightIndex)
+    {
+        return;
+    }
+    int pivotIndex = pivot(array, leftIndex, rightIndex);
+    quickSort(array, leftIndex, pivotIndex - 1);
+    quickSort(array, pivotIndex + 1, rightIndex);
+}
+
+int main()
+{
+    int array[] = {4, 6, 1, 7, 3, 2, 5};
+    int size = sizeof(array) / sizeof(array[0]);
+    quickSort(array, 0, size - 1);
+    for (auto value : array)
+    {
+        cout << value << " ";
+    }
+}
+```
+
+### Interview Questions
+
+#### Bubble Sort of LL
+
+In this exercise, you will implement the `bubbleSort()` method to sort a singly linked list using the Bubble Sort algorithm. The goal is to sort the linked list in ascending order without creating any new nodes. You will only rearrange the `value` fields of the existing nodes.
+
+```c++
+void bubbleSort()
+{
+    if (length < 2)
+    {
+        return;
+    }
+    Node *sortedUntil = nullptr;
+    for (int i = 0; i < length; i++)
+    {
+        Node *current = head;
+        while (current->next != nullptr)
+        {
+            if (current->value > current->next->value)
+            {
+                swapNodeValues(current, current->next);
+            }
+            current = current->next;
+        }
+    }
+}
+```
+
+#### Selection Sort of LL
+
+Your task is to implement the `selectionSort()` method to sort a singly linked list using the Selection Sort algorithm. The goal is to sort the linked list in ascending order, but you can only change the value fields of the existing nodes.
+
+```c++
+void selectionSort()
+{
+    if (length < 2)
+    {
+        return;
+    }
+    Node *sortingNode = head;
+    while (sortingNode != tail)
+    {
+        Node *iterator = sortingNode->next;
+        Node *minValueNode = iterator;
+        while (iterator != nullptr)
+        {
+            if (iterator->value < minValueNode->value)
+            {
+                minValueNode = iterator;
+            }
+            iterator = iterator->next;
+        }
+        if (minValueNode->value < sortingNode->value)
+        {
+            int value = sortingNode->value;
+            sortingNode->value = minValueNode->value;
+            minValueNode->value = value;
+        }
+        sortingNode = sortingNode->next;
+    }
+}
+```
+
+#### Insertion Sort of LL
+
+Your task is to implement the `insertionSort()` method to sort a singly linked list using the Insertion Sort algorithm. The goal is to sort the linked list in ascending order. You should only change the `value` fields of the existing nodes and update the `next` pointers appropriately.
+
+```c++
+TODO
+```
+
+#### Merge Two Sorted LL
+
+Your task is to implement the `merge(LinkedList& otherList)` method.
+
+This method merges two sorted linked lists into a single sorted linked list. The `LinkedList` class has a `head`, `tail`, and `length` members. The nodes have value and next fields.
+
+```c++
+void merge(LinkedList &otherList)
+{
+    if (otherList.length == 0)
+    {
+        return;
+    }
+    else if (length == 0)
+    {
+        head = otherList.head;
+        tail = otherList.tail;
+        length = otherList.length;
+
+        otherList.head = nullptr;
+        otherList.tail = nullptr;
+        otherList.length = 0;
+        return;
+    }
+    int finalLength = length + otherList.length;
+    Node *dummy = new Node(INT_MIN);
+    Node *current = dummy;
+    while (length > 0 && otherList.length > 0)
+    {
+        if (head->value <= otherList.head->value)
+        {
+            current->next = head;
+            head = head->next;
+            length--;
+        }
+        else
+        {
+            current->next = otherList.head;
+            otherList.head = otherList.head->next;
+            otherList.length--;
+        }
+        current = current->next;
+    }
+    if (length == 0)
+    {
+        current->next = otherList.head;
+        tail = otherList.tail;
+    }
+    else if (otherList.length == 0)
+    {
+        current->next = head;
+    }
+    head = dummy->next;
+    length = finalLength;
+    delete dummy;
+    otherList.head = nullptr;
+    otherList.tail = nullptr;
+    otherList.length = 0;
+}
+```
+
+## Dynamic Programming
+
+### Vector: Interview Questions
+
+#### Remove Element
+
+**Introduction**: Imagine you have a collection of items (represented by numbers), and you want to get rid of every occurrence of a specific item without using extra storage or another collection. The task is to perform this action using as minimal space as possible and in the most efficient way.
+
+**Objective**: Write a function that takes in two parameters: a list of numbers (nums) and a target number (val). The goal is to remove all occurrences of the target number from the list without creating a new list. After the removals, the list should not have any gaps between the remaining numbers. The function should not return the modified list since it will be modified in place; however, the function should resize the list so that the remaining length matches the number of items left after the removals.
+
+```c++
+void removeElement(vector<int>& nums, int val) {
+    size_t i = 0;
+    for (size_t j = 0; j < nums.size(); j++) {
+        if (nums[j] != val) {
+            nums[i] = nums[j];
+            i++;
+        }
+    }
+    nums.resize(i);
+}
+```
+
+#### Find Max Min
+
+**Introduction**: Often in data processing or while analyzing a set of numbers, two primary metrics we are interested in are the highest (maximum) value and the lowest (minimum) value. The challenge here is to efficiently find these two metrics without sorting the list or using any external libraries.
+
+**Objective**: Write a function that takes a list of integers and returns a new list containing two elements: the maximum and the minimum value in the input list.
+
+```c++
+vector<int> findMaxMin(vector<int> &myList)
+{
+    int max = myList[0], min = myList[0];
+    for (size_t i = 1; i < myList.size(); i++)
+    {
+        if (myList[i] < min)
+        {
+            min = myList[i];
+        }
+        else if (myList[i] > max)
+        {
+            max = myList[i];
+        }
+    }
+    return vector<int>{max, min};
+}
+```
+
+#### Find Longest String
+
+**Introduction**: Often in data processing or while analyzing a set of numbers, two primary metrics we are interested in are the highest (maximum) value and the lowest (minimum) value. The challenge here is to efficiently find these two metrics without sorting the list or using any external libraries.
+
+**Objective**: Write a function that takes a list of integers and returns a new list containing two elements: the maximum and the minimum value in the input list.
+
+```c++
+string findLongestString(vector<string> &stringList)
+{
+    string longestStr = "";
+    for (auto s : stringList)
+    {
+        if (s.size() > longestStr.size())
+        {
+            longestStr = s;
+        }
+    }
+    return longestStr;
+}
+```
+
+#### Remove Duplicates
+
+**Introduction**: Working with sorted lists is common in programming. While these lists offer the advantage of easier search and analysis, they might contain consecutive duplicates which can be redundant for some applications. The challenge here is to efficiently remove these consecutive duplicate values in-place, without needing a separate data structure.
+
+**Objective**: Write a function that, given a sorted list of integers, removes all consecutive duplicates and returns the length of the modified list. The function should perform the operation in-place, which means you shouldn't use an additional list to store the result.
+
+```c++
+int removeDuplicates(vector<int> &nums)
+{
+    if (nums.size() <= 1)
+    {
+        return nums.size();
+    }
+    int currentValue = INT_MIN;
+    size_t writingIndex = 0;
+    for (size_t i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] != currentValue)
+        {
+            nums[writingIndex] = nums[i];
+            currentValue = nums[i];
+            writingIndex++;
+        }
+    }
+    nums.resize(writingIndex);
+    return writingIndex;
+}
+```
+
+#### Max Profit
+
+**Introduction**: The stock market is unpredictable, with prices of stocks rising and falling every day. For those who want to buy and sell stocks to gain profit, knowing when to buy at a low price and when to sell at a high price is crucial. This problem challenges you to determine the best day to buy and sell a stock to achieve maximum profit.
+
+**Objective**: Given a list of integers where each integer represents the stock price of a company for a particular day (index 0 is Day 1, index 1 is Day 2, and so on), your task is to find the maximum profit you could achieve from buying the stock on one day and selling it on a later day. Note that you are only allowed to complete one transaction, i.e., you can only buy and sell the stock once.
+
+```c++
+int maxProfit(vector<int> &prices)
+{
+    if (prices.size() <= 1)
+    {
+        return 0;
+    }
+    int min = prices[0];
+    int maxProfit = 0;
+    int profit = 0;
+
+    for (size_t i = 0; i < prices.size(); i++)
+    {
+        if (prices[i] < min)
+        {
+            min = prices[i];
+        }
+        profit = prices[i] - min;
+        if (profit > maxProfit)
+        {
+            maxProfit = profit;
+        }
+    }
+    return maxProfit;
+}
+```
+
+#### Rotate
+
+**Introduction**: Array manipulation is a common operation in data processing. One of the operations is rotating the elements of an array. In this problem, the task is to rotate an array to the right by a given number of steps. A rotation on the array means that each element moves to the right, and the last element wraps around to become the first.
+
+**Objective**: Given a list of integers, `nums`, and an integer, k, rotate the elements of nums to the right by k steps.
+
+My poor implementation:
+
+```c++
+void rotate(vector<int> &nums, int k)
+{
+    if (nums.size() < 2)
+    {
+        return;
+    }
+    if (nums.size() <= k)
+    {
+        k = k % nums.size();
+    }
+    for (size_t i = 0; i < k; i++)
+    {
+        nums.insert(nums.begin(), nums.back());
+        nums.pop_back();
+    }
+}
+```
+
+Sofisticated implementation:
+
+```c++
+void rotate(vector<int>& nums, int k) {
+    if (nums.empty()) return;
+
+    k = k % nums.size();
+
+    // Reverse the first part
+    for (int start = 0, end = nums.size() - k - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+
+    // Reverse the second part
+    for (int start = nums.size() - k, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+
+    // Reverse the whole array
+    for (int start = 0, end = nums.size() - 1; start < end; start++, end--) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+    }
+}
+```
