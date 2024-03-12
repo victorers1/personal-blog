@@ -2,7 +2,7 @@
 title: 'C++'
 description: "Notes about C++"
 pubDate: 'Feb 26 2024'
-updatedDate: 'Mar 1 2024'
+updatedDate: 'Mar 12 2024'
 heroImage: '/cpp-gradient.png'
 ---
 
@@ -61,7 +61,7 @@ TODO
 
 ## C/C++ Strings
 
-In C, a string is a list of single `char`s ending with a special null-termination character, `\0`. For example, `char a[3] = {'a', 'b', 'c'};` isn't a string, just a list of chars. But,`"abc"` is a four characters string: 'a', 'b', 'c' plus the ending null-terminator. That's why `char a[3] = "abc"` will produce a compile error, `char a[3]` cannot contains 4 characters.
+In C, a string is a list of single `char`s ending with a special null-termination character, `\0`. For example, `char a[3] = {'a', 'b', 'c'};` isn't a string, just a list of chars. But,`"abc"` is a four characters string: `'a'`, `'b'`, `'c'` plus the ending null-terminator. That's why `char a[3] = "abc"` will produce a compile error, `char a[3]` cannot contains 4 characters.
 
 In C++, the standard library provides us the `std::string` class. Thus, strings are **objects** that represent sequences of characters. The `string` class provides an interface similar to that of a **standard container** of bytes and uses C-strings under the hood.
 
@@ -69,13 +69,21 @@ In C++, the standard library provides us the `std::string` class. Thus, strings 
 
 TODO
 
-### The `*void` type
+## `auto`, `decltype` and `reinterpret_cast`
 
 TODO
 
 ## Arrays
 
-Arrays are used to store multiple values of the same type sequentially in memory. The array, as well as its elements, has a predefined amount of bytes that are allocated right after its declaration.
+Conceptually, arrays are used to sequentially store multiple values of the same type in memory. The array, as well as its elements, has a predefined amount of bytes that are allocated right after its declaration. When there was only C, it was done with the `int a[10]` command. Later, with C++, it was introduced an container to the basic array, the `std::array`. There is a very similar standard container worth mentioning, `std::vector`, which should not be compared to an array as it internally works differently.
+
+Therefore, there are 3 distinct things in C++ that can be mistakenly taken as equal:
+
+- `array`, a basic data type that is around since C language;
+- `std::array`, a C++ standard library container class that encapsulates a fixed sized basic-data-type `array`; and
+- `std::vector`, a C++ standard library container class that is variable length and grows dynamically.
+
+### C arrays
 
 Declaration of an empty array of `int`s:
 
@@ -99,15 +107,167 @@ Note that `integers` and `&integers[0]` will return the same memory address. And
 
 Let's say you want to get the position 10 of an array of `double` stored in `0x5ffdf0`. Each `double` occupies 8 bytes. So, if the first element is at `0x5ffdf0`, the aimed value is `sizeof(double) * index` positions after. The `[]` operator has to return the value stored at `0x5ffdf0 + 8 * 10 = 0x5ffe40`.
 
+### C++ Arrays
+
+The big difference between the basic `array` data type and `std::array` is that it has member functions to return its fixed size, and member functions that return standard library random-access iterators.
+
+Declaration of an empty array of `int`s:
+
+```c++
+array<int, 4> integers;
+//or
+array<int, 4> integers{};
+// or
+array<int, 4> integers = {};
+```
+
+That command above allocates in memory 4 sequential slots that can contain an integer each. As an `int` has 4 bytes, one might say the whole `std::array` occupies 16 bytes, but that isn't true. `integers` is an object the has an interface similar of the C++ standart containers (e.g. `size`, `front`, `back` methods), so it demands more than that.
+
+Example of usage:
+
+```c++
+int main()
+{
+    array<float, 10> floats;
+
+    // prints "4.48416e-44 0 3.64694e-20 4.59149e-41 0 0 0 0 0 0"
+    for (auto f : floats)
+    {
+        cout << f << " ";
+    }
+
+    floats.fill(10);
+
+    // prints "10 10 10 10 10 10 10 10 10 10"
+    for (auto f : floats)
+    {
+        cout << f << " ";
+    }
+}
+```
+
+Example of sorting:
+
+```c++
+int main()
+{
+    array<int, 10> integers = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+    sort(integers.begin(), integers.end());
+    for (auto i : integers)
+    {
+        cout << i << " ";
+    }
+}
+// Output: 0 1 2 3 4 5 6 7 8 9
+```
+
 ## Memory Allocation
 
-### `new` and `delete`
-
-TODO
+Dynamically allocated memory is allocated on **Heap**, and non-static and local variables get memory allocated on **Stack**.
 
 ### `malloc` and `free`
 
-TODO
+C way of doing memory allocation. They do the same as `new` and `delete`;
+
+### `new` and `delete`
+
+Doing normal variable declaration with `bool a;` or `char a[20];` allocates and deallocates memory automatically. But, allocating with `int *p = new int[5];` puts the responsability of deallocation on the programmer.
+
+Allocating space for an int:
+
+```c++
+int main()
+{
+    int *p = NULL;
+    p = new int;
+    cout << p[0] << endl; // prints "-1163005939"
+
+    p[0] = 100;
+    cout << p[0] << endl; // prints "100"
+
+    *p = 200;
+    cout << *p << endl; // prints "200"
+
+    return 0;
+}
+```
+
+Allocating space and givin an initial value:
+
+```c++
+int main()
+{
+    int *i = new int(20);
+    char *c = new char('v');
+    float *f = new float(3.14);
+}
+```
+
+Allocating a block of memory:
+
+```c++
+int main()
+{
+    int *pointer = new int[200];
+    for (int i = 0; i < 200; i++)
+    {
+        pointer[i] = i;
+    }
+    return 0;
+}
+```
+
+Allocating an object:
+
+```c++
+class Rectangle
+{
+    int length;
+    int height;
+    int width;
+    Rectangle *children;
+
+public:
+    Rectangle()
+    {
+        length = 0;
+        height = 0;
+        width = 0;
+        children = nullptr;
+    }
+};
+
+int main()
+{
+    Rectangle *rect = new Rectangle();
+}
+```
+
+Deleting a variable from memory:
+
+```c++
+int main()
+{
+    int *integer = new int(10);
+    cout << *integer << endl; // prints "10"
+    delete integer;
+    cout << *integer << endl; // prints "-8754356480"
+}
+```
+
+Deleting a sequential block of memory:
+
+```c++
+int main()
+{
+    int *integers = new int[10];
+    for (int i = 0; i < 10; i++)
+    {
+        integers[i] = i;
+    }
+    delete[] integers;
+}
+```
 
 ## Classes
 
