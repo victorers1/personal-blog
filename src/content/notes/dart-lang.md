@@ -1,17 +1,177 @@
 ---
 title: 'Dart Language'
-description: "a.k.a. Google's favorite"
+description: "Warning: this notes aren't about Flutter"
 pubDate: 'Feb 11 2024'
-# updatedDate: 'Feb 11 2024'
+updatedDate: 'Mar 14 2024'
 heroImage: '/dart-gradient.png'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+## Intro
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+TODO
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+## Pattern Matching
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+Introduced in Dart 3. TODO
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+## Records
+
+Introduced in Dart 3. TODO
+
+## Nice utilities
+
+### Debounce
+
+A class that prevents a method from being excessively called multiple times in a short period.
+
+```dart
+import 'dart:async';
+
+class Debouncer {
+  final int milliseconds;
+
+  Timer? _timer;
+  final Duration _delay;
+
+  Debouncer({required this.milliseconds})
+      : _delay = Duration(milliseconds: milliseconds);
+
+  void run(void Function() f) {
+    _timer?.cancel();
+    _timer = Timer(_delay, f);
+  }
+
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+  }
+}
+```
+
+Usage:
+
+```dart
+final debouncer = Debouncer(milliseconds: 250);
+
+int main() {
+    debouncer.run(
+        () {
+            print("Won't be executed because of the next line");
+        }
+    );
+
+    debouncer.run(
+        () {
+            print("Will be executed after 250 milliseconds");
+        }
+    );
+
+    debouncer.dispose();
+}
+```
+
+The function `f` passed to the method `run` is executed after a pre-defined delay. When the `run` method is called again in the middle of a delay, the previous call to `f` is cancelled in favor to the current `f` and the delay starts again from 0.
+
+As this implementation uses a `Timer` object, it's very important to **dispose** the debouncer when it won't be needed anymore.
+
+### Singleton class
+
+It's a class that can have only one object instantiated. Every time the `new` operator is called on it, the constructor returns the same instance.
+
+```dart
+class Singleton {
+  String name = 'name';
+
+  /// Internal instance.
+  /// Returned every time the command `new Singleton()` is called
+  static Singleton? _instance;
+
+  /// Private constructor.
+  /// Used to run internal logic at construction time
+  Singleton._privateConstructor() {
+    // add logic here
+  }
+
+  /// Public constructor.
+  /// Returns the same instance every time a new object would be created.
+  factory Singleton() {
+    _instance ??= Singleton._privateConstructor();
+    return _instance!;
+  }
+}
+
+void main() {
+  final objA = Singleton();
+  final objB = Singleton();
+
+  print(objA == objB); // true
+  print(objA.name == objB.name); // true
+  objA.name = 'nome';
+  print(objA.name == objB.name); // true
+}
+```
+
+In the above code, the attribute `name` was added only for testing purposes. The private constructor is needed because it's the true responsible to initialize the object's attributes, allocate it in memory and return its reference. The factory method doesn't actually create anything, it's just used to call the private constructor or the previously created instance.
+
+[Here](https://stackoverflow.com/a/12649574/9718711) is another implementation that creates an instance right at the class declaration:
+
+```dart
+class Singleton {
+  static final Singleton _instance = Singleton._privateConstructor();
+
+  factory Singleton() {
+    return _instance;
+  }
+
+  Singleton._privateConstructor();
+}
+```
+
+[Here](https://stackoverflow.com/a/55348216/9718711) is a implementation that exposes the `instance` attribute:
+
+```dart
+class Singleton {
+  Singleton._privateConstructor();
+  static final Singleton instance = Singleton._privateConstructor();
+}
+```
+
+In the code above, `instance` can be exposed because it's `final`, so once attributed, can't be changed.
+
+### Pair class
+
+If you want to implement by yourself:
+
+```dart
+class Pair<L, R> {
+  final L left;
+  final R right;
+
+  Pair(this.left, this.right);
+}
+
+void main() {
+  const pair = Pair<String, int>('key', 0);
+  print(pair.left);
+  print(pair.right);
+}
+```
+
+Or you could just use the `MapEntry` class, which holds a `key`-`value` pair. To refer these getters as the typical `left`-`right` nomenclature, write an extension on `MapEntry<K, V>`.
+
+```dart
+extension MapEntryExt<K,V> on MapEntry<K, V> {
+  K get left => key;
+  V get right => value;
+}
+
+void main() {
+  const pair = MapEntry('key', 0);
+  print(pair.left);
+  print(pair.right);
+}
+```
+
+### Error Handling
+
+TODO
