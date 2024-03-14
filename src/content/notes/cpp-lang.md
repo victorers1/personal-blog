@@ -21,7 +21,7 @@ Although one might think *ISO* is an abbreviation, the letters do not officially
 C++ is standardized by a group known as [ISO/IEC JTC 1/SC 22](https://www.iso.org/committee/45202.html). That soup letters has these meanings:
 
 - ISO: International Organization for Standardization
-- IEC: International Electrotechnical Commission
+- IEC: International Electrotechnics Commission
 - JTC 1: Joint Technical Committee number 1
 - SC 22: Subcommittee number 22
 
@@ -121,7 +121,7 @@ array<int, 4> integers{};
 array<int, 4> integers = {};
 ```
 
-That command above allocates in memory 4 sequential slots that can contain an integer each. As an `int` has 4 bytes, one might say the whole `std::array` occupies 16 bytes, but that isn't true. `integers` is an object the has an interface similar of the C++ standart containers (e.g. `size`, `front`, `back` methods), so it demands more than that.
+That command above allocates in memory 4 sequential slots that can contain an integer each. As an `int` has 4 bytes, one might say the whole `std::array` occupies 16 bytes, but that isn't true. `integers` is an object the has an interface similar of the C++ standard containers (e.g. `size`, `front`, `back` methods), so it demands more than that.
 
 Example of usage:
 
@@ -171,7 +171,7 @@ C way of doing memory allocation. They do the same as `new` and `delete`;
 
 ### `new` and `delete`
 
-Doing normal variable declaration with `bool a;` or `char a[20];` allocates and deallocates memory automatically. But, allocating with `int *p = new int[5];` puts the responsability of deallocation on the programmer.
+Doing normal variable declaration with `bool a;` or `char a[20];` allocates and deallocates memory automatically. But, allocating with `int *p = new int[5];` puts the responsibility of deallocation on the programmer.
 
 Allocating space for an int:
 

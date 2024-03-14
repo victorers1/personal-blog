@@ -1874,7 +1874,7 @@ public:
 };
 ```
 
-#### Tree Class with Constuctor
+#### Tree Class with Constructor
 
 ```c++
 class BinarySearchTree
@@ -2526,9 +2526,9 @@ vector<vector<string>> groupAnagrams(const vector<string> &strings)
     unordered_map<string, vector<string>> table = unordered_map<string, vector<string>>();
     for (string s : strings)
     {
-        string cannonicalString = s;
-        sort(cannonicalString.begin(), cannonicalString.end());
-        table[cannonicalString].push_back(s);
+        string canonicalString = s;
+        sort(canonicalString.begin(), canonicalString.end());
+        table[canonicalString].push_back(s);
     }
     vector<vector<string>> result = vector<vector<string>>();
     for (const auto [key, value] : table)
@@ -2672,7 +2672,7 @@ The Space complexity of a graph stored as an adjacency matrix is $\Omicron(V^{2}
 
 **Removing an edge between vertices**: similar to adding an edge, it's done by changing two values on a matrix or removing two items in a list of labels. Either way it's $\Omicron(1)$.
 
-**Removing a vertex**: similar to adding a node, the adjacency matrix needs to be rewritten, so it's $\Omicron(V^{2})$. But, if the graph was implementated with an adjacency list, each list of labels needs to be iterated to find the occurrences of the node to be deleted, so it's $\Omicron(V)$.
+**Removing a vertex**: similar to adding a node, the adjacency matrix needs to be rewritten, so it's $\Omicron(V^{2})$. But, if the graph was implemented with an adjacency list, each list of labels needs to be iterated to find the occurrences of the node to be deleted, so it's $\Omicron(V)$.
 
 ### Bidirectional Graph class
 
@@ -3048,9 +3048,9 @@ void insertionSort(int array[], int size)
 
 Really cool algorithm that has a Space complexity of $\Omicron(n)$, and Time complexity of $\Omicron(n \log n)$.
 
-First, we have to create an algorithm that given an array and valid indexes that represents the beginning, the middle and finish of the section we'll work with, creates two sub-arrays: one from beginning to middle, other from middle+1 to finish. After that, it'll overwrite the original array section with the sub-arrays values in a way they end up sorted. To place the values in a sorted way, we'll iterate through both sub-arrays, and at the iteration we'll check which of them has the smallest leftmost element. The smalles leftmost value will enter first the the original array.
+First, we have to create an algorithm that given an array and valid indexes that represents the beginning, the middle and finish of the section we'll work with, creates two sub-arrays: one from beginning to middle, other from middle+1 to finish. After that, it'll overwrite the original array section with the sub-arrays values in a way they end up sorted. To place the values in a sorted way, we'll iterate through both sub-arrays, and at the iteration we'll check which of them has the smallest leftmost element. The smaller leftmost value will enter first the the original array.
 
-Notice that this algorithm by itself doesn't completelly sort an array, it just garantees that the half with the smallest elements will be at the left side, and the half with the biggests elements will be at the right side.
+Notice that this algorithm by itself doesn't completely sort an array, it just guarantees that the half with the smallest elements will be at the left side, and the half with the biggest elements will be at the right side.
 
 ```c++
 void merge(int array[], int leftIndex, int midIndex, int rightIndex)
@@ -3492,7 +3492,7 @@ void rotate(vector<int> &nums, int k)
 }
 ```
 
-Sofisticated implementation:
+Sophisticated implementation:
 
 ```c++
 void rotate(vector<int>& nums, int k) {
