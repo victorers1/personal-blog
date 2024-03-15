@@ -3,7 +3,7 @@ title: 'Kotlin Language'
 description: "a.k.a Android Language"
 pubDate: 'Mar 13 2024'
 updatedDate: 'Mar 13 2024'
-heroImage: '/css-gradient.png'
+heroImage: '/kotlin-gradient.png'
 ---
 
 ## Intro
@@ -13,6 +13,10 @@ TODO
 ## Data Types
 
 The [official doc](https://kotlinlang.org/docs/basic-types.html) has a complete and pretty easy text about the basic types. These notes aren't supposed to be a mirror of any documentation already available online.
+
+## Working with Dates
+
+TODO
 
 ## Ranges and progressions
 
@@ -39,4 +43,41 @@ fun main() {
 
 ### Date ranges
 
-TODO
+Syntax to define a date range:
+
+```kotlin
+val birth = Date.from(Instant.ofEpochMilli(834669000000L))
+val now = Date()
+val life: ClosedRange<Date> = birth..now
+```
+
+`ClosedRange` doesn't have an iterable interface, so it cannot be used in a loop:
+
+```kotlin
+// error: For-loop range must have an 'iterator()' method
+for (date in life) {
+    println(date);
+}
+```
+
+But it still have some getters:
+
+```kotlin
+print(life.start)
+print(life.endInclusive)
+```
+
+And some methods that doesn't require iterating over each date:
+
+```kotlin
+val newMillennium = Date.from(Instant.ofEpochMilli(946684800000L))
+
+life.contains(newMillennium);
+life.run {
+    start.before(now)
+};
+life.takeIf { range ->
+    range.isEmpty()
+};
+life.isEmpty() // that's deep
+```
