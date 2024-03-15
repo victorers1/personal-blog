@@ -3,7 +3,7 @@ title: 'Android 14 Course'
 description: "Notes an Udemy course"
 pubDate: 'Mar 13 2024'
 updatedDate: 'Mar 13 2024'
-heroImage: '/css-gradient.png'
+heroImage: '/android-gradient.png'
 ---
 
 ## Intro

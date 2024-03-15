@@ -1,6 +1,6 @@
 ---
 title: 'Dart Language'
-description: "Warning: this notes aren't about Flutter"
+description: "Warning: these notes aren't about Flutter"
 pubDate: 'Feb 11 2024'
 updatedDate: 'Mar 14 2024'
 heroImage: '/dart-gradient.png'
