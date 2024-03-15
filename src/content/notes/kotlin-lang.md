@@ -14,6 +14,10 @@ TODO
 
 The [official doc](https://kotlinlang.org/docs/basic-types.html) has a complete and pretty easy text about the basic types. These notes aren't supposed to be a mirror of any documentation already available online.
 
+## Higher-order functions and lambdas
+
+[Source doc](https://kotlinlang.org/docs/lambdas.html). TODO.
+
 ## Working with Dates
 
 TODO
@@ -81,3 +85,55 @@ life.takeIf { range ->
 };
 life.isEmpty() // that's deep
 ```
+
+## Classes
+
+### Normal Classes
+
+```kotlin
+class Dog(val name: String, val breed: String, var age: Int = 1) {
+    init {
+        bark()
+    }
+    fun bark() {
+        println("Woof Woof");
+    }
+}
+```
+
+### Data Classes
+
+```kotlin
+data class Coffee(
+    val spoonsCount: Int,
+    val ownerName: String,
+    val size: String,
+    val creamAmount: Int = 0
+)
+```
+
+Usage:
+
+```kotlin
+fun main() {
+    println("Who is this coffee for?");
+    val name: String = readln();
+    println("How many spoons of sugar do you want?");
+    val spoons: Int = readln().toInt();
+
+    val coffee = Coffee(spoons, name, "XXL", 3)
+    println("Created $coffee")
+}
+```
+
+An example of usage:
+
+**Terminal**: Who is this coffee for?
+
+**User input**: *denis*
+
+**Terminal**: How many spoons of sugar do you want?
+
+**User input**: *3*
+
+**Terminal**: Created Coffee(spoonsCount=3, ownerName=denis, size=XXL, creamAmount=3)
