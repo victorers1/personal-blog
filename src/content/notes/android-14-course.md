@@ -101,7 +101,7 @@ class BankAccount(private val accountHolder: String, private var balance: Double
         var history = ""
         if (amount in 0.0..balance) {
             balance -= amount
-            history = "$accountHolder withdraw U\$ $amount"
+            history = "$accountHolder withdrew U\$ $amount"
         } else {
             history = "Withdraw Error: The amount U\$ $amount cannot be withdraw."
         }
@@ -141,7 +141,7 @@ fun main() {
 Output example:
 
 ```text
-Victor opened an account with balance R$ 0.0 in Fri Mar 15 12:13:32 GFT 2024
+Victor opened an account with balance R$ 0.0 in Fri Mar 15 12:30:02 GFT 2024
 Deposit Error: Amount must be greater than U$ 0. Given amount is U$ -1.0
 Your balance is U$ 0.0
 Withdraw Error: The amount U$ 1.0 cannot be withdraw.
@@ -150,21 +150,100 @@ Withdraw Error: The amount U$ -1.0 cannot be withdraw.
 Your balance is U$ 0.0
 Victor deposited U$ 5500.56
 Your balance is U$ 5500.56
-Victor withdraw U$ 2500.0
+Victor withdrew U$ 2500.0
 Your balance is U$ 3000.5600000000004
-Victor withdraw U$ 2500.0
+Victor withdrew U$ 2500.0
 Your balance is U$ 500.5600000000004
 Victor deposited U$ 1400.0
 Your balance is U$ 1900.5600000000004
 
 Transaction history of Victor account
-Victor opened an account with balance R$ 0.0 in Fri Mar 15 12:13:32 GFT 2024
+Victor opened an account with balance R$ 0.0 in Fri Mar 15 12:30:02 GFT 2024
 Deposit Error: Amount must be greater than U$ 0. Given amount is U$ -1.0
 Withdraw Error: The amount U$ 1.0 cannot be withdraw.
 Withdraw Error: The amount U$ -1.0 cannot be withdraw.
 Victor deposited U$ 5500.56
-Victor withdraw U$ 2500.0
-Victor withdraw U$ 2500.0
+Victor withdrew U$ 2500.0
+Victor withdrew U$ 2500.0
 Victor deposited U$ 1400.0
-
 ```
+
+### Unit Converter
+
+This project is a form with a text input and two dropdown menu. Below the form is positioned the result text.
+The text input is meant to insert a valid real number. Both dropdown menus are used to select two separate distance unit, the input measurement unit and the output measurement unit. The options are:
+
+- Centimeter
+- Meter
+- Foot
+- Millimeter
+
+The result is calculated in three steps:
+
+- Cast the value in the text input from `String` to `Double`
+- Knowing the inputted value and the input unit, convert that to meters
+- Knowing the value in meters, convert that to the output unit
+
+That conversions are done by the methods `convertToMeter` and `convertFromMeter`:
+
+```kotlin
+fun convertToMeter(value: Double, inputUnit: String): Double {
+    return when (inputUnit) {
+        "Centimeters" -> value * 0.01
+        "Meters" -> value
+        "Foot" -> value * 0.30479
+        "Millimeters" -> value * 0.001
+        else -> 0.0
+    }
+}
+
+fun convertFromMeter(valueInMeters: Double, outputUnit: String): Double {
+    return when (outputUnit) {
+        "Centimeters" -> valueInMeters * 100
+        "Meters" -> valueInMeters
+        "Foot" -> valueInMeters * 3.28084
+        "Millimeters" -> valueInMeters * 1000
+        else -> 0.0
+    }
+}
+
+fun calcResult() {
+    val inputValueDouble: Double = inputValue.toDoubleOrNull() ?: 0.0
+    val valueInMeters = convertToMeter(inputValueDouble, inputUnit)
+    outputValue = convertFromMeter(valueInMeters, outputUnit).toString()
+}
+```
+
+The UI was built in a composable way, that is, joining small components together to compose a larger interface. Each component is a function annotated with the word `@Composable` and has a well defined interface that can be reused as many times as necessary.
+
+Here is an example of a custom `DropdownMenu` that receives its display texts and behavior in form of methods:
+
+```kotlin
+@Composable
+fun UnitDropDownButton(
+    isExpanded: Boolean,
+    label: String,
+    onClick: () -> Unit,
+    dropDownLabels: List<String>,
+    onDropdownMenuItemClick: (String?) -> Unit
+) {
+    Box {
+        Button(onClick = onClick) {
+            Text(text = label.ifBlank { "Select" })
+            Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
+        }
+        DropdownMenu(expanded = isExpanded, onDismissRequest = { onDropdownMenuItemClick(null) }) {
+            dropDownLabels.map {
+                DropdownMenuItem(
+                    text = { Text(text = it) },
+                    onClick = { onDropdownMenuItemClick(it) },
+                )
+            }
+        }
+    }
+}
+```
+
+Below you can see the same showcase present in the [remote repository](https://github.com/victorers1/unit-converter-jetpack-compose/tree/main), which contains the whole project:
+
+![unit converter showcase](https://github.com/victorers1/unit-converter-jetpack-compose/raw/main/assets/showcase.gif)
