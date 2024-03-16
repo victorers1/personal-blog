@@ -18,7 +18,7 @@ Introduced in Dart 3. TODO
 
 Introduced in Dart 3. TODO
 
-## Nice utilities
+## Nice Utilities
 
 ### Debounce
 
@@ -74,7 +74,7 @@ The function `f` passed to the method `run` is executed after a pre-defined dela
 
 As this implementation uses a `Timer` object, it's very important to **dispose** the debouncer when it won't be needed anymore.
 
-### Singleton class
+### Singleton Pattern
 
 It's a class that can have only one object instantiated. Every time the `new` operator is called on it, the constructor returns the same instance.
 
@@ -138,7 +138,89 @@ class Singleton {
 
 In the code above, `instance` can be exposed because it's `final`, so once attributed, can't be changed.
 
-### Pair class
+### Observer Pattern
+
+Observer class:
+
+```dart
+abstract class Observer {
+  void onUpdate(String data);
+}
+
+class ConcreteObserver implements Observer {
+  final String name;
+
+  ConcreteObserver(this.name);
+
+  @override
+  void onUpdate(String data) {
+    print('$name received data: $data');
+  }
+}
+```
+
+Subject class:
+
+```dart
+class Subject {
+  List<Observer> _observers = [];
+
+  void addObserver(Observer observer) {
+    _observers.add(observer);
+  }
+
+  void removeObserver(Observer observer) {
+    _observers.remove(observer);
+  }
+
+  // Method to send data to observers
+  void sendData(String data) {
+    notifyObservers(data);
+  }
+
+  void notifyObservers(String data) {
+    for (final obs in _observers) {
+      obs.onUpdate(data);
+    }
+  }
+}
+```
+
+Example of usage:
+
+```dart
+void main() {
+  // Create a subject
+  final subject = Subject();
+
+  // Create observers
+  final observer1 = ConcreteObserver("obs1");
+  final observer2 = ConcreteObserver("obs2");
+
+  // Register observers with the subject
+  subject.addObserver(observer1);
+  subject.addObserver(observer2);
+
+  // Send data to observers
+  subject.sendData('Hello');
+
+  // Remove an observer
+  subject.removeObserver(observer2);
+
+  // Send more data to observers
+  subject.sendData('World');
+}
+```
+
+Example of output:
+
+```text
+obs1 received data: Hello
+obs2 received data: Hello
+obs1 received data: World
+```
+
+### Pair Class
 
 If you want to implement by yourself:
 
