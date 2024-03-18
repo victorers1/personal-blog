@@ -168,7 +168,91 @@ Victor withdrew U$ 2500.0
 Victor deposited U$ 1400.0
 ```
 
-### Unit Converter
+## Composable Elements
+
+A composable element is a piece of the UI built in a declarative way. An UI is built using the pre-implemented composables in `androidx.compose` package and the custom ones that the programmer has defined. Some examples of the existing ones are:
+
+- Row, in `androidx.compose.foundation.layout.Row`
+- Spacer, in `androidx.compose.foundation.layout.Spacer`
+- Icon, in `androidx.compose.material3.Icon`
+- Text, in `androidx.compose.material3.Text`
+
+A custom composable can be defined as below:
+
+```kotlin
+@Composable
+fun Item() {
+    Row {
+        Column {
+            Button(onClick = {}) {
+                Text(text = "Text")
+            }
+        }
+    }
+}
+```
+
+Each composable is a function annotated with the word `@Composable`, can receive parameters to manage its state and behavior, and has a well declared interface that can be reused as many times as necessary.
+
+Composables usually has the `modifier` argument. This is the way Jetpack Compose applies visual styling such as internal and external spacing, border, shape and color. The modifiers are applied in the order they are defined. That means this code with `padding(8.dp)` after the `border`:
+
+```kotlin
+Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .border(
+            border = BorderStroke(2.dp, Color(0xFF018786)),
+            shape = RoundedCornerShape(20)
+        )
+        .padding(8.dp),
+) {
+    Text(
+        text = "Item long name, Qtd: 1",
+    )
+    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+    Row {
+        Icon(imageVector = Icons.Filled.Edit)
+        Icon(imageVector = Icons.Filled.Delete)
+    }
+}
+```
+
+Produces this UI:
+
+![item](../../../public/notes/android-14-course/jetpack-compose-shoppinglistitem-paddingpreview.png)
+
+That is different to this code with `border` after the `padding(8.dp)`:
+
+```kotlin
+Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp)
+        .border(
+            border = BorderStroke(2.dp, Color(0xFF018786)),
+            shape = RoundedCornerShape(20)
+        ),
+) {
+    Text(
+        text = "Item long name, Qtd: 1",
+    )
+    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+    Row {
+        Icon(imageVector = Icons.Filled.Edit)
+        Icon(imageVector = Icons.Filled.Delete)
+    }
+}
+```
+
+Which produces this result:
+
+![item](../../../public/notes/android-14-course/jetpack-compose-shoppinglistitem-marginpreview.png)
+
+## State management
+
+TODO
+
+## Unit Converter
 
 This project is a form with a text input and two dropdown menu. Below the form is positioned the result text.
 The text input is meant to insert a valid real number. Both dropdown menus are used to select two separate distance unit, the input measurement unit and the output measurement unit. The options are:
@@ -214,7 +298,7 @@ fun calcResult() {
 }
 ```
 
-The UI was built in a composable way, that is, joining small components together to compose a larger interface. Each component is a function annotated with the word `@Composable` and has a well defined interface that can be reused as many times as necessary.
+The UI was built in a composable way, that is, joining small components together to compose a larger interface.
 
 Here is an example of a custom `DropdownMenu` that receives its display texts and behavior in form of methods:
 
@@ -247,3 +331,16 @@ fun UnitDropDownButton(
 Below you can see the same showcase present in the [remote repository](https://github.com/victorers1/unit-converter-jetpack-compose/tree/main), which contains the whole project:
 
 ![unit converter showcase](https://github.com/victorers1/unit-converter-jetpack-compose/raw/main/assets/showcase.gif)
+
+## Shopping List App
+
+It's an app that saves shopping items and its quantity in a list. Items can be edited and deleted. The `ShoppingItem` data class is:
+
+```kotlin
+data class ShoppingItem(
+    val id: Int,
+    var name: String,
+    var quantity: Int,
+    var isEditing: Boolean = false
+)
+```
