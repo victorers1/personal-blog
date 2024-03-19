@@ -341,6 +341,40 @@ data class ShoppingItem(
     val id: Int,
     var name: String,
     var quantity: Int,
-    var isEditing: Boolean = false
 )
 ```
+
+To add or edit an item, the app opens the dialogs `AddItemDialog` and `EditItemDialog` respectively. In contrast with the last "Unit Converter" project, all composables in this project was placed in a different file, for organization. To achieve this, all data and behavior that each composable needs to properly work, have to be given through function params. Below, the example of `DialogTextField`:
+
+```kotlin
+@Composable
+fun DialogTextField(
+    value: String,
+    label: String,
+    placeholder: String,
+    onValueChange: (String) -> Unit,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = { Text(text = placeholder) },
+        singleLine = true,
+        label = { Text(text = label) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    )
+}
+```
+
+### Mutable List State
+
+One thing learned in this project is that although we manage state using the function `mutableStateOf()`, we have to treat these variables as immutable. That is, in order to Jetpack Compose detect a change in state and update the screen, these values has to be overwritten. That seems to be obvious when working with primitive type variables, but it's even more clear when working with iterable structures like `List`s.
+
+In this project, we had to declare `var shoppingItems by remember { mutableStateOf(listOf<ShoppingItem>() }`. To add items to `shoppingItems`, we couldn't simply do an in-place operation by adding an element at the end of the existing list. We had to create a copy of the existing list, insert the new item at the end, and then, overwrite the existing state in `shoppingItems` with the new one.
+
+That is also the case if you want to change one of the element's attribute, like `name`. You must create the new copy of that element, create a new list with the new element inserted, and then, overwrite the `shoppingItems` variable.
+
+Below you can see the same showcase present in the [remote repository](https://github.com/victorers1/shoppinglist-jetpack-compose), which contains the whole project:
+
+![unit converter showcase](https://github.com/victorers1/shoppinglist-jetpack-compose/raw/main/assets/showcase.gif)
