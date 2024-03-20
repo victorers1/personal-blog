@@ -377,4 +377,92 @@ That is also the case if you want to change one of the element's attribute, like
 
 Below you can see the same showcase present in the [remote repository](https://github.com/victorers1/shoppinglist-jetpack-compose), which contains the whole project:
 
-![unit converter showcase](https://github.com/victorers1/shoppinglist-jetpack-compose/raw/main/assets/showcase.gif)
+![shopping list showcase](https://github.com/victorers1/shoppinglist-jetpack-compose/raw/main/assets/showcase.gif)
+
+## Counter App with MVVM
+
+Yeah, I know it's just a goddamn counter app, but the reason I done this is to test the MVVM architecture in android's Jetpack Compose.
+
+![mvvm showcase](https://github.com/victorers1/counterapp-mvvm-jetpack-compose/raw/main/assets/showcase.gif)
+
+## Recipe App
+
+It's a single page app that loads meals categories information from the site `https://www.themealdb.com`. The API returns a JSON containing a bunch of meals categories. Each one has an id, an image URL, a name and a description.
+
+When any category is clicked, the details page opens, showing the name, image and the description.
+
+### External Packages
+
+We're using:
+
+- `androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0` to work with View models
+- `com.squareup.retrofit2:retrofit:2.10.0` to do network calls
+- `com.squareup.retrofit2:converter-gson:2.10.0` to convert JSONs to Kotlin object mapping
+- `io.coil-kt:coil:2.6.0` to load images from URLs
+
+### Requests
+
+We created a service interface to serve as the contract used in the whole app to do network request. The service internally uses Retrofit plugin, but the rest of the app doesn't need to know this.
+
+```kotlin
+private val retrofit = Retrofit.Builder().baseUrl("https://www.themealdb.com/api/json/v1/1/")
+    .addConverterFactory(GsonConverterFactory.create()).build()
+
+var recipeService: ApiService = retrofit.create(ApiService::class.java)
+
+interface ApiService {
+    @GET("categories.php")
+    suspend fun getCategories(): CategoriesResponse
+}
+```
+
+### Image Loading
+
+To load an Image from a given URL, we're using the `coil.compose.rememberAsyncImagePainter` function as seen below:
+
+```kotlin
+@Composable
+fun MealCategoryItem(mealCategory: MealCategory) {
+    Column {
+        Image(
+            painter = rememberAsyncImagePainter(mealCategory.strCategoryThumb),
+        )
+        Text(
+            text = mealCategory.strCategory,
+        )
+    }
+}
+```
+
+### Navigation
+
+In order to navigate from a screen to another, we've built a `RootScreen` to serve as a container to the navigation stack, it's the page that is never popped and every page is on top of it. The root, contains only a `NavHost`, responsible for stacking the others Composables, like `HomeScreen` and `CategoryDetailsScreen`. `NavHost` works with named route, like the web. Below, it's the simplified version of the `RootScreen`:
+
+```kotlin
+@Composable
+fun RootScreen() {
+    val navController = rememberNavController()
+    val homeScreenViewModel: HomeScreenViewModel = viewModel()
+    val homeScreenState by homeScreenViewModel.homeScreenState
+
+    NavHost(navController = navController, startDestination = "homeScreen") {
+
+        composable(route = "homeScreen") {
+            HomeScreen(
+                viewState = homeScreenState,
+                navigateToCategoryDetailsScreen = {
+                    navController.navigate("detailsScreen")
+                }
+            )
+        }
+
+        composable(route = "detailsScreen") {
+            CategoryDetailsScreen(
+                navigateToHomeScreen = { navController.popBackStack() }
+            )
+        }
+    }
+}
+```
+
+![meal db showcase](https://github.com/victorers1/meal-db-jetpack-compose-app/raw/main/assets/showcase.gif)
