@@ -254,6 +254,26 @@ void main() {
 }
 ```
 
+### DurationExtension
+
+If you want to declare `Duration`s in a less verbose way:
+
+```dart
+extension DurationExt on int {
+  Duration get ms => Duration(milliseconds: this);
+  Duration get sec => Duration(seconds: this);
+  Duration get min => Duration(minutes: this);
+}
+```
+
+Usage:
+
+```dart
+final halfSec = 500.ms;
+final twoSecs = 2.sec;
+final oneHour = 60.min;
+```
+
 ### Error Handling
 
 TODO
