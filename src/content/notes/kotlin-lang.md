@@ -146,6 +146,37 @@ map.forEach { (_, value) -> println("$value!") }
 
 #### Anonymous Functions
 
+They're simply normal functions without the name:
+
+```kotlin
+// with name
+fun sum(a: Int, b: Int): Int {
+    return a + b
+}
+
+// without name, body body
+var sum = fun(a: Int, b: Int): Int {
+    return a + b
+}
+
+// without name, expression body
+var sum = fun(a: Int, b: Int): Int = a + b
+```
+
+The parameters and the return type are specified in the same way as for regular functions, except the parameter types can be omitted if they can be inferred from the context:
+
+```kotlin
+integers.filter(fun(item) = item > 0)
+```
+
+In the example above, the function `filter` expects an argument of type `(Int) -> Boolean` so, when passing just `fun(item) = item > 0` the compiler infers the type `Int` to `item`.
+
+Note that when `filter` receives an anonymous function, this is placed inside `()`. If we gave a lambda expression, this could be placed inside `{}`:
+
+```kotlin
+integers.filter { it > 0 }
+```
+
 ## Working with Dates
 
 TODO
