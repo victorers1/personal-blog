@@ -2,7 +2,7 @@
 title: 'Kotlin Language'
 description: "a.k.a Android Language"
 pubDate: 'Mar 13 2024'
-updatedDate: 'Mar 13 2024'
+updatedDate: 'Apr 15 2024'
 heroImage: '/kotlin-gradient.png'
 ---
 
@@ -14,9 +14,137 @@ TODO
 
 The [official doc](https://kotlinlang.org/docs/basic-types.html) has a complete and pretty easy text about the basic types. These notes aren't supposed to be a mirror of any documentation already available online.
 
-## Higher-order functions and lambdas
+## Functions
 
-[Source doc](https://kotlinlang.org/docs/lambdas.html). TODO.
+[Source text](https://kotlinlang.org/docs/lambdas.html).
+
+### Higher-order functions
+
+A higher-order function is a function that takes functions as parameters, or returns a function. That's not exclusive to Kotlin, it's a well-known computer science concept.
+
+### Functions literals
+
+In Kotlin there are a few ways of creating a function, one of them are **Function literals**. Function literals are functions that are not declared but are passed immediately as an expression. There are two kinds of function literal in Kotlin: **Lambda expressions** and **Anonymous functions**.
+
+#### Lambda expressions
+
+Below, an example of the usage of a lambda function that compares two strings by its lengths:
+
+```kotlin
+max(strings, { a, b -> a.length < b.length })
+```
+
+Since a lambda is an expression, it can be attributed into a variable:
+
+```kotlin
+// Types inside lambda
+val isStringShorterThanInt = { a: String, b: Int -> a.length < b }
+
+// Types outside lambda
+val isGreaterThan: (Int, Int) -> Boolean = { a, b -> a > b }
+```
+
+There are a few cool syntax rules that applies to lambda expressions:
+
+##### Inferred Return Value
+
+If the inferred return type of the lambda is not Unit, the last (or possibly single) expression inside the lambda body is treated as the return value:
+
+```kotlin
+val compare: (String, String) -> Boolean = { str1, str2 ->
+    val len1 = str1.length
+    val len2 = str2.length
+    len1 > len2
+}
+```
+
+##### Passing Trailing Lambdas
+
+According to Kotlin convention, if the last parameter of a function is a function, then a lambda expression passed as the corresponding argument can be placed outside the parentheses:
+
+```kotlin
+val product = items.fold(1) { acc, e -> acc * e }
+```
+
+Such syntax is also known as **trailing lambda**.
+
+If the lambda is the only argument in that call, the parentheses can be omitted entirely:
+
+```kotlin
+data class Person(
+    val age: Short
+)
+
+fun main() {
+    val person = Person(27)
+
+    // option 1
+    val v = person.takeIf({ it -> it.age > 18 })
+
+    // option 2
+    val p = person.takeIf { it -> it.age > 18 }
+}
+```
+
+##### it: Implicit Name Of A Single Parameter
+
+If the compiler can parse the signature without any parameters, the parameter does not need to be declared and `->` can be omitted. The parameter will be implicitly declared under the name `it`.
+
+```kotlin
+// option 1
+person.let { it -> print(it.age) }
+
+// since there is only one argument, it can be omitted
+person.let { print(it.age) }
+```
+
+##### Returning A Value From A Lambda Expression
+
+In Kotlin, function can be nested using functions literals, local functions and expressions. When a `return` statement is called inside a lambda expression, will take effect on the outer calling function:
+
+```kotlin
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach {
+        if (it == 3) return // non-local return directly to the caller of foo()
+        print(it)
+    }
+    println("this point is unreachable")
+}
+```
+
+To return from a lambda expression, qualify the `return`:
+
+```kotlin
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach {
+        if (it == 3) return@forEach // local return to the caller of the lambda - the forEach loop
+        print(it)
+    }
+    print(" done with implicit label")
+}
+```
+
+Alternatively, you can replace the lambda expression with an anonymous function:
+
+```kotlin
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach(fun(value: Int) {
+        if (value == 3) return  // local return to the caller of the anonymous function - the forEach loop
+        print(value)
+    })
+    print(" done with anonymous function")
+}
+```
+
+##### Underscore For Unused Variables
+
+If the lambda parameter is unused, you can place an underscore instead of its name:
+
+```kotlin
+map.forEach { (_, value) -> println("$value!") }
+```
+
+#### Anonymous Functions
 
 ## Working with Dates
 
@@ -24,7 +152,7 @@ TODO
 
 ## Ranges and progressions
 
-There is an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover what isn't in the docs at least in a first look.
+There is an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover what isn't in the docs, at least in a first look.
 
 ### Comparing ranges
 

@@ -2,7 +2,7 @@
 title: 'Android 14 Course'
 description: "Notes an Udemy course"
 pubDate: 'Mar 13 2024'
-updatedDate: 'Mar 14 2024'
+updatedDate: 'Mar 20 2024'
 heroImage: '/android-gradient.png'
 ---
 
@@ -466,3 +466,7 @@ fun RootScreen() {
 ```
 
 ![meal db showcase](https://github.com/victorers1/meal-db-jetpack-compose-app/raw/main/assets/showcase.gif)
+
+## Location App
+
+TODO
