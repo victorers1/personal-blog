@@ -69,7 +69,7 @@ The team personally commit to the Sprint objectives. Never promise what you can'
 
 The people in the team respects each other both professionally and personally, even if they are Python programmers. The team can only succeed if everyone believes on each other capabilities and independency. No toxicity is allowed.
 
-### Open to Changes
+### Openness
 
 The Scrum team and the stakeholder needs to agree to never change the current running Sprint backlog, but this doesn't mean this will never happen. A well structured Scrum team will be capable of dealing with the minor changes (since it don't happens frequently).
 
@@ -92,6 +92,14 @@ The Scrum team and the stakeholder needs to agree to never change the current ru
 - The result of the Sprint
 - Equals to the old product added by a valuable increment
 - The amount of increment is planned in the Sprint Planning
+- An Increment is a concrete stepping stone toward the Product Goal
+- Each Increment is additive to all prior Increments and thoroughly verified, ensuring that all Increments work together
+- In order to provide value, the Increment must be usable
+- Multiple Increments may be created within a Sprint
+- The sum of the Increments is presented at the Sprint Review thus supporting empiricism
+- However, an Increment may be delivered to stakeholders prior to the end of the Sprint
+- The Sprint Review should never be considered a gate to releasing value
+- Work cannot be considered part of an Increment unless it meets the Definition of Done
 
 ## Roles
 
@@ -131,9 +139,7 @@ Every ceremony occurs inside a Sprint, there is nothing outside nor between Spri
 Roles:
 
 - **Product Owner**: Influenced by the stakeholders, he/she brings the business objectives and, thus, the team objectives ordered by priority.
-
 - **Scrum Master**: Conducts the reunion. Facilitates the communication between the members. Plans how the team will be able to reach the objectives.
-
 - **Developers**: Pushes to the Sprint Backlog the right tasks to reach the current goal. Plans how they will be able to reach the objectives.
 
 Artifacts:
@@ -161,11 +167,8 @@ Roles:
 Roles:
 
 - **Scrum Master**: Conducts the event. Guarantees that the ceremony occurs at the correct time and with the right duration.
-
 - **Product Owner**: Observes the stakeholders and collects feedbacks as the presentation is happening.
-
 - **Developers**: Presents the increment to the stakeholders, while interacting with them.
-
 - **Stakeholders**: Watch the presentation and give feedbacks.
 
 Artifacts:
@@ -183,7 +186,6 @@ Artifacts:
 Roles:
 
 - **Scrum Master**: Conducts the ceremony applying some interpersonal dynamic to involve all the team. Collects and analyses what has been discussed by the team.
-
 - **Scrum Master**, **Product Owner**, **Developers**: Brings reflections on the current Sprint and the Scrum implementation. Expose team blockers, self-made errors and suggest possible fixes to improve the methodology and itself. Recognizes team partners for their amazing skills.
 
 Artifacts:
@@ -201,7 +203,6 @@ Artifacts:
 Roles:
 
 - **Product Owner**: Brings to discussion business objectives that will be relevant in a near future. Always points out blocks and risks.
-
 - **Developers**: Answer the Product Owners doubts. Based in the discussion, proposes tasks to the Backlog. Estimates each task effort.
 
 ### Team size
@@ -234,19 +235,11 @@ In a really big project, where the people had to be divided in several Scrum Tea
 [CertiProf®](https://www.agilealliance.org/organizations/certiprof/) is a corporate member of the [Agile Alliance](https://www.agilealliance.org/organizations/).
 
 - Basic: 40 questions, 1 hour
-
   - SFPC, Scrum Foundation Professional Certified
-
 - Professional: 40 questions, 1 hour
-
   - SMPC, Scrum Master Professional Certificate
-
   - SDPC, Scrum Developer Certification
-
   - SPOPC, Scrum Product Owner Certification
-
 - Advanced: Synchronous live conversation. Based on experience and documentation.
-
   - SAPC, Scrum Advanced Professional Certificate
-
   - ST-SM, Scrum Advanced Professional Certificate
