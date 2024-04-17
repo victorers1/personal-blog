@@ -1,12 +1,14 @@
 ---
 title: 'Scrum basics'
-description: "Notes an Udemy course"
+description: "Notes about a course"
 pubDate: 'Apr 16 2024'
-updatedDate: 'Apr 16 2024'
+updatedDate: 'Apr 17 2024'
 heroImage: '/android-gradient.png'
 ---
 
 ## Intro
+
+Scrum is a lightweight framework that helps people, teams and organization generate value through adaptive solutions for complex problems. The Scrum framework is purposefully incomplete, only defining the parts required to implement Scrum theory. While implementing only parts of Scrum is possible, the result is not Scrum.
 
 Courses:
 
@@ -19,6 +21,11 @@ Courses:
 They're non-negotiable.
 
 ### Empirical Process Control
+
+- Learn as we go
+- Wait and accept change
+- Inspect and adapt using short development cycles
+- Estimates are indicative only and may not be accurate
 
 The Scrum Team must always analyze what they are doing, be transparent to each other and be able to adapt to changes.
 
@@ -210,3 +217,36 @@ When the team adopts the User Stories method, they are placed in the Backlog and
 ### Scrum of Scrums
 
 In a really big project, where the people had to be divided in several Scrum Teams, there can be a person responsible to manage all the Scrum Teams applying the Scrum methodology to each Team as they as individuals. This can be done taking one representative person of each team. This person is called **Chief Scrum Master**.
+
+## Certifications
+
+- CSM, Certified Scrum Master: 2 days course, mandatorily with official Scrum Alliance members
+- PSM, Professional Scrum Master: 80 questions, 1 hour
+- PMI-ACP, Agile Certifier Practitioner: 120 questions, 3 hours
+- ASF, Agile Scrum Foundation: 40 questions, 1 hour
+- ASM, Agile Scrum Master: portfolio overview with official members of Agile Scrum Foundation
+- SFC, Scrum Fundamentals Certified: offered by SCRUMstudy, 40 questions, 1 hour
+- SDC, Scrum Developer Certified: offered by SCRUMstudy, 75 questions, 90 minutes
+- SMC, Scrum Master Certified: offered by SCRUMstudy, 100 questions, 2 hours
+
+### CertiProf
+
+[CertiProf®](https://www.agilealliance.org/organizations/certiprof/) is a corporate member of the [Agile Alliance](https://www.agilealliance.org/organizations/).
+
+- Basic: 40 questions, 1 hour
+
+  - SFPC, Scrum Foundation Professional Certified
+
+- Professional: 40 questions, 1 hour
+
+  - SMPC, Scrum Master Professional Certificate
+
+  - SDPC, Scrum Developer Certification
+
+  - SPOPC, Scrum Product Owner Certification
+
+- Advanced: Synchronous live conversation. Based on experience and documentation.
+
+  - SAPC, Scrum Advanced Professional Certificate
+
+  - ST-SM, Scrum Advanced Professional Certificate
