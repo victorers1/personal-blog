@@ -14,9 +14,37 @@ Courses:
 - [Introdução a agilidade + scrum + kanban - Curso express](https://www.udemy.com/course/curso-express-agilidade/) (in portuguese)
 - [Os Fundamentos do Scrum](https://www.udemy.com/course/os-fundamentos-do-scrum/)
 
+## Principles
+
+They're non-negotiable.
+
+### Empirical Process Control
+
+The Scrum Team must always analyze what they are doing, be transparent to each other and be able to adapt to changes.
+
+### Self-organization
+
+Each individual must be highly independent and able to follow the methodology with low guidance. This also means they need to trust each other's capabilities of self-organization.
+
+### Collaboration
+
+The resulting product is a equally shared effort, every one is responsible for the team success, there are no favorites.
+
+### Value-oriented prioritization
+
+The Scrum Team main goal is always to maximize the product value during the whole project.
+
+### Time-boxing
+
+Each process and ceremony have a well defined duration and time to occur.
+
+### Iterative Development
+
+The product has its value regularly incremented in cycles called Sprint.
+
 ## Values
 
-THe golden rule is: always deliver an increment at each sprint. To do that, you will need 5 values.
+THe golden rule is: always deliver an increment at each Sprint. To do that, you will need 5 values.
 
 ### Courage
 
@@ -24,11 +52,11 @@ A Scrum Team needs to be courageous to do the right thing, to do hard tasks and 
 
 ### Focus
 
-The team has to focus on the current sprint and on the Scrum maintenance. That is nothing else to do inside a sprint.
+The team has to focus on the current Sprint and on the Scrum maintenance. That is nothing else to do inside a Sprint. Sprints can take from 2 to 6 weeks.
 
 ### Commitment
 
-The team personally commit to the sprint objectives. Never promise what you can't deliver.
+The team personally commit to the Sprint objectives. Never promise what you can't deliver.
 
 ### Respect
 
@@ -36,31 +64,7 @@ The people in the team respects each other both professionally and personally, e
 
 ### Open to Changes
 
-THe Scrum team and the stakeholder needs to agree to never change the current running sprint backlog, but this doesn't mean this will never happen. A well structured Scrum team will be capable of dealing with the minor changes (since it don't happens frequently).
-
-## Roles
-
-### Scrum Master
-
-- Knows all about the Scrum framework (thus, Scrum *master*)
-- Guides those that don't know how to Scrum
-- Manages the processes and tools the team uses
-- Conducts the Scrum events
-- Facilitator
-- Encourages the each team member to be independent
-- Adapts the Scrum Framework to the project's reality
-
-### Product Owner
-
-- Listen to the stakeholders' needs
-- Translates the business objects to demands
-- Populate backlogs with demands
-- Give specifications to developers
-- Responsible for the final product
-
-### Developers
-
-- Translates demands to a final product
+The Scrum team and the stakeholder needs to agree to never change the current running Sprint backlog, but this doesn't mean this will never happen. A well structured Scrum team will be capable of dealing with the minor changes (since it don't happens frequently).
 
 ## Artifacts
 
@@ -81,6 +85,31 @@ THe Scrum team and the stakeholder needs to agree to never change the current ru
 - The result of the Sprint
 - Equals to the old product added by a valuable increment
 - The amount of increment is planned in the Sprint Planning
+
+## Roles
+
+### Scrum Master
+
+- Know all about the Scrum framework (thus, Scrum *master*)
+- Guide those that don't know how to Scrum
+- Manage the processes and tools the team uses
+- Lead the Scrum events
+- Facilitates the team members jobs
+- Encourage the each team member to be independent
+- Resolve blocks to the delivery
+- Adapt the Scrum Framework to the project's reality
+
+### Product Owner
+
+- Listen to the stakeholders' needs
+- Translates the business objectives to demands
+- Populate the Backlog with demands
+- Give specifications to developers
+- Responsible for the final product
+
+### Developers
+
+- Translates demands to a final product
 
 ## Ceremonies
 
@@ -167,3 +196,17 @@ Roles:
 - **Product Owner**: Brings to discussion business objectives that will be relevant in a near future. Always points out blocks and risks.
 
 - **Developers**: Answer the Product Owners doubts. Based in the discussion, proposes tasks to the Backlog. Estimates each task effort.
+
+### Team size
+
+It is recommended from 10 to 20 at each Scrum Team. For bigger projects, it's possible to divide the people in smalls Scrum Teams.
+
+### User Stories
+
+Usually written by the Product Owner, those are documents with the stakeholders definitions clearly stated in a way the Scrum Team easily understand. It also contains all the acceptance criteria, the minimum requirements that makes the final product acceptable by the stakeholders. User Stories can be highly complex tasks and may be sub-divided in smaller tasks.
+
+When the team adopts the User Stories method, they are placed in the Backlog and follows the normal flow of a task.
+
+### Scrum of Scrums
+
+In a really big project, where the people had to be divided in several Scrum Teams, there can be a person responsible to manage all the Scrum Teams applying the Scrum methodology to each Team as they as individuals. This can be done taking one representative person of each team. This person is called **Chief Scrum Master**.
