@@ -274,6 +274,17 @@ final twoSecs = 2.sec;
 final oneHour = 60.min;
 ```
 
-### Error Handling
+### Random Numbers
 
-TODO
+```kotlin
+import 'dart:math';
+
+void main() {
+  var random = Random();
+
+  random.nextBool();
+  random.nextDouble();
+  random.nextInt(100);
+  random.toString();
+}
+```
