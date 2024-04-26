@@ -12,7 +12,43 @@ TODO
 
 ## Data Types
 
-The [official doc](https://kotlinlang.org/docs/basic-types.html) has a complete and pretty easy text about the basic types. These notes aren't supposed to be a mirror of any documentation already available online.
+The [official doc](https://kotlinlang.org/docs/basic-types.html) has a complete and pretty easy text about it. These notes aren't supposed to be a mirror of the documentation already available online.
+
+### Any, Unit & Nothing
+
+`Any`: The root of the Kotlin class hierarchy. Every Kotlin class has `Any` as a superclass.
+
+```kotlin
+// The returned value's type isn't pre-defined
+fun returnsAnyType(): Any? {
+    val randomNumber = (0..5).random()
+    return when (randomNumber) {
+        0 -> "string"
+        1 -> 's'
+        2 -> 1
+        3 -> Double.MAX_VALUE
+        4 -> Float.MAX_VALUE
+        5 -> true
+        else -> null
+    }
+}
+```
+
+`Unit`: The type with only one value: the `Unit` object. This type corresponds to the void type in Java.
+
+```kotlin
+fun hasNoReturn(): Unit {
+}
+```
+
+`Nothing`: `Nothing` has no instances. You can use `Nothing` to represent "a value that never exists": for example, if a function has the return type of `Nothing`, it means that it never returns (always throws an exception).
+
+```kotlin
+// This function can't return anything, not even an Unit
+fun returnsNothing(): Nothing {
+    throw Exception()
+}
+```
 
 ## Functions
 
@@ -183,7 +219,7 @@ TODO
 
 ## Ranges and progressions
 
-There is an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover what isn't in the docs, at least in a first look.
+There's an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover what isn't in the docs, at least in a first look.
 
 ### Comparing ranges
 
@@ -301,6 +337,44 @@ An example of usage:
 
 TODO
 
-## Coroutine
+## Coroutines
 
 TODO
+
+## Nice Utilities
+
+### Random Numbers
+
+The easiest to generate a random Int way is through ranges:
+
+```kotlin
+val randomNumber = (0..5).random()
+```
+
+To generate random `Double` in the range `[0.0, 1.0)`, do:
+
+```kotlin
+val random = Math.random()
+```
+
+Since computers doesn't have infinite precision, there is a limited amount of `Double` numbers they can represent. Given a number N, you can verify what's the next possible `Double` right after or before N. For example, let `N = 1.0`. We can verify that the next `Double` that the computer can represent is `1.0000000000000002` by running:
+
+```kotlin
+println(1.0.nextUp())
+```
+
+We can verify that `0.9999999999999999` is the `Double` value right before the 1.0 with the command `println(1.0.nextDown())`.
+
+The same applies to `Float`:
+
+```kotlin
+println(1.0f.nextDown()) // 0.99999994
+println(1.0f.nextUp()) // 1.0000001
+```
+
+As the largest double value less than 1.0 is `Math.nextDown(1.0)`, a value $x$ in the closed range $[x1, x2]$ where $x1 \leq x2$ may be defined by the statements:
+
+```kotlin
+double f = Math.random()/Math.nextDown(1.0);
+double x = x1*(1.0 - f) + x2*f;
+```
