@@ -333,6 +333,22 @@ An example of usage:
 
 **Terminal**: Created Coffee(spoonsCount=3, ownerName=denis, size=XXL, creamAmount=3)
 
+### Constructors
+
+TODO
+
+### Getters, Setters & fields
+
+TODO
+
+### Late Initialization
+
+TODO
+
+### With
+
+TODO
+
 ## Async Programming
 
 TODO

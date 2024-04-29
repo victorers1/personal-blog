@@ -3,7 +3,7 @@ title: 'Scrum basics'
 description: "Notes about a course"
 pubDate: 'Apr 16 2024'
 updatedDate: 'Apr 17 2024'
-heroImage: '/android-gradient.png'
+heroImage: '/scrum-gradient.png'
 ---
 
 ## Intro

@@ -276,6 +276,8 @@ final oneHour = 60.min;
 
 ### Random Numbers
 
+Basic usage:
+
 ```kotlin
 import 'dart:math';
 
@@ -286,5 +288,13 @@ void main() {
   random.nextDouble();
   random.nextInt(100);
   random.toString();
+}
+```
+
+To generate numbers inside the interval $[min, max)$, use the function:
+
+```dart
+int random(int min, int max) {
+    return min + Random().nextInt(max - min);
 }
 ```
