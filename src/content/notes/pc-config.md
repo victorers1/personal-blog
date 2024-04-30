@@ -8,6 +8,8 @@ heroImage: '/docker-gradient.png'
 
 ## Intro
 
+These are my config files for some of the programs I use. Hope they will never be needed.
+
 ## Oh-my-posh Profile
 
 Configured Theme and aliases in order to make it look like Linux shell with oh-my-zhs.

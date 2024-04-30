@@ -112,3 +112,4 @@ To attach to a Container output, there is the command `docker attach [CONTAINER_
 
 ### Port Mapping
 
+You publish a container's port(s) to the host machine with: `docker container run -itd -p 8080:80/tcp my_image`
