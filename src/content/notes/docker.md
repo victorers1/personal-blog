@@ -109,3 +109,6 @@ Just like a process is a running instance of a program, a Container is a running
 ### I/O Attach
 
 To attach to a Container output, there is the command `docker attach [CONTAINER_NAME]`, but this will stop the Container execution when it is exited with the command `exit`. To prevent this behavior, an alternative is to attach using the command `docker exec -it [CONTAINER_NAME] bash`. For example: `docker exec -it first_container bash`. After inserting the `exit` command and checking all running containers with `docker ps`, the "first_container" is still up. Note that the `bash` can be replaced by others commands like `ls` and `pwd`, but these will automatically exit after the output is printed out.
+
+### Port Mapping
+
