@@ -6,7 +6,44 @@ updatedDate: 'Apr 29 2024'
 heroImage: '/docker-gradient.png'
 ---
 
-## Intro
+## Main Concepts
+
+TL:DR definition: Docker is a Container Manager Engine. "Container" in this context means "a running instance of an isolated Virtual Machine."
+
+### Virtual Machines
+
+TODO
+
+### Virtualization Methods
+
+It's a machine virtualization tool but doesn't do it the same way as Hypervisor programs like Oracle's VM VirtualBox. These traditional programs perform virtualization running completely separate Guest OS's instances on the Host Machine. These Guests OS can work completely different from the Host OS, and they requires hardware resources just like they were running on their own machine.
+
+Docker doesn't create Virtual Machines, it creates **Containers**. Thus, Docker can be defined as a Container Manager Engine.
+
+### Docker Container
+
+Container is a process in the computer that runs your program completely isolated from the others processes while still using the same kernel of the Host OS. They even have their own isolated file system to avoid interfering in the Host OS. Note that it isn't a Virtual Machine, as it isn't completely independent from the Host Machine. They will share the kernel and possibly some binaries.
+
+### LXC: Linux Containers
+
+When using traditional virtualization methods, with a Hypervisor, it is possible to run a Linux OS inside a Windows OS and vice-versa. Guest OS and Host OS can be different. This isn't the case when working with Docker, because it was built upon an existing Linux feature, the LXC.
+
+Since Docker was made upon LXC (Linux Containers), it can runs only Linux based OS (e.g. Ubuntu, Fedora, RedHat OS). There aren't Containers based on macOS or Windows.
+
+By the way, processes containerization isn't new when Docker was made, but it was a bit more hard to understand and to perform. The Docker project came to provide a friendly CLI, REST APIs and patterns that helps less familiarized developers to work with LXC.
+
+### Isolation
+
+There are many possible isolation methods provided by Docker. A few of them are:
+
+- RAM usage limit
+- CPU usage limit
+- I/O usage limit
+- Network data limit
+- Network interface isolation
+- File system isolation
+- Different policies and permissions usage
+- Kernel capacity
 
 ## Remembering Commands
 
@@ -104,7 +141,7 @@ If the Dockerfile is changed, another build is necessary.
 
 ## Containers
 
-Just like a process is a running instance of a program, a Container is a running instance of a Docker Image. By "Run", we mean "Use CPU, RAM and Storage". They can talk to others Containers, like processes in Linux and uses Copy-On-Write file system.
+Just like a process is a running instance of a program, a Container is a running instance of a Docker Image. By "Run", I mean "Use CPU, RAM and Storage". They can talk to others Containers, like processes in Linux and uses Copy-On-Write file system.
 
 ### I/O Attach
 
