@@ -17,8 +17,18 @@ Configured Theme and aliases in order to make it look like Linux shell with oh-m
 ```text
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/peru.omp.json" | Invoke-Expression
 
-function headFunction { Select-Object -First 10 }
-function tailFunction { Select-Object -Last 10 }
+function headFunction {
+ if ($MyInvocation.ExpectingInput) { # Pipeline input present
+  # $Input passes the collected pipeline input through
+  $Input | Select-Object -First 10
+ }
+}
+function tailFunction {
+ if ($MyInvocation.ExpectingInput) { # Pipeline input present
+  # $Input passes the collected pipeline input through
+  $Input | Select-Object -Last 10
+ }
+}
 function gstFunction { git status }
 function gloFunction { git status --one-line }
 function gaFunction { git add $args}
@@ -39,6 +49,7 @@ Remove-Item alias:gl -Force
 New-Alias gl glFunction
 Remove-Item alias:gp -Force
 New-Alias gp gpFunction
+
 ```
 
 ## VSCode Config
