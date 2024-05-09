@@ -335,7 +335,64 @@ An example of usage:
 
 ### Constructors
 
-TODO
+Every class have an implicit constructor which doesn't need to be written.
+
+```kotlin
+class Empty
+```
+
+The implicit constructor (a.k.a default constructor) can be private. Having only privates constructors, the class can't be instanced, like the `Nothing` class.
+
+```kotlin
+class NoInstance private constructor()
+```
+
+The class below has a default constructor which requires a String and a Short.
+
+```kotlin
+class Constructor(private var name: String, private var age: Short) {
+
+    /**
+    When defining another constructor, it needs to call the default constructor using `this`
+    keyword.
+     */
+    constructor() : this("", 0) {
+        // Constructors can have a body
+        println("Warning: constructed an empty object")
+    }
+
+    /**
+     * More than one constructor can be defined, as long as they don't have the same signature.
+     */
+    constructor(name: String) : this(name, 0)
+
+    /**
+     * The definition below is invalid because the default constructor already has the signature
+     * (String, Short)
+     */
+    // constructor(str: String, num: Short) : this(str, num)
+
+    override fun toString(): String = "Constructor(name: $name, age: $age)"
+}
+```
+
+Usage example:
+
+```kotlin
+fun main() {
+    Empty() // Has an implicit constructor
+
+    // NoInstance() Can't be instanced
+
+    val c1 = Constructor()
+    val c2 = Constructor("Victor")
+    val c3 = Constructor("Victor", 18)
+
+    for (c in arrayOf(c1, c2, c3)) {
+        println(c)
+    }
+}
+```
 
 ### Getters, Setters & fields
 
