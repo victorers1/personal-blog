@@ -21,16 +21,25 @@ function headFunction {
  if ($MyInvocation.ExpectingInput) { # Pipeline input present
   # $Input passes the collected pipeline input through
   $Input | Select-Object -First 10
- }
+   }
 }
 function tailFunction {
  if ($MyInvocation.ExpectingInput) { # Pipeline input present
   # $Input passes the collected pipeline input through
   $Input | Select-Object -Last 10
- }
+   }
 }
+
+function flFunction { flutter $args }
+function flgetFunction { flutter pub get $args }
+function flcFunction { flutter clean $args }
+function fldFunction { flutter doctor $args }
+
+function gclFunction { git clone $args }
+function gcoFunction { git checkout $args }
+function gbFunction { git branch $args }
 function gstFunction { git status }
-function gloFunction { git status --one-line }
+function gloFunction { git log --oneline }
 function gaFunction { git add $args}
 function gcFunction { git commit $args}
 function glFunction { git pull $args}
@@ -39,6 +48,16 @@ function gdFunction { git diff $args }
 
 New-Alias head headFunction
 New-Alias tail tailFunction
+
+Remove-Item alias:fl -Force
+New-Alias fl flFunction
+New-Alias flget flgetFunction
+New-Alias flc flcFunction
+New-Alias fld fldFunction
+
+New-Alias gcl gclFunction
+New-Alias gco gcoFunction
+New-Alias gb gbFunction
 New-Alias gst gstFunction
 New-Alias glo gloFunction
 New-Alias gd gdFunction
@@ -49,7 +68,6 @@ Remove-Item alias:gl -Force
 New-Alias gl glFunction
 Remove-Item alias:gp -Force
 New-Alias gp gpFunction
-
 ```
 
 ## VSCode Config
