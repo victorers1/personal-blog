@@ -45,6 +45,10 @@ function gcFunction { git commit $args}
 function glFunction { git pull $args}
 function gpFunction { git push $args }
 function gdFunction { git diff $args }
+function gmFunction { git merge $args }
+function gstaFunction { git stash $args }
+function gstlFunction { git stash list $args }
+function gstdFunction { git stash drop $args }
 
 New-Alias head headFunction
 New-Alias tail tailFunction
@@ -68,6 +72,12 @@ Remove-Item alias:gl -Force
 New-Alias gl glFunction
 Remove-Item alias:gp -Force
 New-Alias gp gpFunction
+Remove-Item alias:gm -Force
+New-Alias gm gmFunction
+New-Alias gsta gstaFunction
+New-Alias gstl gstlFunction
+New-Alias gstd gstdFunction
+
 ```
 
 ## VSCode Config
