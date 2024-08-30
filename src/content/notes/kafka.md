@@ -1,7 +1,7 @@
 ---
 title: 'Kafka'
 description: 'Notes from a course'
-pubDate: 'Ago 27 2024'
+pubDate: 'Aug 27 2024'
 heroImage: '/blog-placeholder-1.jpg'
 ---
 
