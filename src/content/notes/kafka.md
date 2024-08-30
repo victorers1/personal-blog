@@ -27,11 +27,17 @@ Kafka combines three key capabilities so you can implement your use cases for ev
   - `$KAFKA_HOME/bin` for MacOS and Linux. They're `.sh` files.
   - `$KAFKA_HOME/bin/windows` for Windows. They're `.bat` files.
 
-## Scripts
+## Kafka Scripts
+
+Below, we have command scripts for windows version. They should work exactly the same way on macOS and Linux.
 
 ### Generating IDs
 
-### Listing Topics
+### Create Topic
+
+`./kafka-topics.bat`
+
+### List Topic
 
 `.\kafka-topics.bat --list --bootstrap-server localhost:9092`
 
