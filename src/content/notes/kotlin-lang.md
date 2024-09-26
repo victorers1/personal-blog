@@ -34,7 +34,7 @@ fun returnsAnyType(): Any? {
 }
 ```
 
-`Unit`: The type with only one value: the `Unit` object. This type corresponds to the void type in Java.
+`Unit`: The type with only one value. This type corresponds to the `void` type in Java.
 
 ```kotlin
 fun hasNoReturn(): Unit {
@@ -56,11 +56,11 @@ fun returnsNothing(): Nothing {
 
 ### Higher-order functions
 
-A higher-order function is a function that takes functions as parameters, or returns a function. That's not exclusive to Kotlin, it's a well-known computer science concept.
+A higher-order function is a function that takes functions as parameters, or returns a function. That's not exclusive to Kotlin.
 
 ### Functions literals
 
-In Kotlin there are a few ways of creating a function, one of them are **Function literals**. Function literals are functions that are not declared but are passed immediately as an expression. There are two kinds of function literal in Kotlin: **Lambda expressions** and **Anonymous functions**.
+Function literals are functions that are not declared but are passed immediately as an expression. There are two kinds of function literal in Kotlin: **Lambda expressions** and **Anonymous functions**.
 
 #### Lambda expressions
 
@@ -190,7 +190,7 @@ fun sum(a: Int, b: Int): Int {
     return a + b
 }
 
-// without name, body body
+// without name, with body
 var sum = fun(a: Int, b: Int): Int {
     return a + b
 }
@@ -219,7 +219,7 @@ TODO
 
 ## Ranges and progressions
 
-There's an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover what isn't in the docs, at least in a first look.
+There's an official text about [ranges in Kotlin](https://kotlinlang.org/docs/ranges.html). Below, I will cover some concepts with examples.
 
 ### Comparing ranges
 
@@ -281,7 +281,7 @@ life.takeIf { range ->
 life.isEmpty() // that's deep
 ```
 
-## Classes
+## Classes and Objects
 
 ### Normal Classes
 
@@ -298,6 +298,8 @@ class Dog(val name: String, val breed: String, var age: Int = 1) {
 
 ### Data Classes
 
+Given this example:
+
 ```kotlin
 data class Coffee(
     val spoonsCount: Int,
@@ -307,31 +309,15 @@ data class Coffee(
 )
 ```
 
-Usage:
+The compiler automatically derives the following members from all properties declared in the primary constructor:
 
-```kotlin
-fun main() {
-    println("Who is this coffee for?");
-    val name: String = readln();
-    println("How many spoons of sugar do you want?");
-    val spoons: Int = readln().toInt();
+- `.equals()`/`.hashCode()` pair.
 
-    val coffee = Coffee(spoons, name, "XXL", 3)
-    println("Created $coffee")
-}
-```
+- `.toString()` of the form "Coffee(spoonsCount=3, ownerName="John", size="XL", creamAmount=2)".
 
-An example of usage:
+- `.componentN()` functions corresponding to the properties in their order of declaration.
 
-**Terminal**: Who is this coffee for?
-
-**User input**: *denis*
-
-**Terminal**: How many spoons of sugar do you want?
-
-**User input**: *3*
-
-**Terminal**: Created Coffee(spoonsCount=3, ownerName=denis, size=XXL, creamAmount=3)
+- `.copy()` function.
 
 ### Constructors
 
@@ -341,7 +327,7 @@ Every class have an implicit constructor which doesn't need to be written.
 class Empty
 ```
 
-The implicit constructor (a.k.a default constructor) can be private. Having only privates constructors, the class can't be instanced, like the `Nothing` class.
+The implicit constructor (a.k.a default constructor) can be private. Having only privates constructors, the class can't be instanced, just like the `Nothing` class. Example:
 
 ```kotlin
 class NoInstance private constructor()
@@ -394,6 +380,14 @@ fun main() {
 }
 ```
 
+### Inline Value Classes
+
+TODO
+
+### Object Expressions and Declarations
+
+TODO
+
 ### Getters, Setters & fields
 
 TODO
@@ -445,7 +439,7 @@ println(1.0f.nextDown()) // 0.99999994
 println(1.0f.nextUp()) // 1.0000001
 ```
 
-As the largest double value less than 1.0 is `Math.nextDown(1.0)`, a value $x$ in the closed range $[x1, x2]$ where $x1 \leq x2$ may be defined by the statements:
+Since the largest double value less than 1.0 is `Math.nextDown(1.0)`, a value $x$ in the closed range $[x1, x2]$ where $x1 \leq x2$ may be defined by the statements:
 
 ```kotlin
 double f = Math.random()/Math.nextDown(1.0);
