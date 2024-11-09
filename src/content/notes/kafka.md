@@ -53,7 +53,7 @@ Below, we have command scripts for windows version. They should work exactly the
 
 #### Delete Topic
 
-`kafka-topics.sh --delete --topic topic-name --bootstrap-server localhost:9092`
+`.\kafka-topics.bat --delete --topic topic-name --bootstrap-server localhost:9092`
 
 #### List Topics
 
