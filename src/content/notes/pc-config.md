@@ -8,7 +8,7 @@ heroImage: '/docker-gradient.png'
 
 ## Intro
 
-These are my config files for some of the programs I use. Hope they will never be needed.
+These are my config files for some of the programs I use. This should be useful when I change my PC.
 
 ## Oh-my-posh Profile
 
@@ -260,4 +260,107 @@ New-Alias gstd gstdFunction
   ]
  }
 }
+```
+
+## Android Studio VSCode keymap
+
+```xml
+<keymap version="1" name="VSCode (macOS) copy" parent="VSCode OSX">
+  <action id="CloseAllEditorsButActive">
+    <keyboard-shortcut first-keystroke="shift meta w" />
+  </action>
+  <action id="CloseProject">
+    <keyboard-shortcut first-keystroke="meta k" second-keystroke="f" />
+  </action>
+  <action id="CodeCompletion">
+    <keyboard-shortcut first-keystroke="alt escape" />
+    <keyboard-shortcut first-keystroke="meta space" />
+  </action>
+  <action id="DuplicatesForm.SendToLeft" />
+  <action id="EditorCloneCaretAbove">
+    <keyboard-shortcut first-keystroke="meta up" />
+  </action>
+  <action id="EditorCloneCaretBelow">
+    <keyboard-shortcut first-keystroke="meta down" />
+  </action>
+  <action id="EditorLineEnd">
+    <keyboard-shortcut first-keystroke="ctrl e" />
+    <keyboard-shortcut first-keystroke="end" />
+  </action>
+  <action id="EditorLineEndWithSelection">
+    <keyboard-shortcut first-keystroke="shift end" />
+  </action>
+  <action id="EditorLineStart">
+    <keyboard-shortcut first-keystroke="ctrl a" />
+    <keyboard-shortcut first-keystroke="home" />
+  </action>
+  <action id="EditorLineStartWithSelection">
+    <keyboard-shortcut first-keystroke="shift home" />
+  </action>
+  <action id="EditorNextWord">
+    <keyboard-shortcut first-keystroke="meta right" />
+  </action>
+  <action id="EditorNextWordWithSelection">
+    <keyboard-shortcut first-keystroke="shift meta right" />
+  </action>
+  <action id="EditorPreviousWord">
+    <keyboard-shortcut first-keystroke="meta left" />
+  </action>
+  <action id="EditorPreviousWordWithSelection">
+    <keyboard-shortcut first-keystroke="shift meta left" />
+  </action>
+  <action id="EditorTextEnd" />
+  <action id="EditorTextStart" />
+  <action id="Exit" />
+  <action id="ExternalSystem.ProjectRefreshAction" />
+  <action id="FileChooser.GoToParent" />
+  <action id="FileChooser.GotoHome" />
+  <action id="Flutter.JumpToSource" />
+  <action id="GotoAction">
+    <keyboard-shortcut first-keystroke="f1" />
+    <keyboard-shortcut first-keystroke="shift meta p" />
+  </action>
+  <action id="Kotlin.NewFile">
+    <keyboard-shortcut first-keystroke="meta 1" />
+  </action>
+  <action id="MoveLineDown">
+    <keyboard-shortcut first-keystroke="ctrl down" />
+  </action>
+  <action id="MoveLineUp">
+    <keyboard-shortcut first-keystroke="ctrl up" />
+  </action>
+  <action id="QuickImplementations">
+    <keyboard-shortcut first-keystroke="alt f12" />
+  </action>
+  <action id="RecentFiles" />
+  <action id="ReformatCode">
+    <keyboard-shortcut first-keystroke="shift alt f" />
+    <keyboard-shortcut first-keystroke="meta i" />
+  </action>
+  <action id="SaveAll">
+    <keyboard-shortcut first-keystroke="meta alt s" />
+    <keyboard-shortcut first-keystroke="meta k" second-keystroke="meta s" />
+  </action>
+  <action id="SwitcherIterateItems" />
+  <action id="SwitcherRecentEditedChangedToggleCheckBox" />
+  <action id="Table-selectFirstRow" />
+  <action id="Terminal.ClearBuffer">
+    <keyboard-shortcut first-keystroke="meta l" />
+  </action>
+  <action id="Terminal.SelectBlockAbove">
+    <keyboard-shortcut first-keystroke="up" />
+  </action>
+  <action id="Terminal.SelectLastBlock" />
+  <action id="Terminal.SelectPrompt" />
+  <action id="Tree-selectFirst" />
+  <action id="UsageView.Include" />
+  <action id="android.deploy.ApplyChanges">
+    <keyboard-shortcut first-keystroke="ctrl meta e" />
+  </action>
+  <action id="android.deploy.CodeSwap">
+    <keyboard-shortcut first-keystroke="shift ctrl meta e" />
+  </action>
+  <action id="android.device.overview.button" />
+  <action id="org.intellij.plugins.markdown.ui.actions.styling.ToggleItalicAction" />
+</keymap>
 ```
