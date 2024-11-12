@@ -53,7 +53,7 @@ Below, we have command scripts for windows version. They should work exactly the
 
 #### Delete Topic
 
-`kafka-topics.sh --delete --topic topic-name --bootstrap-server localhost:9092`
+`.\kafka-topics.bat --delete --topic topic-name --bootstrap-server localhost:9092`
 
 #### List Topics
 
@@ -72,11 +72,15 @@ Topic: product-create-events-topic      TopicId: U7J3LhLMTlCTS9K9ElmzbA Partitio
         Topic: product-create-events-topic      Partition: 2    Leader: 3       Replicas: 3,1,2 Isr: 2,3,1  Elr:    LastKnownElr:
 ```
 
-- **Topic**  holds the the name of the topic.
-- **Partition** holds the ID of the partition. In the example above there are 3 partitions.
-- **Leader** holds the ID of the partition's Leader, which is the broker responsible to read/write requests.
-- **Replicas** holds the Ids of the brokers which stores that partition replicas. In the example above, each partition has 3 replicas. Partition 0 has replicas in broker 1, 2, and 3.
+- **Topic**  the name of the topic.
+- **Partition** ID of the partition. In the example above there are 3 partitions.
+- **Leader** ID of the partition's Leader, which is the broker responsible to read/write requests.
+- **Replicas** Ids of the brokers which stores that partition replicas. In the example above, each partition has 3 replicas. Partition 0 has replicas in broker 1, 2, and 3.
 - **Isr** stands for Insync Replicas. It holds the Ids of the brokers which are in sync with that partition Leader. In sync Brokers that replace the Leader.
+
+#### Edit Topic
+
+Run `.\kafka-configs.bat --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name product-create-events-topic --add-config min.insync.replicas=2`. To see if the alteration was successful, run [Describe Topic](#describe-topic) command.
 
 ### Produce Events
 
@@ -194,20 +198,71 @@ spring.kafka.producer.properties.delivery.timeout.ms=120000
 #### Kafka Configuration
 
 ```java
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import com.pessoallegal.webservice.productsmicroservice.service.ProductCreatedEvent;
 
 @Configuration
 public class KafkaConfig {
+
+    @Value("${spring.kafka.producer.bootstrap-servers}")
+    private String bootstrapServers;
+
+    @Value("${spring.kafka.producer.key-serializer}")
+    private String keySerializer;
+
+    @Value("${spring.kafka.producer.value-serializer}")
+    private String valueSerializer;
+
+    @Value("${spring.kafka.producer.acks}")
+    private String acks;
+
+    @Value("${spring.kafka.producer.properties.delivery.timeout.ms}")
+    private String deliveryTimeout;
+
+    @Value("${spring.kafka.producer.properties.linger.ms}")
+    private String linger;
+
+    @Value("${spring.kafka.producer.properties.request.timeout.ms}")
+    private String requestTimeout;
+
+    Map<String, Object> producerConfig() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+        config.put(ProducerConfig.ACKS_CONFIG, acks);
+        config.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, deliveryTimeout);
+        config.put(ProducerConfig.LINGER_MS_CONFIG, linger);
+        config.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, requestTimeout);
+        return config;
+    }
+
+    @Bean
+    ProducerFactory<String, ProductCreatedEvent> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfig());
+    }
+
+    @Bean
+    KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
+
     @Bean
     NewTopic createTopic() {
         return TopicBuilder.name("product-create-events-topic").partitions(3)
-        .replicas(3)
-        .configs(Map.of("min.insync.replicas", "1"))
-        .build();
+                .replicas(3)
+                .configs(Map.of("min.insync.replicas", "1"))
+                .build();
     }
 }
 ```
