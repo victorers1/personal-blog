@@ -1,6 +1,6 @@
 ---
 title: 'Android 14 Course'
-description: "Notes an Udemy course"
+description: "Notes of a Udemy course"
 pubDate: 'Mar 13 2024'
 updatedDate: 'Mar 20 2024'
 heroImage: '/android-gradient.png'
@@ -12,8 +12,6 @@ heroImage: '/android-gradient.png'
 - Language version: Kotlin 1.9.22
 - IDE: Android Studio Hedgehog | 2023.1.1 Patch 2
 - VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
-
-NOTE: The code below is an indistinguishable mix between mine and the teacher's.
 
 ## Rock, Paper, Scissors game
 
