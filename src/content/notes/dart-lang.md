@@ -2,13 +2,13 @@
 title: 'Dart Language'
 description: "Warning: these notes aren't about Flutter"
 pubDate: 'Feb 11 2024'
-updatedDate: 'Mar 14 2024'
+updatedDate: 'Jul 15 2025'
 heroImage: '/dart-gradient.png'
 ---
 
 ## Intro
 
-TODO
+My notes about Dart Lang.
 
 ## Pattern Matching
 
@@ -76,7 +76,7 @@ As this implementation uses a `Timer` object, it's very important to **dispose**
 
 ### Singleton Pattern
 
-It's a class that can have only one object instantiated. Every time the `new` operator is called on it, the constructor returns the same instance.
+It's a class that can have only one object instantiated. Every time the `new` operator is called, the constructor returns the same instance.
 
 ```dart
 class Singleton {
@@ -113,7 +113,7 @@ void main() {
 
 In the above code, the attribute `name` was added only for testing purposes. The private constructor is needed because it's the true responsible to initialize the object's attributes, allocate it in memory and return its reference. The factory method doesn't actually create anything, it's just used to call the private constructor or the previously created instance.
 
-[Here](https://stackoverflow.com/a/12649574/9718711) is another implementation that creates an instance right at the class declaration:
+[In this post](https://stackoverflow.com/a/12649574/9718711), there is another implementation that creates an instance right at the class declaration:
 
 ```dart
 class Singleton {
@@ -127,7 +127,7 @@ class Singleton {
 }
 ```
 
-[Here](https://stackoverflow.com/a/55348216/9718711) is a implementation that exposes the `instance` attribute:
+[In this post](https://stackoverflow.com/a/55348216/9718711), there is an implementation that exposes the `instance` attribute:
 
 ```dart
 class Singleton {
@@ -276,7 +276,7 @@ final oneHour = 60.min;
 
 ### HexColor Extension
 
-Extracted from [here](https://stackoverflow.com/a/50081214/9718711).
+Extracted from [StackOverflow](https://stackoverflow.com/a/50081214/9718711).
 
 ```dart
 extension HexColor on Color {
@@ -308,11 +308,64 @@ void main() {
 }
 ```
 
+### SizedBox Extension
+
+If you want to add white spaces in a less verbose way.
+
+```dart
+extension SizedBoxExtension on num {
+  /// Creates the SizedBox of given height
+  SizedBox get sh => SizedBox(height: toDouble());
+
+  /// Creates the SizedBox of given width
+  SizedBox get sw => SizedBox(width: toDouble());
+}
+```
+
+Basic usage:
+
+```dart
+Column(
+  children: [
+    32.sh,
+    Widget(),
+    Row(
+      children: [
+        Widget(),
+        16.sw,
+        Widget()
+      ]
+    ),
+    56.sh,
+  ]
+)
+```
+
+### Size Extension
+
+```dart
+extension SizeExtension on BuildContext {
+  double get width => MediaQuery.of(this).size.width;
+
+  double get height => MediaQuery.of(this).size.height;
+}
+```
+
+Basic Usage:
+
+```dart
+Container(
+  width: context.width,
+  height: context.height,
+  child: Widget(),
+)
+```
+
 ### Random Numbers
 
 Basic usage:
 
-```kotlin
+```dart
 import 'dart:math';
 
 void main() {
