@@ -1,6 +1,6 @@
 ---
 title: 'Cascading Style Sheet Language'
-description: "Makes us wonder for a moment if this didn't come straight from hell"
+description: "Makes me wonder if it didn't come straight out of hell"
 pubDate: 'Feb 11 2024'
 updatedDate: 'Feb 12 2024'
 heroImage: '/css-gradient.png'
