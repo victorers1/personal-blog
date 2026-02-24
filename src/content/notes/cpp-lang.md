@@ -31,13 +31,13 @@ Version's informal names carries a 2-digit code representing the year it was rel
 
 | Year | ISO/IEC Standard | Informal name |
 | --- | --- | --- |
-|1998 | 14882:1998 | C++98|
-|2003 | 14882:2003 | C++03|
-|2011 | 14882:2011 | C++11, C++0x|
-|2014 | 14882:2014 | C++14, C++1y|
-|2017 | 14882:2017 | C++17, C++1z|
-|2020 | 14882:2020 | C++20, C++2a|
-|2023 | | C++23|
+| 1998 | 14882:1998 | C++98 |
+| 2003 | 14882:2003 | C++03 |
+| 2011 | 14882:2011 | C++11, C++0x |
+| 2014 | 14882:2014 | C++14, C++1y |
+| 2017 | 14882:2017 | C++17, C++1z |
+| 2020 | 14882:2020 | C++20, C++2a |
+| 2023 | | C++23 |
 
 Newer C++ standards usually do not make old code invalid, generally they just add features to the language and standard library. But, C++11 fundamentally changed the language. You should never use any language standard below that or resources that use any language standard below C++11.
 
