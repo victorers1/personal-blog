@@ -12,7 +12,79 @@ The official Apple language.
 
 ## Examples
 
-### Switch
+### Optionals
+
+```swift
+let optionalBool: Bool? = nil
+let optionalInt: Int? = nil
+let optionalStr: String? = nil
+```
+
+#### `nil` coalescing
+
+```swift
+let nonOptionalBool: Bool = optionalBool ?? false
+```
+
+#### `if let`
+
+```swift
+/// Without var creation
+if let optionalBool, let optionalInt, let optionalStr {
+    print("optionalBool, optionalInt AND optionalStr are not optional in here: \(optionalBool), \(optionalInt), \(optionalStr)")
+} else {
+    print("either optionalBool OR optionalInt OR optionalStr are nil")
+}
+
+/// With var creation
+if let aBoolValue = optionalBool, let aIntValue = optionalInt, let aStrValue = optionalStr {
+    print("aBoolValue, aIntValue AND aStrValue are not optional: \(aBoolValue), \(aIntValue), \(aStrValue)")
+} else {
+    print("either optionalBool OR optionalInt OR optionalStr are nil")
+}
+```
+
+#### `guard let`
+
+```swift
+/// With var creation
+guard let aBoolValue = optionalBool, let aIntValue = optionalInt, let aStrValue = optionalStr else {
+    print("either optionalBool OR optionalInt OR optionalStr are nil, no variable was created")
+}
+
+/// A `guard` statement makes you sure that the created variables are not optional
+print("aBoolValue, aIntValue AND aStrValue are not optional: \(aBoolValue), \(aIntValue), \(aStrValue)")
+s
+/// Without var creation
+guard let optionalBool, let optionalInt, let optionalStr else {
+    print("either optionalBool OR aIntValue OR aStrValue are nil, no variable was created")
+}
+
+print("optionalBool, optionalInt AND optionalStr are not optional anymore: \(optionalBool), \(optionalInt), \(optionalStr)")
+```
+
+### Tuples
+
+```swift
+/// Access
+let tuple: (String, Int) = ("One", 1)
+print("Name: \(tuple.0), Value: \(tuple.1)")
+
+let (name, value): (String, Int) = ("One", 1)
+print("Name: \(name), Value: \(value)")
+
+for (index, char) in "String".enumerated() {
+    print("Index: \(index), Character: \(char)")
+}
+
+let letters: [(Int, Character)] = "String".enumerated().map { tuple in
+    (tuple.offset, tuple.element)
+}
+
+print("First letter: \(letters.first!.1), Last letter: \(letters.last!.1)")
+```
+
+### Enum
 
 #### Raw values
 
@@ -28,7 +100,7 @@ enum Color: String {
 }
 ```
 
-#### Iterating over enum
+#### Iterating
 
 ```swift
 /// `CaseIterable` protocol enables `CompassPoint.allCases` list
