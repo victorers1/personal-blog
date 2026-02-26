@@ -148,3 +148,123 @@ productBarcode = .qrCode("ABCDEFGHIJKLMNOP") // old values are lost
 
 print(productBarcode)
 ```
+
+### Iterables and common iteration methods
+
+```swift
+let fruitsArray: [String] = ["Apple", "Orange", "Orange"]
+if let firstFruit = fruitsArray.first {
+    print("First fruit: \(firstFruit)")
+}
+
+var booleans: Array<Bool> = [true, false, true]
+let falseCount = booleans.count(where: { element in
+    !element
+})
+
+/// Adding elements
+booleans.append(false)
+booleans.append(contentsOf: [true, true])
+booleans = booleans + [false, true]
+booleans.insert(true, at: 0)
+booleans.insert(contentsOf: [false, true], at: 1)
+print("The last false is in: \(booleans.lastIndex(of: false) ?? 0)")
+
+/// Sets
+var fruitsSet: Set<String> = []
+fruitsArray.forEach { fruitsSet.insert($0) }
+print("fruitsSet: \(fruitsSet)")
+```
+
+### `filter`
+
+```swift
+let trueCount = booleans.filter(\.self).count
+print("trueCount: \(trueCount)")
+
+let onlyFalses: [Bool] = booleans.filter({ !$0 }) // one-line shorthand
+print("onlyFalses: \(onlyFalses)")
+
+let fruitsWithA = fruits.filter { f in
+    f.lowercased().starts(with: "a")
+}
+print("fruitsWithA: \(fruitsWithA)")
+```
+
+### `map`
+
+```swift
+let uppercasedFruits = fruits.map { fruit in
+    fruit.uppercased()
+}
+print("uppercasedFruits: \(uppercasedFruits)")
+
+let booleansString = booleans.map(\.description)
+print("booleansString: \(booleansString)")
+```
+
+### `sort`
+
+```swift
+let sortedTrueFirst = booleans.sorted { a, b in
+    a == true && b == false
+}
+print("sortedBooleans: \(sortedTrueFirst)")
+
+/// Integer sorting method
+func areInIncreasingOrder(a: Int, b: Int) -> Bool {
+    a < b
+}
+
+let integers = [9, 4, 7, 8, 6, 1, 5, 2, 3, 0]
+let sortedIntegers = integers.sorted(by: areInIncreasingOrder)
+print("sortedIntegers: \(sortedIntegers)")
+```
+
+### Dictionary
+
+```swift
+let empty: [String: Int] = [:]
+var fruits: [String: [String]] = ["a": ["Apple"], "b": ["Banana"], "c": ["Carrot"]]
+
+/// [] returns an optional
+let fruitsWithA: [String]? = fruits["a"]
+let fruitsWithZ: [String] = fruits["z"] ?? []
+
+fruits["d"] = ["Durian"]
+fruits["a"]?.append("Avocado")
+print(fruits)
+
+let json: [String: Any] = [
+    "name": "Flank",
+    "age": 29,
+    "isPremium": false,
+    "friends": ["Milano", "Bertrand"]
+    "address": [
+        "street": "Rua das Flores",
+        "number": 123,
+        "city": "São Paulo"
+    ],
+]
+```
+
+### Loops
+
+```swift
+let seconds: Range<Int> = 0 ..< 60
+let secs: ClosedRange<Int> = 0 ... 59
+for num in secs {
+    print(num)
+}
+
+let natoAlphabet = ["Alpha", "Bravo", "Delta", "Echo", "Foxtrot"]
+for letter in natoAlphabet {
+    print(letter)
+}
+
+for (index, second) in seconds.enumerated() {
+    if index % 2 == 0 { continue }
+    if second > 30 { break }
+    print("second \(index) == \(second)")
+}
+```
