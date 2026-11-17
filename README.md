@@ -1,60 +1,36 @@
-# Astro Starter Kit: Blog
+# BlogGPT
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/854981ef-c1c7-4704-b2bd-cfba7f35ab00/deploy-status)](https://app.netlify.com/sites/victorbot/deploys)
+**A modern [Astro](https://astro.build/) blog theme inspired by ChatGPT's clean, focused interface.**
 
-Astro Features:
+Write in Markdown or MDX, organize your posts with a collapsible sidebar, and help readers find anything in seconds with built-in full-text search.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+[Live Demo](https://demo.bloggpt.reincarnatey.net) · [Documentation](https://bloggpt.reincarnatey.net/en/) · [GitHub Repository](https://github.com/Raincarnator/astro-theme-BlogGPT)
 
-## 🧞 Commands
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FRaincarnator%2Fastro-theme-BlogGPT-starter)
+&nbsp;
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Raincarnator/astro-theme-BlogGPT-starter)
 
-All commands are run from the root of the project, from a terminal:
+Get up and running in minutes with the [BlogGPT Starter Template](https://github.com/Raincarnator/astro-theme-BlogGPT-starter), which comes pre-configured with a sample post, an About page, and sensible defaults. You can also [create a repository from the GitHub template](https://github.com/Raincarnator/astro-theme-BlogGPT-starter/generate) and connect your hosting provider later. The main theme repository includes the full demo content and documentation workspace.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+> **New here?** Start with the [Getting Started Guide](https://bloggpt.reincarnatey.net/en/guide/getting-started), then explore the [Documentation](https://bloggpt.reincarnatey.net/en/) to customize your blog.
 
-## 🚀 Project Structure
+## Key Features
 
-Inside of your Astro project, you'll see the following folders and files:
+| Category                  | Highlights                                                                                                                                                         |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Reading Experience**    | Responsive ChatGPT-style layout, resizable sidebar, light/dark/system themes, collapsible table of contents, keyboard shortcuts, and smooth client-side navigation |
+| **Content Management**    | Posts, standalone pages and tags; custom slugs, folder-based content bundles for local attachments, and CLI scaffolding templates (archetypes)        |
+| **Rich Markdown**         | Full Markdown & MDX support with Expressive Code syntax highlighting, KaTeX math formulas, Mermaid diagrams, callout blocks, and image lightbox                    |
+| **Content Discovery**     | Pinned/featured posts, chronological archives, pagination with page jump, category cover styles, and tag cloud                   |
+| **Instant Search**        | Static full-text search powered by Pagefind with article, title/description, body, and whole-site scopes, keyword highlighting, and `/` commands                   |
+| **Multi-Language (i18n)** | Built-in Brazilian Portuguese and English UI, localized URL routing, filename-based translation linking, and customizable UI                                          |
+| **Stats & Sharing**       | Word count, site-wide writing statistics & activity heatmap, customizable share snippets, and dynamic Open Graph cover generation                                  |
+| **SEO & Extensibility**   | Open Graph tags, Twitter Cards, Sitemap, and extension hooks (`custom/head.html`, `custom/styles.css`, `custom/client.ts`)                              |
 
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+## Quick Start
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Follow the [Getting Started Guide](https://bloggpt.reincarnatey.net/en/guide/getting-started) to scaffold a new project, install dependencies, and start the local development server.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## License
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
-
-## Mesh Gradient images were done in [here](https://meshgradient.com/)
+Theme code is released under [Apache-2.0](LICENSE). Documentation is licensed under [MIT](apps/docs/LICENSE). See [third-party notices](THIRD_PARTY_NOTICES.md) for bundled assets and dependencies.

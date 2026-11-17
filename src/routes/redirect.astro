@@ -1,0 +1,83 @@
+---
+import { localeInfo } from '../lib/translations';
+import config from '../lib/config';
+import { href, localize } from '../lib/i18n';
+import { htmlRoutes } from '../lib/html-routes';
+export async function getStaticPaths() {
+  const prefix = href(config.site.defaultLocale);
+  const routes = new Map(
+    await Promise.all(
+      config.site.locales.map(
+        async (locale) => [locale, new Set(await htmlRoutes(locale))] as const,
+      ),
+    ),
+  );
+  return (await htmlRoutes(config.site.defaultLocale)).map((target) => {
+    const path = target.slice(prefix.length);
+    const targets = Object.fromEntries(
+      config.site.locales.map((locale) => {
+        const candidate = href(locale, path);
+        return [
+          locale,
+          routes.get(locale)!.has(candidate) ? candidate : target,
+        ];
+      }),
+    );
+    return {
+      params: { unprefixed: decodeURI(path).replace(/\/$/, '') || undefined },
+      props: { target, targets },
+    };
+  });
+}
+interface Props {
+  target: string;
+  targets: Record<string, string>;
+}
+const { target, targets } = Astro.props;
+---
+
+<!doctype html>
+<html
+  lang={localeInfo(config.site.defaultLocale).lang}
+  data-language-targets={JSON.stringify(targets)}
+  data-default-locale={config.site.defaultLocale}
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${target}`} />
+    </noscript>
+    <title>{localize(config.site.title, config.site.defaultLocale)}</title>
+    <link rel="canonical" href={new URL(target, config.site.url).href} />
+    <script>
+      import {
+        languagePreferenceKey,
+        preferredLocale,
+      } from '../lib/language-preference';
+      const root = document.documentElement;
+      const targets = JSON.parse(root.dataset.languageTargets!) as Record<
+        string,
+        string
+      >;
+      let saved: string | null = null;
+      try {
+        saved = localStorage.getItem(languagePreferenceKey);
+      } catch {
+        /* Storage is optional. */
+      }
+      const locale = preferredLocale(
+        Object.keys(targets),
+        saved,
+        navigator.languages ?? [navigator.language],
+        root.dataset.defaultLocale!,
+      );
+      location.replace(targets[locale] + location.search + location.hash);
+    </script>
+  </head>
+  <body>
+    <a href={target}>
+      {localize(config.site.title, config.site.defaultLocale)}
+    </a>
+  </body>
+</html>

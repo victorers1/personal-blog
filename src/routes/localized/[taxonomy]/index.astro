@@ -1,0 +1,46 @@
+---
+import { pageLocale } from '../../../lib/i18n';
+import Layout from '../../../layouts/Layout.astro';
+import ThemeIcon from '../../../components/ThemeIcon.astro';
+import BuiltinHeading from '../../../components/BuiltinHeading.astro';
+import { taxonomy, encodedSlug } from '../../../lib/content';
+import { t, href } from '../../../lib/i18n';
+export const getStaticPaths = () =>
+  ['tags'].map((kind) => ({ params: { taxonomy: kind } }));
+const lang = pageLocale(Astro.routePattern);
+const kind = Astro.params.taxonomy as 'tags';
+const ui = t(lang);
+const groups = await taxonomy(kind, lang);
+const title = ui.tagsTitle;
+---
+
+<Layout
+  lang={lang}
+  title={title}
+  active={kind}
+>
+  <div class="content-column">
+    <BuiltinHeading
+      title={title}
+      description={`${groups.length} ${ui[kind]}`}
+      eyebrow={ui[kind]}
+      icon={'tags'}
+    />
+    <div class="taxonomy-grid">
+      {groups.map(({ slug, posts }) => (
+        <a
+          class="taxonomy-card"
+          href={href(lang, `${kind}/${encodedSlug(slug)}/`)}
+        >
+          <div>
+            <h2>{slug}</h2>
+            <p class="taxonomy-count">
+              {posts.length} {ui.articleCount}
+            </p>
+          </div>
+          <ThemeIcon name="arrow-up-right" size={20} />
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

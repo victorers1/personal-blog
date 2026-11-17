@@ -1,0 +1,81 @@
+---
+import { pageLocale, routeLocales } from '../../../lib/i18n';
+import config from '../../../lib/config';
+import Layout from '../../../layouts/Layout.astro';
+import PostList from '../../../components/PostList.astro';
+import ThemeIcon from '../../../components/ThemeIcon.astro';
+import {
+  taxonomy,
+  encodedSlug,
+  type Post,
+} from '../../../lib/content';
+import { t, href } from '../../../lib/i18n';
+import type { Locale } from '../../../types/config';
+export async function getStaticPaths({
+  routePattern,
+}: import('astro').GetStaticPathsOptions) {
+  const paths = [];
+  for (const lang of routeLocales(routePattern))
+    for (const kind of ['tags'] as const)
+      for (const group of await taxonomy(kind, lang, true))
+        paths.push({
+          params: { taxonomy: kind, term: group.slug },
+          props: {
+            posts: group.posts,
+            hidden: group.hidden,
+          },
+        });
+  return paths;
+}
+interface Props {
+  posts: Post[];
+  hidden: boolean;
+}
+const lang = pageLocale(Astro.routePattern);
+const kind = Astro.params.taxonomy as 'tags';
+const term = Astro.params.term!;
+const ui = t(lang);
+const { posts, hidden } = Astro.props;
+const label = term;
+const alternatePaths: Partial<Record<Locale, string>> = {};
+const translationPaths: Partial<Record<Locale, string>> = {};
+for (const locale of config.site.locales) {
+  const target = href(
+    locale,
+    `${kind}/${encodedSlug(term)}/`,
+  );
+  if (
+    (await taxonomy(kind, locale, true)).some(
+      (group) => group.slug === term,
+    )
+  ) {
+    alternatePaths[locale] = target;
+    translationPaths[locale] = target;
+  }
+}
+---
+
+<Layout
+  lang={lang}
+  title={label}
+  active={kind}
+  alternatePaths={alternatePaths}
+  translationPaths={translationPaths}
+  noindex={hidden}
+>
+  <div class="content-column">
+    <section>
+      <a class="eyebrow taxonomy-back" href={href(lang, `${kind}/`)}>
+        <ThemeIcon name="arrow-left" size={16} />
+        {ui[kind]}
+      </a>
+      <header class="page-heading taxonomy-heading">
+        <h1>{label}</h1>
+        <p class="taxonomy-count">
+          {posts.length} {ui.articleCount}
+        </p>
+      </header>
+    </section>
+    <PostList posts={posts} lang={lang} />
+  </div>
+</Layout>
