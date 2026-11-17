@@ -1,6 +1,6 @@
 import type { BlogConfig } from '../types/config';
 
-export const introRoutes = ['posts', 'tags', 'history'] as const;
+export const introRoutes = ['posts', 'tags', 'notes'] as const;
 export function introPageSlug(
   config: BlogConfig,
   route: string,

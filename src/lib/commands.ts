@@ -16,7 +16,7 @@ export const commands = [
     icon: 'chart-no-axes-column',
   },
   {
-    name: 'history',
+    name: 'notes',
     icon: 'archive',
   },
 ] as const;

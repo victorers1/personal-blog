@@ -1035,7 +1035,7 @@ function setup() {
     const requestedLanguage = languageLinks.find(
       (link) => link.locale.toLowerCase() === argument,
     );
-    if (!['random', 'lang', 'theme', 'status', 'history'].includes(name))
+    if (!['random', 'lang', 'theme', 'status', 'notes'].includes(name))
       return false;
     if (name === 'lang' && argument && !requestedLanguage) return false;
     if (
@@ -1070,7 +1070,7 @@ function setup() {
       if (!commandStatus) return false;
       openStatistics();
     }
-    if (name === 'history')
+    if (name === 'notes')
       void navigate(`${document.body.dataset.localeRoot}${name}/`);
     return true;
   };

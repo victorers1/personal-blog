@@ -3,7 +3,7 @@ import type { BlogConfig } from './src/types/config';
 /** Frequent identity, copy and content settings come first; optional services follow reading defaults. */
 const config: BlogConfig = {
   site: {
-    title: 'VictorGPT',
+    title: 'ViGPT',
     baseUrl: 'https://victorbot.netlify.app/', // Include the deployment directory, e.g. https://example.com/blog/.
     defaultLocale: 'en',
     locales: ['en', 'pt'],
@@ -96,24 +96,13 @@ const config: BlogConfig = {
         icon: 'square-pen',
       },
       {
-        id: 'posts',
+        id: 'notes',
         type: 'builtin',
-        route: 'posts',
-        page: 'posts',
+        route: 'notes',
+        page: 'notes',
         label: {
           en: 'Notes',
           pt: 'Notas',
-        },
-        icon: 'files',
-      },
-      {
-        id: 'history',
-        type: 'builtin',
-        route: 'history',
-        page: 'history',
-        label: {
-          en: 'History',
-          pt: 'Histórico',
         },
         icon: 'archive',
       },
@@ -123,7 +112,7 @@ const config: BlogConfig = {
         page: 'about',
         label: {
           en: 'About me',
-          pt: 'Sobre o autor',
+          pt: 'Sobre mim',
         },
         icon: 'info',
       },
@@ -154,17 +143,17 @@ const config: BlogConfig = {
         },
       },
       {
-        id: 'posts',
+        id: 'notes',
         type: 'builtin',
-        route: 'posts',
-        page: 'posts',
+        route: 'notes',
+        page: 'notes',
         label: {
-          en: 'Articles',
-          pt: 'Articles',
+          en: 'Notes',
+          pt: 'Notas',
         },
         description: {
-          en: 'Browse all articles',
-          pt: 'Browse all articles',
+          en: 'Browse all notes',
+          pt: 'Explore todas as notas',
         },
       },
       {

@@ -76,7 +76,7 @@ export async function introFor(route: string, lang: Locale) {
   return page;
 }
 export function isReservedPage(slug: string) {
-  return /^(404|posts|tags|search|history|page-og|og|search-data\.json)(\/|$)/.test(
+  return /^(404|posts|tags|search|notes|page-og|og|search-data\.json)(\/|$)/.test(
     slug,
   );
 }

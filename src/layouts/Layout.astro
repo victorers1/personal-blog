@@ -71,7 +71,7 @@ const pageTitle = title
   ? `${title} · ${localize(config.site.title, lang)}`
   : `${localize(config.site.title, lang)} · ${localize(config.text.siteDescription, lang)}`;
 const canonical = new URL(Astro.url.pathname, config.site.url).href;
-const introRoute = ['posts', 'history', 'tags'].includes(active ?? '')
+const introRoute = ['posts', 'notes', 'tags'].includes(active ?? '')
   ? active
   : undefined;
 const translationPaths: Partial<Record<Locale, string>> =

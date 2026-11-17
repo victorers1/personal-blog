@@ -12,7 +12,7 @@ import type { Locale } from '../types/config';
 
 /** Actual rendered HTML destinations, including unlisted but routable content. */
 export async function htmlRoutes(lang: Locale): Promise<string[]> {
-  const paths = ['', 'posts/', 'history/', 'search/', 'tags/'].map(
+  const paths = ['', 'posts/', 'notes/', 'search/', 'tags/'].map(
     (route) => href(lang, route),
   );
   for (const post of await postsFor(lang, true))

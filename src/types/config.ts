@@ -12,7 +12,7 @@ export type NavigationItem = {
 } & (
   | {
       type: 'builtin';
-      route: 'home' | 'posts' | 'history' | 'tags';
+      route: 'home' | 'posts' | 'notes' | 'tags';
       page?: string;
     }
   | { type: 'page'; page: string }

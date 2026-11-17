@@ -3,7 +3,7 @@ import type { BlogConfig } from '../types/config';
 
 const templates = [
   ['/', 'index.astro'],
-  ['/history', 'history.astro'],
+  ['/notes', 'notes.astro'],
   ['/search', 'search.astro'],
   ['/search-data.json', 'search-data.json.ts'],
   ['/posts', 'posts/index.astro'],
