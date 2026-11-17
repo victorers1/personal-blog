@@ -40,8 +40,8 @@ const config: BlogConfig = {
   },
   text: {
     siteDescription: {
-      en: "An Astro blog theme inspired by ChatGPT's layout.",
-      pt: "An Astro blog theme inspired by ChatGPT's layout.",
+      en: 'My personal notes',
+      pt: 'Minhas notas pessoais.',
     },
     tabs: {
       search: {
