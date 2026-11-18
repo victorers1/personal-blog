@@ -7,113 +7,136 @@ draft: true
 
 ## Intro
 
-We can divide cyber attacks into two type: **passive** and **active**.
+We can divide cyber attacks into two types, **passive** and **active**.
 
-The main difference is:
-
-- **Passive**: attacker observes and collects information without communication interference
-  - Passive Eavesdropping
-  - Traffic Analysis
-
-- **Active**: attacker does not just observe the communication, but interferes or interrupts some functionality
-  - Active Eavesdropping.
-  - Masquerade.
-  - Replay attack.
-  - Denial of Service.
+- **Passive attacks** involve observing and collecting information without interfering with communication.
+  - Passive eavesdropping
+  - Traffic analysis
+- **Active attacks** involve interfering with communication or disrupting a system's operation.
+  - Active eavesdropping
+  - Masquerade
+  - Replay attacks
+  - Denial of service
 
 ## Passive Attacks
 
-**Passive Eavesdropping**: to intercept or monitor a communication without modifying or interrupting it.
+**Passive eavesdropping** involves intercepting or monitoring communications without modifying or interrupting them.
 
-An attacker connected to the same network can collect:
+An attacker who can observe unencrypted network traffic may see:
 
-- Recent pages
-- Non-encripted info
-- Forms
-- Credentials, when transmitted without protection
+- Pages users visit
+- Information sent in plain text
+- Data submitted through forms
+- Credentials transmitted without protection
 
-(AI: Make MERMAID Chart)
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Observer as Passive observer
+    Client->>Server: Message
+    Note over Client,Observer: The observer can see the message in transit.
+```
 
-**Traffic Analysis**: consists in analyzing a communication in order to infer something about it. The attacker do not necesseraly knows the content of the messages, but can make conclusions about observed patterns.
+**Traffic analysis** involves examining communication patterns to draw inferences. An attacker can draw conclusions from those patterns even when the contents of the messages are encrypted.
 
-An attacker doesn't knows exactly what is the message but can observe:
+An attacker can observe:
 
-- Peak consumption time
-- Volume of data
-- Connections frequency
-- Sessions duration
-- Traffic origin and destiny
+- Peak traffic times
+- Data volume
+- Connection frequency
+- Session duration
+- Traffic sources and destinations
 
-With these info they can know:
+These patterns can suggest:
 
-- Which server is more used
-- There is a maintenance in course
-- A specific team is doing a certain task
-- If there is an incommon activity in a certain day
+- Which server is used most often
+- Whether maintenance is underway
+- Whether a particular team is performing a task
+- Whether activity on a given day is unusual
 
-(AI: Make MERMAID Chart)
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Observer as Traffic observer
+    Client->>Server: Encrypted request
+    Server-->>Client: Encrypted response
+    Note over Client,Observer: The observer can compare timing, volume, and endpoints.
+    Note right of Observer: Patterns may reveal peak usage or unusual activity.
+```
 
 ## Active Attacks
 
-**Active Eavesdropping**: intercepts a communication with the possibility of modifying its content. Most known example is the Man-in-the-Middle attack.
+**Active eavesdropping** involves intercepting communications and potentially modifying their contents. A common example is a man-in-the-middle attack.
 
-(AI: Make MERMAID Chart about MITM)
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Intermediary as Unauthorized intermediary
+    participant Server
+    Client->>Intermediary: Request intended for the server
+    Intermediary->>Server: Relayed request
+    Server-->>Intermediary: Response
+    Intermediary-->>Client: Relayed response
+    Note over Client,Server: The intermediary can observe or modify messages in transit.
+```
 
 An attacker can:
 
 - Intercept messages
-- Modify transmitted info
+- Modify transmitted information
 - Redirect requests
-- Insert content in the communication
+- Insert content into the communication
 
-**Masquerade** or **Spoofing**: consists in an attacker disguising itself into an legitimate suer, device or entity.
+A **masquerade attack** involves impersonating a legitimate user, device, or entity. **Spoofing** is one way to carry out this impersonation.
 
-For example, if an attacker obtain some employee credentials, they can use it to:
+For example, if an attacker obtains an employee's credentials, they can use them to:
 
 - Access internal systems
-- Talk in behalf of others
-- Send fake e-mails
+- Communicate on the employee's behalf
+- Send fraudulent emails
 
-Examples of spoofing:
+Examples of spoofing include:
 
-- IP Spoofing: fakes an origin's IP address to make a package look like it is from a different device.
+- **IP spoofing** falsifies a packet's source IP address so that the packet appears to come from a different device.
+- **ARP spoofing** uses forged ARP messages to associate one device's IP address with another device's MAC address. This can allow an attacker to intercept local network traffic.
+- **Email spoofing** falsifies sender information so that an email appears to come from someone else.
+- **DNS spoofing** manipulates DNS responses and can redirect a user to an IP address controlled by an attacker.
 
-- ARP Spoofing: sends fake ARP messages in order to associate your MAC to the IP of another device. That let you intercept local network traffic.
+A **replay attack** occurs when an attacker captures a legitimate message or request and later resends it to the same destination to try to repeat the original action.
 
-- Email Spoofing: fake the sender of an e-mail in order to make a message look like it came from another person.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+    participant Attacker
+    Client->>Server: Original request
+    Note over Client,Attacker: The attacker observes and copies the request.
+    Attacker->>Server: Duplicate request sent later
+    Server-->>Attacker: Duplicate rejected when replay protection is enabled
+```
 
-- DNS Spoofing: manipulate DNS responses aiming to redirect the victim to an IP controlled by an attacker.
+Ways to reduce replay risk include:
 
-**Replay attack**: occurs when an attacker capture a legitimate message or request to resend it later to the same destiny in order to reproduce a anwser.
+- Validating message timestamps and rejecting stale requests
+- Using single-use tokens
+- Expiring sessions to limit the window for replay
+- Rejecting duplicate transaction identifiers
 
-(AI: make MERMAID chart about reply attack)
+A **denial-of-service (DoS)** attack disrupts a service or makes it unavailable to legitimate users.
 
-How to prevent:
-
-- Timestamps in messages
-- Single use tokens
-- Session expiration mechanisms
-- Single-time transaction identifiers
-
-**Denial of Service (DoS)**: consists in making a service fully overwhelmed until it is unavailable to its legitimate users.
-
-The attacker usually explores a vulnerability or consumes all the server resources in order to interrupt its normal functionality.
-
-An important difference between DoS x DDoS:
+An attacker may exhaust the service's resources or exploit a vulnerability to interrupt normal operation.
 
 | DoS | DDoS |
-| -- | -- |
-| Denial of Service | Distributed Denial of Service |
-| Origin is a single source | Origin is multiple sources |
-| Aim is to make service unavailable | Aim is also to make service unavailable |
-| Can be done from a single machine | Usually make use of a botnet |
+| --- | --- |
+| Denial of service | Distributed denial of service |
+| Can originate from a single source | Originates from multiple sources |
+| Aims to disrupt service availability | Aims to disrupt service availability |
+| Can be carried out from a single machine | Often uses a botnet |
 
-## Related concepts
+## Related Concepts
 
-**Sniffing**: is a technique of capturing and analysing traffic packages in a network.
+**Sniffing** is the practice of capturing and analyzing network packets. Wireshark is a well-known tool for packet capture and analysis. Network administrators can use sniffing to diagnose network problems.
 
-A well-known tool for sniffing is **Wireshark**.
-
-Important: Sniffing be can used by admins to diagnose network problems. The technique is not malicious by itself.
-
-**Man-in-the-Middle**: occcurs when an attacker position theirselves in the middle of a communication, intercepting it and potencially monitoring, modifying or redirecting it.
+A **man-in-the-middle attack** occurs when an attacker positions themselves between two communicating parties and intercepts their messages. The attacker can monitor, modify, or redirect those messages.
