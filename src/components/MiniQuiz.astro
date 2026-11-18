@@ -1,0 +1,228 @@
+---
+interface Props {
+  questions: {
+    prompt: string;
+    choices: [string, string, string, string];
+    answer: 0 | 1 | 2 | 3;
+  }[];
+}
+
+const { questions } = Astro.props;
+const letters = ['A', 'B', 'C', 'D'];
+---
+
+<mini-quiz>
+  <form>
+    <ol>
+      {questions.map(({ prompt, choices, answer }, questionIndex) => (
+        <li>
+          <fieldset data-answer={answer}>
+            <legend><span class="question-number">{questionIndex + 1}.</span> {prompt}</legend>
+            {choices.map((choice, index) => (
+              <label>
+                <input type="radio" name={`question-${questionIndex}`} value={index} />
+                <span class="choice-letter">{letters[index]}</span>
+                <span>{choice}</span>
+                <span class="choice-result"></span>
+              </label>
+            ))}
+          </fieldset>
+        </li>
+      ))}
+    </ol>
+    <footer>
+      <button type="submit" disabled>Confirm</button>
+      <button type="reset" disabled>Retake quiz</button>
+    </footer>
+  </form>
+  <noscript>Enable JavaScript to confirm your answers.</noscript>
+</mini-quiz>
+
+<script>
+  class MiniQuiz extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector('form')!;
+      const fieldsets = form.querySelectorAll('fieldset');
+      const confirm = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+      const retake = form.querySelector<HTMLButtonElement>('[type="reset"]')!;
+
+      confirm.disabled = !retake.disabled;
+
+      form.onsubmit = (event) => {
+        event.preventDefault();
+        if (confirm.disabled) return;
+
+        for (const fieldset of fieldsets) {
+          for (const label of fieldset.querySelectorAll('label')) {
+            const radio = label.querySelector('input')!;
+            const result = label.querySelector('.choice-result')!;
+            if (radio.value === fieldset.dataset.answer) {
+              label.dataset.result = 'correct';
+              result.textContent = 'Correct';
+            } else if (radio.checked) {
+              label.dataset.result = 'incorrect';
+              result.textContent = 'Incorrect';
+            }
+          }
+          fieldset.disabled = true;
+        }
+
+        confirm.disabled = true;
+        retake.disabled = false;
+        retake.focus();
+      };
+
+      form.onreset = () => {
+        for (const fieldset of fieldsets) fieldset.disabled = false;
+        for (const label of form.querySelectorAll<HTMLLabelElement>('label[data-result]')) {
+          delete label.dataset.result;
+          label.querySelector('.choice-result')!.textContent = '';
+        }
+
+        confirm.disabled = false;
+        retake.disabled = true;
+        form.querySelector('input')?.focus();
+      };
+    }
+  }
+
+  if (!customElements.get('mini-quiz')) customElements.define('mini-quiz', MiniQuiz);
+</script>
+
+<style>
+  mini-quiz {
+    --quiz-correct: light-dark(#17613c, #8ee0ad);
+    --quiz-incorrect: light-dark(#a52232, #ffadb6);
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    color-scheme: light;
+  }
+
+  :global([data-theme='dark']) mini-quiz {
+    color-scheme: dark;
+  }
+
+  mini-quiz ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  mini-quiz li {
+    padding: clamp(1rem, 4vw, 1.5rem);
+    margin: 0;
+  }
+
+  mini-quiz li + li,
+  mini-quiz footer {
+    border-top: 1px solid var(--border);
+  }
+
+  fieldset {
+    min-inline-size: 0;
+  }
+
+  legend {
+    margin-bottom: 0.75rem;
+    font-weight: 650;
+  }
+
+  .question-number {
+    color: var(--muted);
+  }
+
+  label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    margin-block: 0.35rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  label:hover,
+  label:has(input:checked) {
+    background: color-mix(in srgb, currentColor 6%, transparent);
+  }
+
+  label:has(input:checked) {
+    border-color: var(--border);
+  }
+
+  label:has(input:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  label input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .choice-letter {
+    display: grid;
+    place-items: center;
+    flex: 0 0 1.75rem;
+    height: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 650;
+  }
+
+  fieldset:disabled label {
+    cursor: default;
+  }
+
+  [data-result='correct'] {
+    --result-color: var(--quiz-correct);
+  }
+
+  [data-result='incorrect'] {
+    --result-color: var(--quiz-incorrect);
+  }
+
+  label[data-result] {
+    color: var(--result-color);
+    border-color: color-mix(in srgb, var(--result-color) 40%, transparent);
+    background: color-mix(in srgb, var(--result-color) 10%, transparent);
+  }
+
+  button {
+    min-height: 2.5rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button[type='submit'] {
+    color: light-dark(#fff, #171717);
+    background: light-dark(#262626, #ededed);
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .choice-result:not(:empty) {
+    margin-inline-start: auto;
+    font-size: 0.8rem;
+    font-weight: 650;
+  }
+
+  mini-quiz footer {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.85rem clamp(1rem, 4vw, 1.5rem);
+  }
+</style>
