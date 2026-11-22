@@ -144,7 +144,7 @@ Examples of spoofing include:
 
 A **man-in-the-middle attack** occurs when an attacker positions themselves between two communicating parties and intercepts their messages. The attacker can monitor, modify, or redirect those messages.
 
-## Mini Test
+## Quiz
 
 Select one answer per question, then press **Confirm** at the bottom to check your answers. You can leave questions blank.
 
@@ -220,3 +220,60 @@ Select one answer per question, then press **Confirm** at the bottom to check yo
     answer: 3,
   },
 ]} />
+
+## Malwares
+
+Is any type of software developed to disrupt, damage, or gain unauthorized access to computer systems. Malware can take many forms, including viruses, worms, trojans, ransomware, and more.
+
+### Viruses
+
+A **virus** attaches itself to a legitimate program or file and spreads to other programs or files when executed.
+
+#### File Infector
+
+Attaches to executable files and spreads when the infected program is run. It can modify or delete files, slow down performance, or cause crashes.
+
+#### Boot Sector
+
+Infects the master boot record (MBR) of a storage device, allowing it to execute before the operating system loads. It can prevent the system from booting or cause data loss.
+
+#### Macro Virus
+
+Exploits vulnerabilities in applications that support macros, such as Microsoft Office. It can execute malicious code when a document is opened, potentially spreading to other documents or systems.
+
+For exmaple, **Melissa**, released on March 26, 1999. The  author initially posted a Word document (list.doc) on an internet newsgroup using a compromised AOL account, luring users with promises of sensitive access or passwords. Built as a MS Word macro, the malware ran when an infected document was opened. It hijacked MS Outlook to automatically email copies of itself to the first 50 entries in the victim's address book. Because messages appeared to come from trusted contacts, recipients frequently opened them.
+
+#### Script Virus
+
+Written in scripting languages like JavaScript or VBScript. It can be embedded in web pages, email attachments, or other files, executing when the file is opened or the script is run.
+
+For exmaple, **ILOVEYOU**, it arrived via email with the subject line "ILOVEYOU" and an attachment named LOVE-LETTER-FOR-YOU.txt.vbs (often appearing as a text file because _Windows hid .vbs extensions by default_). When executed, it automatically emailed copies of itself to every contact in the victim's MS Outlook address book. It operated overwriting local and network files —including images, music, and documents— with its own code and altered system settings.
+
+#### Resident Virus
+
+Loads into memory and remains active, infecting files and programs as they are accessed. It can slow down system performance and cause instability.
+
+####  Overwrite Virus
+
+Erases or overwrites files, making them unusable. It can lead to data loss and system instability.
+
+For example, **CIH (Chernobyl)**, a destructive virus that overwrites critical system files and the BIOS, rendering the computer inoperable. It was notorious for its payload that could corrupt the system's firmware.
+
+#### Polymorphic Virus
+
+Changes its code or appearance with each infection, making it difficult for antivirus software to detect. It can evade signature-based detection methods and spread undetected.
+
+### Browser Hijacker
+Modifies a web browser's settings without the user's consent, redirecting them to unwanted websites or displaying intrusive ads. It can compromise user privacy and security.
+
+### Worms
+
+A **worm** is a standalone malware that replicates itself to spread to other computers, often exploiting vulnerabilities in network protocols or software.
+
+### Trojan
+
+A **trojan** disguises itself as a legitimate program or file to trick users into executing it. Once activated, it can perform malicious actions, such as stealing data or creating backdoors for attackers.
+
+### Ransomware
+
+A **ransomware** encrypts a victim's files or locks them out of their system until a ransom is paid. It often spreads through phishing emails or malicious downloads.
